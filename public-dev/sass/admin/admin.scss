@@ -1,0 +1,157 @@
+body, html{
+	padding:0px;
+	margin:0px;
+	font-family: 'Lato';
+}
+
+body{
+	background: #15273f;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+section{
+	box-sizing: border-box;
+}
+
+.contener{
+	width:960px;
+	min-height:500px;
+	margin:0px auto;
+	margin-bottom: 20px; 
+	background:#fff;
+	height:auto;
+	padding-top:45px;
+	padding-bottom: 10px;
+	background: #15273f;
+	background-size: cover;
+	position:relative;
+	
+	//overflow:hidden;
+
+	.window_switch{
+
+		margin:5px;
+		overflow:hidden; 
+
+		a, link{
+			display:block;
+			float:left;
+			text-decoration:none;
+			text-weight:bold;
+			color:#000;
+			padding:5px;
+			font-size: 25px;
+
+			&.active{
+				text-decoration: underline;
+			}
+
+			&:hover{
+				text-decoration: underline;
+			}
+
+		}
+	}
+}
+
+#toolbar_top{
+
+	height:40px;
+	margin:0px;
+	margin-bottom:10px;
+	padding:0px;
+	background:rgba(105,105,105,0.7);
+	color:#fff;
+	line-height: 40px;
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	z-index:9999;
+
+	.logo{
+		display:block; 
+		width:130px;
+		height:40px;
+		background:url(../images/biqmap.png);
+		background-size:100%;
+		float:left;
+		text-indent:-9999px;
+	}
+
+  span{
+    float:right;
+    margin-right:20px;
+    font-weight: normal;
+    font-style: italic;
+  }
+
+	.title{
+		margin:0px;
+		margin-left:20px;
+		padding:0px;
+		font-size:16px;
+		float:left;
+	}
+
+	.menu_right{
+		float:right;
+    margin-right:20px;
+    font-weight: normal;
+    font-style: italic;
+
+		a, button, span{
+			display: block;
+			color:#fff;
+			font-weight: bold;
+			font-style: normal;
+			font-family: arial;
+			font-size:12px;
+			text-decoration: none;
+			border:0px;
+			background-color:rgba(170,170,170,1);
+			padding:0px 10px;
+			margin:0px;
+
+			margin-left: 5px;
+		//	border-radius: 10px;
+			height:20px;
+			line-height: 20px;
+
+			display:inline-block;
+
+			&:hover{
+				cursor:pointer;
+				background-color:rgba(255,0,0,1);
+			}
+		}
+
+		button:first-of-type{
+			margin-left:20px;
+		}
+	}
+
+	.return{
+		display:inline-block;
+		background:green;
+		border-radius:5px;
+		padding:5px 15px;
+		height: 20px;
+		line-height: 20px;
+		color:#fff;
+		text-decoration: none;
+		margin:0px 30px;
+
+		&:hover{
+			background:lightgreen;
+		}
+	}
+}
+
+footer{
+	font-size:14px;
+	font-style: italic;
+	float:right;
+	margin-right:50px;
+}

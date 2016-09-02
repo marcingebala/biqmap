@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js')
+    link(rel='stylesheet', href='css/intro.css')
+  body
+    section.view.login_box
+      .login
+        h2 logowanie
+        input(type='test', name='login', placeholder='login')
+        input(type='password', name='password', placeholder='hasło')
+        button ZALOGUJ
+        span
+          | Nie masz jeszcze konta? 
+          a.no-link Zarejestruj się
+      .register
+        h2 rejestracja
+        .alert
+        input(type='test', name='login', placeholder='login')
+        input(type='test', name='email', placeholder='email')
+        input(type='password', name='password', placeholder='hasło')
+        input(type='password', name='password_repeat', placeholder='powtórz hasło')
+        button ZAREJESTRUJ
+        span
+          | Posiadasz konto? 
+          a.no-link Zaloguj się
+    script(src='js/intro.js')

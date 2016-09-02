@@ -1,0 +1,112 @@
+doctype html
+html(lang='pl')
+  head
+    title BIQmap
+    link(href='https://fonts.googleapis.com/css?family=Lato:100', rel='stylesheet', type='text/css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js')
+    script.
+      //var basic_url = 'http://php.local/biqmap/public';
+      //var csrf_token = 'EsjWQdIvOn1iz3jfnZN8XTPCoUQ9GbcmjMuVdPgN';
+    script(src='js/map.js')
+    link(rel='stylesheet', href='css/map.css')
+    // colorpicker start
+    link(rel='stylesheet', media='screen', type='text/css', href='colorpicker/css/colorpicker.css')
+    script(type='text/javascript', src='colorpicker/js/colorpicker.js')
+    // colorpicker stop
+    link(rel='stylesheet', href='css/admin.css')
+    head
+  body
+    section#toolbar_top
+      span.logo
+      |biqmap 
+
+      button.save
+        |save
+
+      button.delete
+        |delete
+
+      select.select_maps
+        option(id='new_map')
+          |nowa mapa
+
+      span.menu_right
+
+        a(href='/maps') mapa
+        a(href='/projects') projekt
+
+        |  Jesteś zalogowany jako: 
+        strong= login
+        
+        a(href='/logout') wyloguj się
+    
+    #menu_top
+      input.input_base_text.title_project(type='text', name='title_project', obj='canvas', value='nowa mapa')
+      button#add_image dodaj zdjęcie
+      #move_image.user_mode move image (I)
+      #move_canvas.user_mode move canvas (C)
+      #auto_draw.user_mode auto draw (D)
+      select#change_category.select_base(obj='menu_top', name='category')
+        option(name='0') null
+      select#alpha_image
+        option(name='0') 0
+        option(name='1') 1
+        option(name='2') 2
+        option(name='3') 3
+        option(name='4') 4
+        option(name='5') 5
+        option(name='6') 6
+        option(name='7') 7
+        option(name='8') 8
+        option(name='9') 9
+        option(selected='', name='10') 10
+      button#increment_canvas +
+      button#decrement_canvas -
+      button#reset_canvas R
+      #canvas_info
+        input#size(type='text', value='100%')
+        input#width(type='text', value='')
+        |  :
+        input#height(type='text', value='')
+    canvas#thumbnail_canvas(width='700px', height='400px')
+    #canvas_box
+      #canvas_wrapper
+        canvas#main_canvas(nameclick='canvas', width='700px', height='400px')
+        #image_resize(nameclick='image_resize')
+      #right_resize(nameclick='right_resize')
+      #bottom_resize(nameclick='bottom_resize')
+    #category_box
+      h2 -- kategorie --
+      input(type='text', name='add_category')
+      button#add_category dodaj
+      #list
+    #pointer_box
+      h2 -- pointery --
+      label Pokaż wszystkie punkty:
+      .switch.switch-on(obj='pointers', name='show_all_point', value='true')
+        div
+      label odstęp poziomy:
+      input.input_base(type='text', value='1', obj='pointers', name='padding_x')
+      button.increment(obj='pointers', nameinput='padding_x') +
+      button.decrement(obj='pointers', nameinput='padding_x') -
+      label odstęp pionowy:
+      input.input_base(type='text', value='1', obj='pointers', name='padding_y')
+      button.increment(obj='pointers', nameinput='padding_y') +
+      button.decrement(obj='pointers', nameinput='padding_y') -
+      label przesunięcie modulo:
+      .switch.switch-off(obj='pointers', name='translate_modulo', value='false')
+        div
+      label wielkość:
+      input.input_base(type='text', value='10', obj='pointers', name='size_pointer')
+      button.increment(obj='pointers', nameinput='size_pointer') +
+      button.decrement(obj='pointers', nameinput='size_pointer') -
+      label rodzaj:
+      select.select_base(name='main_kind', obj='pointers')
+        option(name='square') square
+        option(name='circle') circle
+        option(name='hexagon') hexagon
+        option(name='hexagon2') hexagon2
+  script.
+    //crud.map_hash = '86M31cog4u';
+    //crud.get_map();
