@@ -9,9 +9,12 @@
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
+    "excel": "^0.1.6",
+    "excel-parser": "^0.2.2",
     "express": "~4.13.4",
     "express-session": "^1.14.1",
     "fluent-ffmpeg": "^2.1.0",
+    "formidable": "^1.0.17",
     "jade": "~1.11.0",
     "mongo-sync": "^2.0.1",
     "mongodb": "^2.2.8",
@@ -19,8 +22,10 @@
     "morgan": "~1.7.0",
     "mp4-convert": "^1.0.1",
     "node-session": "^1.2.1",
+    "node-xlsx": "^0.7.2",
     "serve-favicon": "~2.3.0",
     "sha1": "^1.1.1",
+    "socket.io": "^1.4.8",
     "xss": "^0.2.13"
   },
   "devDependencies": {

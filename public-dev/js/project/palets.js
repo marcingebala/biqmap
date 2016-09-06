@@ -4,6 +4,8 @@ palets = {
   val_interval : null,   
   palets_active : 0,
   colors_active : ['#f7fcfd','#e5f5f9','#ccece6','#99d8c9','#66c2a4','#41ae76','#238b45','#006d2c','#00441b'],
+  value : -1,
+  category : -1,
 
   //podstawowe palety kolorów ( ostatnia paleta jest naszą własną do zdefiniowania )
   color_arr : [
@@ -30,8 +32,59 @@ palets = {
 
   show : function(){
 
-this.show_color();
-this.show_palets();
+    this.show_color();
+    this.show_palets();
+    this.show_select();
+    //layers.data.color_active[layers.active] = this.colors_active;
+  },
+
+  show_select : function(){
+
+    //wyświetlamy panel do wyboru kolumny kategorii
+    add_html = '<option col="-1">wybierz kolumnę</option>';
+    for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
+      if(i == this.category){
+        add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
+      }
+      else{
+        add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
+      }
+    }
+    $('#palets .category').html( add_html );
+
+    //wyświetlamy panel do wyboru kolumny wartości
+    add_html = '<option col="-1">wybierz kolumnę</option>';
+    for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
+      if(i == this.value){
+        add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
+      }
+      else{
+        add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
+      }
+    }
+    $('#palets .value').html( add_html );
+  },
+
+  set_category : function(obj){
+    palets.category = parseFloat($("#palets select.category option:selected").attr('col'));
+    $('#excel .td').removeClass("category");
+    $('#excel .td[col="'+(palets.category+1)+'"]').addClass("category");
+  }, 
+
+  set_value : function(obj){
+
+  var value_tmp = parseFloat($("#palets select.value option:selected").attr('col'));
+
+  if($.isNumeric( excel.data[1][value_tmp] )){
+    palets.value = value_tmp;
+  }
+  else{
+    alert('wybrana kolumna nie zawiera liczb')
+  }
+  
+    $('#excel .td').removeClass("value");
+    $('#excel .td[col="'+(palets.value+1)+'"]').addClass("value");
+  
   },
 
   show_color : function(){
@@ -54,9 +107,7 @@ this.show_palets();
     $('#palets #select').html( html );
     
     $('#palets #select > span').click(function(){ 
-    
       palets.select_color(this); 
-    
     });
     
   },
@@ -104,13 +155,18 @@ this.show_palets();
       }
      }
 
-     function rgb2hex(rgb) {
-    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    function hex(x) {
+    //kopiujemy zaznaczone kolory do głównej tablicy warstw
+    //layers.data.color_active[layers.active] = this.colors_active;
+
+    //funkcja pomocnicza
+    function rgb2hex(rgb) {
+      rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+      
+      function hex(x) {
         return ("0" + parseInt(x).toString(16)).slice(-2);
+      }
+      return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
     }
-    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
-}
   },
 
   //zaznaczamy palete kolorów
@@ -120,5 +176,8 @@ this.show_palets();
     this.palets_active = $(obj).index();
     this.show_color();
   }
-
 }
+
+//zdarzenia dotyczące palet
+$('#palets select.category').change(function(){ palets.set_category(this); });
+$('#palets select.value').change(function(){ palets.set_value(this); });

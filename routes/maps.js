@@ -6,6 +6,7 @@ var ffmpeg = require('fluent-ffmpeg');
 var url = 'mongodb://localhost:27017/biqmap';
 var xss = require('xss');
 var sha1 = require('sha1');
+var formidable = require('formidable');
 
 
 //middleware sprawdzający czy użytkownik jest zalogowany

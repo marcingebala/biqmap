@@ -4,7 +4,7 @@ var pointers = {
 	padding_x : 1,
 	padding_y : 1,
 	translate_modulo : false,
-	size_pointer : 10,
+	size : 10,
 	main_kind : 'square',
 	kinds : Array('square','circle','hexagon','hexagon2'),
 
@@ -16,8 +16,8 @@ var pointers = {
 
 	//rysowanie wszystkich punktów
 	draw : function(){
-		var width_pointer = this.size_pointer + this.padding_x;
-		var height_pointer = this.size_pointer + this.padding_y;
+		var width_pointer = this.size + this.padding_x;
+		var height_pointer = this.size + this.padding_y;
 		var none_color = "rgba(0,0,0,0)"
 
 		if(this.show_all_point) none_color = "rgba(128,128,128,1)";
@@ -45,10 +45,10 @@ var pointers = {
 				}
 
 				if( (row % 2 == 0) && (pointers.translate_modulo) ){
-					window['figures'][this.main_kind]( column*width_pointer + width_pointer/2 , row*height_pointer , this.size_pointer);
+					window['figures'][this.main_kind]( column*width_pointer + width_pointer/2 , row*height_pointer , this.size);
 				}
 				else{
-					window['figures'][this.main_kind]( column*width_pointer , row*height_pointer , this.size_pointer);
+					window['figures'][this.main_kind]( column*width_pointer , row*height_pointer , this.size);
 				}
 
 			}
@@ -57,8 +57,8 @@ var pointers = {
 
 	//tworzymy tablice ponterów (jeśli jakiś ponter istnieje zostawiamy go, w przypadku gdy pointera nie ma tworzymy go na nowo)
 	create_array : function(){
-		canvas.active_row = parseInt( canvas.height_canvas / (pointers.size_pointer + pointers.padding_y) );
-		canvas.active_column = parseInt( canvas.width_canvas / (pointers.size_pointer + pointers.padding_x) );
+		canvas.active_row = parseInt( canvas.height_canvas / (pointers.size + pointers.padding_y) );
+		canvas.active_column = parseInt( canvas.width_canvas / (pointers.size + pointers.padding_x) );
 
 		if( (this.pointers.length < canvas.active_row) || (this.pointers[0].length < canvas.active_column) )
 		{

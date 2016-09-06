@@ -8,7 +8,7 @@ html(lang='pl')
     script.
       //var basic_url = 'http://php.local/biqmap/public';
       //var csrf_token = 'EsjWQdIvOn1iz3jfnZN8XTPCoUQ9GbcmjMuVdPgN';
-    script(src='js/project.js')
+
     link(rel='stylesheet', href='css/project.css')
     // colorpicker start
     link(rel='stylesheet', media='screen', type='text/css', href='colorpicker/css/colorpicker.css')
@@ -44,10 +44,21 @@ html(lang='pl')
     #layers
 
     #palets
+      | kolumna kategorii: 
+      select.category
+      |<br /> kolumna wartości: 
+      select.value
       #select
       #all
 
-    
+    #excel
+      input(type="file")
+      button 
+        | wczytaj plik excel
+      
+      div.table
+
+
     #canvas_box
       #canvas_wrapper
         canvas#main_canvas(nameclick='canvas', width='700px', height='400px')
@@ -81,3 +92,4 @@ html(lang='pl')
         option(name='hexagon') hexagon
         option(name='hexagon2') hexagon2
 
+    script(src='js/project.js')

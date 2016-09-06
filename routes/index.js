@@ -7,7 +7,6 @@ var url = 'mongodb://localhost:27017/biqmap';
 var xss = require('xss');
 var sha1 = require('sha1');
 
-
 //middleware sprawdzający czy użytkownik jest zalogowany
 var logged = function (req, res, next) {
 

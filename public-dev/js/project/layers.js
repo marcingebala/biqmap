@@ -3,6 +3,41 @@ var layers = {
 	list : ['warstwa1'],
 	active : 0,
 
+	//tablica z podstawowywmi danymi zagregowanymi dla każdej warstwy
+	data : {
+		category : [],
+		value : [],
+		colors_active : [],
+		min_value : [],
+		max_value : [],
+		cloud : []
+	},
+
+	get_data : function(){
+
+		this.data.colors_active[this.active] = palets.colors_active;
+		this.data.category[this.active] = palets.category;
+
+
+		//wyszukujemy najmniejsza i największą wartość w kolumnie wartości
+		if(palets.value != -1){
+			this.data.value[this.active] = palets.value;
+			
+			var tmp_min = excel.data[1][palets.value]
+			var tmp_max = excel.data[1][palets.value];
+			for(var i = 1, i_max = excel.data.length; i < i_max; i++){
+				if(tmp_min > excel.data[i][palets.value]) tmp_min = excel.data[i][palets.value];
+				if(tmp_max < excel.data[i][palets.value]) tmp_max = excel.data[i][palets.value];
+			}
+			console.log("min max value: ",tmp_min, tmp_max);
+		}
+
+		this.data.min_value[this.active] = tmp_min
+		this.data.max_value[this.active] = tmp_max;
+	},
+
+	//set_data : function
+
 	show : function(){
 		
 		var html = "";
@@ -29,6 +64,7 @@ var layers = {
 	},
 
 	select : function(obj){
+		this.get_data();
 		$('#layers span').removeClass('active');
 		$(obj).addClass('active');
 		layers.active = $(obj).index();

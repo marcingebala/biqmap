@@ -15,12 +15,15 @@ var colorpicker = new _colorpicker();
 var figures = new _figures();
 */
 
+
 $(document).ready(function(){
 
 
 	menu_top.get_maps();
   layers.show();
   palets.show();
+
+  on_category.init();
 
 	//zablokowanie możliwości zaznaczania buttonów podczas edycji pola
 	$(document).on("focusin","input",function(){ menu_top.disable_select = true; });
