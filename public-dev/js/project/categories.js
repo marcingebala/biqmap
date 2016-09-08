@@ -17,33 +17,31 @@ var categories = {
 	},
 
 	//po wybraniu odpowiedniej kolumny katerogii i wartości aktualizujemy kolor kategorii na podstawie excela
-	excel_color : function(){
+	color_from_excel : function(){
 
-		//ustalamy co ile zmieniamy kolor na kolejny 
-		var color_count = layers.colors_active[layers.active].length - 1 //ilosc kolorów
-		var diffrent = Math.abs( layers.min_value[layers.active] - layers.max_value[layers.active] ) / color_count;
-//console.log(color_count,diffrent);
+		//możliwa aktualizacja jedynie w przypadku wybrania konkretnej kolumny wartości i kategorii w excelu
+		if((crud.map_json.length > 0) && (excel.data.length > 0) && (layers.category[layers.active] != -1) && (layers.value[layers.active] != -1)){
 
-		for (var i = 1, i_max = this.category.length; i < i_max; i++){
-			// this.category[i][0] name
-			// this.category[i][1] color
-			
-			for (var i_ex = 0, i_ex_max = excel.data[layers.category[layers.active]].length; i_ex < i_ex_max; i_ex++){
-				//jeśli znaleźliśmy kategorię w excelu to pobieramy jej wartość
+			//ustalamy co ile zmieniamy kolor na kolejny 
+			var color_count = layers.colors_active[layers.active].length - 1 //ilosc kolorów
+			var diffrent = Math.abs( layers.min_value[layers.active] - layers.max_value[layers.active] ) / color_count;
 
-				//console.log( this.category[i][0] );
-				//console.log( excel.data[i_ex][layers.category[layers.active]]);
-
-				if( this.category[i][0] == excel.data[i_ex][layers.category[layers.active]]){
-			
-					var color_i = Math.floor((parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])) / diffrent);
-					console.log(color_i, (parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])), diffrent );
-					this.category[i][1] = layers.colors_active[layers.active][color_i];
+			for (var i = 1, i_max = this.category.length; i < i_max; i++){
+				
+				for (var i_ex = 0, i_ex_max = excel.data[layers.category[layers.active]].length; i_ex < i_ex_max; i_ex++){
+		
+					if( this.category[i][0] == excel.data[i_ex][layers.category[layers.active]]){
+				
+						var color_i = Math.floor((parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])) / diffrent);
+						console.log(color_i, (parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])), diffrent );
+						this.category[i][1] = layers.colors_active[layers.active][color_i];
+					}
 				}
 			}
+			//po zaktualizowaniu kolorów w kategoriach rysujemy na nowo canvas
+			canvas.draw();
+			legends.update();
 		}
-		
-		canvas.draw();
 	},
 
 	remove : function(id){

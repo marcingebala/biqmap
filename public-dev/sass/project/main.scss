@@ -8,6 +8,32 @@ body {
 }
 
 
+#legends{
+  
+  display:block;
+  border:1px solid red;
+  margin-top:50px;
+  color:#fff;
+  overflow: hidden;
+
+  span{
+    float:left;
+    width:100px;
+    color:#fff;
+    display:block;
+
+  }
+
+  span.color{
+    display: block;
+    float:left;
+    clear:left;
+    width:20px;
+    height:20px;
+    margin-right:10px;
+  }
+}
+
 //style dotyczące panelu warstw
 #layers{
   border:1px solid red;
@@ -110,6 +136,8 @@ body {
         background:#fff;
         margin:1px;
         margin-left:0px;
+        position:relative;
+
       }
 
       .td:first-child{

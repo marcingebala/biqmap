@@ -1,41 +1,14 @@
 //obiekt mówiący nam nad jaką kategoria jesteśmy
-
 var on_category = {
 	
-	canvas_offset_top : null,
-	canvas_offset_left : null,
-
-	init : function(){
-
-		canvas_offset_top = $('#canvas_wrapper').offset().top;
-		canvas_offset_left = $('#canvas_wrapper').offset().left;
-
-$('#canvas_wrapper').mouseleave(function(){
-		$("#canvas_cloud").fadeOut(200);
-})
-
-		$('#canvas_wrapper').mousemove(function(){
-
-
-var name = on_category.get_name()
-console.log(name);
-	cloud.update_text( name );
-	
-		});
-
-
-$("#canvas_cloud").mousemove(function(){
-	cloud.set_position();
-
-});
-
-	},
-	
+	canvas_offset_top : $('#canvas_wrapper').offset().top,
+	canvas_offset_left : $('#canvas_wrapper').offset().left,
 
 	//funkcja zwracająca aktualną kategorię nad którą znajduje się kursor
 	get_name : function(){
-	var left = mouse.left - canvas_offset_left;
-		var top = mouse.top - canvas_offset_top;
+		
+		var left = mouse.left - this.canvas_offset_left;
+		var top = mouse.top - this.canvas_offset_top;
 		var row = Math.ceil( top / (pointers.size + pointers.padding_y) );
 		
 		if((pointers.translate_modulo) && (row % 2 != 0)){
@@ -63,3 +36,7 @@ $("#canvas_cloud").mousemove(function(){
 	}
 
 }
+
+$('#canvas_wrapper').mouseleave(function(){ $("#canvas_cloud").fadeOut(200); });
+$('#canvas_wrapper').mousemove(function(){ cloud.update_text( on_category.get_name() ); });
+$("#canvas_cloud").mousemove(function(){ cloud.set_position(); });

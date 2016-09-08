@@ -1,29 +1,33 @@
-//lista obiektów
-
-
 /*
-var canvas = new _canvas(); //obiekt canvasa
-var crud = new _crud(); //obiekt canvasa
-var image = new _image(); //obiekt zdjęcia od którego odrysowujemy mapy
-var mouse = new _mouse();
-var models = new _models();
-var global = new _global(); //funkcje nie przypisany do innych obiektów
-var categories = new _categories();
-var pointers = new _pointers();
-var colorpicker = new _colorpicker();
-//var menu_top = new _menu_top();
-var figures = new _figures();
+    ____   ____ ____    __  ___ ___     ____     _____    ____ 
+   / __ ) /  _// __ \  /  |/  //   |   / __ \   |__  /   / __ \
+  / __  | / / / / / / / /|_/ // /| |  / /_/ /    /_ <   / / / /
+ / /_/ /_/ / / /_/ / / /  / // ___ | / ____/   ___/ /_ / /_/ / 
+/_____//___/ \___\_\/_/  /_//_/  |_|/_/       /____/(_)\____/  
+
+varsion 3.0 by Marcin Gębala
+
+lista obiektów:
+
+ canvas = canvas() - obiekt canvasa
+ crud = crud() - obiekt canvasa
+ image = image() - obiekt zdjęcia od którego odrysowujemy mapy
+ mouse = mouse()
+ models = models()
+ global = global() - funkcje nie przypisany do innych obiektów
+ categories = categories()
+ pointers = pointers()
+ colorpicker = colorpicker()
+ menu_top = menu_top()
+ figures = figures()
+
 */
 
-
 $(document).ready(function(){
-
 
 	menu_top.get_maps();
   layers.show();
   palets.show();
-
-  on_category.init();
 
 	//zablokowanie możliwości zaznaczania buttonów podczas edycji pola
 	$(document).on("focusin","input",function(){ menu_top.disable_select = true; });
@@ -109,7 +113,7 @@ $(document).ready(function(){
     	}
 	});
 
-	$(document).keypress(function(e) { menu_top.switch_mode( e.which ); });
+	//$(document).keypress(function(e) { menu_top.switch_mode( e.which ); });
 
 	//zaktualizowanie kategorii
 	$("#list").delegate("input","focusout", function() { categories.update($(this).attr('id_category') ,$(this).val() ); });

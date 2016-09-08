@@ -80,6 +80,7 @@ palets = {
     layers.category[layers.active] = parseFloat($("#palets select.category option:selected").attr('col'));
     $('#excel .td').removeClass("category");
     $('#excel .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
+    categories.color_from_excel();
   }, 
 
   set_value : function(obj){
@@ -112,7 +113,7 @@ palets = {
 
     layers.min_value[layers.active] = tmp_min
     layers.max_value[layers.active] = tmp_max;
-
+    categories.color_from_excel();
   },
 
   show_color : function(){
@@ -170,6 +171,7 @@ palets = {
       $(obj).addClass('active');
     }
     this.parse_color();
+    categories.color_from_excel();
   },
 
   parse_color : function(){
@@ -207,6 +209,7 @@ palets = {
     }
 
     this.show_color();
+    categories.color_from_excel();
   }
 }
 

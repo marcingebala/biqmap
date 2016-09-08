@@ -19,9 +19,9 @@ cloud = {
 
 	//ustawiamy poprawną pozycję dymka
 	set_position : function(){
-		var left = mouse.left - canvas_offset_left;
-		var top = mouse.top - canvas_offset_top;
-	$("#canvas_cloud").fadeIn(200);
+		var left = mouse.left - on_category.canvas_offset_left;
+		var top = mouse.top - on_category.canvas_offset_top;
+
 		$("#canvas_cloud").css({top:parseInt(top - $("#canvas_cloud").height()-30)+'px',left:left+'px'});
 	},
 
@@ -31,6 +31,7 @@ cloud = {
 		if(name != "null"){
 
 			var tmp_row = null;
+			var find = 0;
 			for( var i_row = 0, i_row_max = excel.data.length; i_row < i_row_max; i_row++ ){
 				if(name == excel.data[i_row][layers.category[layers.active]]){
 					
@@ -40,11 +41,24 @@ cloud = {
 					for(var i = 0, i_max = excel.data[0].length; i < i_max; i++){
 						text_tmp = text_tmp.replace('$'+excel.data[0][i],excel.data[i_row][i]);
 					}
-
-					$("#canvas_cloud").html(text_tmp);
-
+					
+					//dopiero jeśli dymek ma mieć jakaś konkretną zawartość wyświetlamy go
+					if(text_tmp!=""){
+						$("#canvas_cloud").fadeIn(200);
+						$("#canvas_cloud").html(text_tmp);
+						find = 1;
+					}
 				}
 			}
+
+			//jeśli nie znaleziono odpowiedniej kategorii
+			if (!find) { 
+				$("#canvas_cloud").fadeOut(200);
+			}
+
+		}
+		else{
+			$("#canvas_cloud").fadeOut(200);
 		}
 	}
 

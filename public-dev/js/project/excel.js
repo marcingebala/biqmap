@@ -2,7 +2,6 @@ var excel = {
 	
 	alpha : ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','w','x','y','z'],
 	data : [["wojewodztwo","wartosc1","wartosc2","wartosc3"],["krowodrza",1.4,20,6],["srodmiescie",1.6,50,43],["nowa_huta",2,34,3],["wielkopolska",1,32,6]],
-	data_parser : {},
 	min_row : 10,
 	min_col : 6,
   //column : ,
@@ -48,10 +47,10 @@ var excel = {
 				else{
 					try{
 						if(typeof(excel.data[i][(j-1)]) != "undefined"){
-							add_html += '<div class="td" row="' + i + '" col="' + j + '">'+excel.data[i][(j-1)]+'</div>';
+							add_html += '<div class="td" contenteditable="true" row="' + i + '" col="' + j + '">'+excel.data[i][(j-1)]+'</div>';
 						}
 						else{
-							add_html += '<div class="td" row="' + i + '" col="' + j + '"></div>';
+							add_html += '<div class="td"  row="' + i + '" col="' + j + '"></div>';
 						}
 						//console.log(excel.data[i][(j+1)]);
 					}catch(error){
@@ -64,6 +63,13 @@ var excel = {
 		}
 
 		$('#excel .table').html( add_html );
+
+		//dodajemy możliwość edycji excela
+		$('#excel .table .td').blur(function(){
+			excel.data[$(this).attr('row')][$(this).attr('col')] = $(this).html();
+		});
+
+
 
 	/*
 		$("#excel .tr").each(function(index, obj){
@@ -93,7 +99,7 @@ excel_form.append("excel_file", $("#excel input")[0].files[0]);
       processData: false,
       contentType: false
     } ).done(function( response ) {
-console.log( response )
+			console.log( response )
     	excel.data = response.excel[0].data;
     	//excel.parser();
     	excel.draw();

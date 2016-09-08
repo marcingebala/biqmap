@@ -73,6 +73,7 @@ var crud = {
 
 			//po zapisaniu danych do bazy aktualizujemy id (w przypadku jeśli istnieje nadpisujemy je)
 			var response = JSON.parse(data.data[0].map_json);
+			th.map_json = response;
 
 			//pobieramy i wczytujemy dane o canvasie do obiektu
 			canvas.height_canvas = response[0][0];
@@ -138,6 +139,7 @@ var crud = {
 
 			canvas.draw();
 			categories.show_list();
+			categories.color_from_excel();
 		});
 	},
 

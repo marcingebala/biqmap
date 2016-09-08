@@ -13,6 +13,7 @@ var layers = {
 	max_value : [0],
 	cloud : [""],
 	cloud_parser : [""],
+	legends : [[[20,"#f7fcfd"],[50,"#e5f5f9"],[80,"#ccece6"],[110,"#99d8c9"],[140,"#66c2a4"],[170,"#41ae76"],[200,"#238b45"],[230,"#006d2c"],[260,"#00441b"]]],
 
 	show : function(){
 		
@@ -28,7 +29,7 @@ var layers = {
 		}
 
 		html += '<button class="add">+</button><button class="remove">-</button>';
-		console.log('layers_show');
+
 		$('#layers').html(html);
 
 		$('#layers .add').click(function(){layers.add();});
@@ -46,6 +47,7 @@ var layers = {
 		layers.active = $(obj).index();
 		palets.show();
 		cloud.set_textarea();
+		categories.color_from_excel();
 	},
 
 	add : function(){
@@ -62,6 +64,7 @@ var layers = {
 		this.max_value.push(0);
 		this.cloud.push("");
 		this.cloud_parser.push("");
+		this.legends.push([]);
 		this.show();
 	},
 
@@ -84,6 +87,7 @@ var layers = {
 		this.max_value.pop();
 		this.cloud.pop();
 		this.cloud_parser.pop();
+		this.legends.pop();
 		this.show();
 	},
 
