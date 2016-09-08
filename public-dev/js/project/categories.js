@@ -16,6 +16,36 @@ var categories = {
 		this.show_list();
 	},
 
+	//po wybraniu odpowiedniej kolumny katerogii i wartości aktualizujemy kolor kategorii na podstawie excela
+	excel_color : function(){
+
+		//ustalamy co ile zmieniamy kolor na kolejny 
+		var color_count = layers.colors_active[layers.active].length - 1 //ilosc kolorów
+		var diffrent = Math.abs( layers.min_value[layers.active] - layers.max_value[layers.active] ) / color_count;
+//console.log(color_count,diffrent);
+
+		for (var i = 1, i_max = this.category.length; i < i_max; i++){
+			// this.category[i][0] name
+			// this.category[i][1] color
+			
+			for (var i_ex = 0, i_ex_max = excel.data[layers.category[layers.active]].length; i_ex < i_ex_max; i_ex++){
+				//jeśli znaleźliśmy kategorię w excelu to pobieramy jej wartość
+
+				//console.log( this.category[i][0] );
+				//console.log( excel.data[i_ex][layers.category[layers.active]]);
+
+				if( this.category[i][0] == excel.data[i_ex][layers.category[layers.active]]){
+			
+					var color_i = Math.floor((parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])) / diffrent);
+					console.log(color_i, (parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])), diffrent );
+					this.category[i][1] = layers.colors_active[layers.active][color_i];
+				}
+			}
+		}
+		
+		canvas.draw();
+	},
+
 	remove : function(id){
 		var th = this;
 

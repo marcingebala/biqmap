@@ -3,9 +3,8 @@ palets = {
   val_min : null,
   val_interval : null,   
   palets_active : 0,
-  colors_active : ['#f7fcfd','#e5f5f9','#ccece6','#99d8c9','#66c2a4','#41ae76','#238b45','#006d2c','#00441b'],
-  value : -1,
-  category : -1,
+  //value : -1,
+  //category : -1,
 
   //podstawowe palety kolorów ( ostatnia paleta jest naszą własną do zdefiniowania )
   color_arr : [
@@ -35,7 +34,7 @@ palets = {
     this.show_color();
     this.show_palets();
     this.show_select();
-    //layers.data.color_active[layers.active] = this.colors_active;
+    //layers.data.color_active[layers.active] = layers.colors_active[layers.active];
   },
 
   show_select : function(){
@@ -43,7 +42,7 @@ palets = {
     //wyświetlamy panel do wyboru kolumny kategorii
     add_html = '<option col="-1">wybierz kolumnę</option>';
     for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
-      if(i == this.category){
+      if(i == layers.category[layers.active]){
         add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
       }
       else{
@@ -55,7 +54,7 @@ palets = {
     //wyświetlamy panel do wyboru kolumny wartości
     add_html = '<option col="-1">wybierz kolumnę</option>';
     for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
-      if(i == this.value){
+      if(i == layers.value[layers.active]){
         add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
       }
       else{
@@ -63,61 +62,86 @@ palets = {
       }
     }
     $('#palets .value').html( add_html );
+
+    //kolorujemy odpowiednio excela
+    $('#excel .td').removeClass("value");
+    $('#excel .td').removeClass("category");
+    
+    if( layers.value[layers.active] != -1){
+      $('#excel .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
+    }
+
+    if( layers.category[layers.active] != -1){
+      $('#excel .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
+    }
   },
 
   set_category : function(obj){
-    palets.category = parseFloat($("#palets select.category option:selected").attr('col'));
+    layers.category[layers.active] = parseFloat($("#palets select.category option:selected").attr('col'));
     $('#excel .td').removeClass("category");
-    $('#excel .td[col="'+(palets.category+1)+'"]').addClass("category");
+    $('#excel .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
   }, 
 
   set_value : function(obj){
 
-  var value_tmp = parseFloat($("#palets select.value option:selected").attr('col'));
+    var value_tmp = parseFloat($("#palets select.value option:selected").attr('col'));
 
-  if($.isNumeric( excel.data[1][value_tmp] )){
-    palets.value = value_tmp;
-  }
-  else{
-    alert('wybrana kolumna nie zawiera liczb')
-  }
+    if($.isNumeric( excel.data[1][value_tmp] )){
+      layers.value[layers.active] = value_tmp;
+    }
+    else{
+      alert('wybrana kolumna nie zawiera liczb')
+    }
   
     $('#excel .td').removeClass("value");
-    $('#excel .td[col="'+(palets.value+1)+'"]').addClass("value");
+    $('#excel .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
   
+    var tmp_value = layers.value[layers.active];
+    
+    //wyszukujemy najmniejsza i największą wartość w kolumnie wartości
+    if( layers.value[tmp_value] != -1 ){
+      
+      var tmp_min = excel.data[1][tmp_value]
+      var tmp_max = excel.data[1][tmp_value];
+      for(var i = 1, i_max = excel.data.length; i < i_max; i++){
+        if(tmp_min > excel.data[i][tmp_value]) tmp_min = excel.data[i][tmp_value];
+        if(tmp_max < excel.data[i][tmp_value]) tmp_max = excel.data[i][tmp_value];
+      }
+      console.log("min max value: ",tmp_min, tmp_max);
+    }
+
+    layers.min_value[layers.active] = tmp_min
+    layers.max_value[layers.active] = tmp_max;
+
   },
 
   show_color : function(){
     //wyświetlamy pierwszalistę kolorów
     var html = '';
+
     for (var i = 0, i_max = this.color_arr[0].length; i<i_max; i++){
-      if($.inArray(this.color_arr[this.palets_active][i],this.colors_active)){
-        html += '<span class="active" style="background:'+this.color_arr[this.palets_active][i]+'"></span>';
+      
+      if(layers.colors_pos[layers.active][i] == 1){
+        html += '<span class="active" style="background:'+this.color_arr[layers.palets_active[layers.active]][i]+'"></span>';
       }
       else{
-        console.log( $('#palets #select span').eq(i).hasClass('active') );
-        if( $('#palets #select span').eq(i).hasClass('active') ){
-          html += '<span class="active" style="background:'+this.color_arr[this.palets_active][i]+'"></span>';
-        }
-        else{
-          html += '<span style="background:'+this.color_arr[this.palets_active][i]+'"></span>';
-        }
-      } 
+        html += '<span style="background:'+this.color_arr[layers.palets_active[layers.active]][i]+'"></span>';
+      }
     }
+
     $('#palets #select').html( html );
     
-    $('#palets #select > span').click(function(){ 
-      palets.select_color(this); 
-    });
-    
+    $('#palets #select > span').click(function(){ palets.select_color(this); });
+
   },
 
   show_palets : function(){
-//wyswietlamy wszystkie palety
+    
+    //wyswietlamy wszystkie palety
     var html = '';
     for (var i = 0, i_max = this.color_arr.length;i < i_max; i++){
       
-      if(i == this.palets_active){
+      if(i == layers.palets_active[layers.active]){
         html += '<span class="active">';
       }
       else{
@@ -125,7 +149,7 @@ palets = {
       }
 
       for (var j = 0, j_max = this.color_arr[0].length; j < j_max; j++){
-        html += '<span style="background:'+this.color_arr[i][j]+'"></span>';
+        html += '<span style="background:' + this.color_arr[i][j] + '"></span>';
       }
       html += '</span>';
 
@@ -138,25 +162,24 @@ palets = {
   //zaznaczamy konkretne kolory do wyświetlenia
   select_color : function(obj){
     if( $(obj).hasClass('active') ){
+      layers.colors_pos[layers.active][$(obj).index()] = 0;
       $(obj).removeClass('active');
     }
     else{
+      layers.colors_pos[layers.active][$(obj).index()] = 1;
       $(obj).addClass('active');
     }
     this.parse_color();
   },
 
   parse_color : function(){
-    this.colors_active = [];
+    layers.colors_active[layers.active] = [];
      for (var i = 0, i_max = this.color_arr[0].length; i<i_max; i++){
 
       if( $('#palets #select span').eq(i).hasClass('active') ){
-        this.colors_active.push( rgb2hex($('#palets #select span').eq(i).css('background-color')) );
+        layers.colors_active[layers.active].push( rgb2hex($('#palets #select span').eq(i).css('background-color')) );
       }
      }
-
-    //kopiujemy zaznaczone kolory do głównej tablicy warstw
-    //layers.data.color_active[layers.active] = this.colors_active;
 
     //funkcja pomocnicza
     function rgb2hex(rgb) {
@@ -173,7 +196,16 @@ palets = {
   select_palets : function(obj){
     $('#palets #all > span').removeClass('active');
     $(obj).addClass('active');
-    this.palets_active = $(obj).index();
+    layers.palets_active[layers.active] = $(obj).index();
+    
+    //aktualizujemy paletę aktywnych kolorów
+    layers.colors_active[layers.active] = [];
+    for(var i = 0, i_max = layers.colors_pos[layers.active].length; i < i_max; i++){
+      if(layers.colors_pos[layers.active][i] == 1){
+        layers.colors_active[layers.active].push( palets.color_arr[layers.palets_active[layers.active]][i] );
+      }
+    }
+
     this.show_color();
   }
 }

@@ -4,43 +4,20 @@ var layers = {
 	active : 0,
 
 	//tablica z podstawowywmi danymi zagregowanymi dla każdej warstwy
-	data : {
-		category : [],
-		value : [],
-		colors_active : [],
-		min_value : [],
-		max_value : [],
-		cloud : []
-	},
-
-	get_data : function(){
-
-		this.data.colors_active[this.active] = palets.colors_active;
-		this.data.category[this.active] = palets.category;
-
-
-		//wyszukujemy najmniejsza i największą wartość w kolumnie wartości
-		if(palets.value != -1){
-			this.data.value[this.active] = palets.value;
-			
-			var tmp_min = excel.data[1][palets.value]
-			var tmp_max = excel.data[1][palets.value];
-			for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-				if(tmp_min > excel.data[i][palets.value]) tmp_min = excel.data[i][palets.value];
-				if(tmp_max < excel.data[i][palets.value]) tmp_max = excel.data[i][palets.value];
-			}
-			console.log("min max value: ",tmp_min, tmp_max);
-		}
-
-		this.data.min_value[this.active] = tmp_min
-		this.data.max_value[this.active] = tmp_max;
-	},
-
-	//set_data : function
+	palets_active : [0],
+	category : [-1],
+	value : [-1],
+	colors_pos : [[1,1,1,1,1,1,1,1,1]],
+	colors_active : [["#f7fcfd", "#e5f5f9", "#ccece6", "#99d8c9", "#66c2a4", "#41ae76", "#238b45", "#006d2c", "#00441b"]],
+	min_value : [0],
+	max_value : [0],
+	cloud : [""],
+	cloud_parser : [""],
 
 	show : function(){
 		
 		var html = "";
+
 		for(var i = 0, i_max = this.list.length; i < i_max; i++){
 			if(i == this.active){
 				html += '<span class="active">' + this.list[i] + '</span>';
@@ -48,8 +25,8 @@ var layers = {
 			else{
 				html += '<span>' + this.list[i] + '</span>';
 			}
-
 		}
+
 		html += '<button class="add">+</button><button class="remove">-</button>';
 		console.log('layers_show');
 		$('#layers').html(html);
@@ -64,21 +41,49 @@ var layers = {
 	},
 
 	select : function(obj){
-		this.get_data();
 		$('#layers span').removeClass('active');
 		$(obj).addClass('active');
 		layers.active = $(obj).index();
+		palets.show();
+		cloud.set_textarea();
 	},
 
 	add : function(){
 
 		this.list.push( 'warstwa' + parseInt(this.list.length+1));
-		this.show();
 
+
+		this.category.push(-1);
+		this.value.push(-1);
+		this.palets_active.push(0);
+		this.colors_active.push(['#f7fcfd','#e5f5f9','#ccece6','#99d8c9','#66c2a4','#41ae76','#238b45','#006d2c','#00441b']);
+		this.colors_pos.push([1,1,1,1,1,1,1,1,1]);
+		this.min_value.push(0);
+		this.max_value.push(0);
+		this.cloud.push("");
+		this.cloud_parser.push("");
+		this.show();
 	},
 
 	remove : function(){
-		this.list.pop()
+
+		console.log("remove",this.active,this.list.length-1)
+
+		if(this.active == (this.list.length-1)){
+			var i_tmp = this.list.length-1;
+			this.select( $('#layers span').eq( i_tmp ) );
+		} 
+	
+		this.palets_active.pop();
+		this.list.pop();
+		this.colors_pos.pop();
+		this.category.pop();
+		this.value.pop();
+		this.colors_active.pop();
+		this.min_value.pop();
+		this.max_value.pop();
+		this.cloud.pop();
+		this.cloud_parser.pop();
 		this.show();
 	},
 

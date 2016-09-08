@@ -1,7 +1,8 @@
 var excel = {
 	
 	alpha : ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','w','x','y','z'],
-	data : [["wojewodztwo","wartosc1","wartosc2","wartosc3"],["malopolska",1.4,20,6],["slask",1.6,50,43],["mazowsze",2,34,3],["wielkopolska",1,32,6]],
+	data : [["wojewodztwo","wartosc1","wartosc2","wartosc3"],["krowodrza",1.4,20,6],["srodmiescie",1.6,50,43],["nowa_huta",2,34,3],["wielkopolska",1,32,6]],
+	data_parser : {},
 	min_row : 10,
 	min_col : 6,
   //column : ,
@@ -94,6 +95,7 @@ excel_form.append("excel_file", $("#excel input")[0].files[0]);
     } ).done(function( response ) {
 console.log( response )
     	excel.data = response.excel[0].data;
+    	//excel.parser();
     	excel.draw();
 
     });
@@ -110,8 +112,25 @@ console.log( response )
 
 */
 
-}
+},
+/*
+parser : function(){
+
+	for(var i = 0, i_max = this.data.length; i < i_max; i++){
+			
+			[this.data_parser[this.data[i][0]]] = [];
+			console.log( this.data_parser[this.data[i][0]] );
+
+			for(var j = 0, j_max = this.data[i].length; j < j_max; j++){
+				alert('ho!');
+				console.log( this.data[i][j] );
+				[this.data_parser[this.data[i][0]]].push(this.data[i][j]); 
+			}
+	}
+
+}*/
 
 }
 
 excel.init();
+//excel.parser();
