@@ -9,22 +9,25 @@ body {
 
 
 #legends{
-  
-  display:block;
-  border:1px solid red;
-  margin-top:50px;
+
+  display:none;
   color:#fff;
   overflow: hidden;
 
   span{
-    float:left;
-    width:100px;
-    color:#fff;
-    display:block;
+    float: left;
+    width: 170px;
+    color: #fff;
+    display: block;
+    margin-bottom: 5px;
+    border: 1px solid #aaa;
+    outline: 0px;
+    padding: 2px;
 
   }
 
   span.color{
+     border:1px solid rgba(0,0,0,0);
     display: block;
     float:left;
     clear:left;
@@ -36,30 +39,65 @@ body {
 
 //style dotyczące panelu warstw
 #layers{
-  border:1px solid red;
-  height:50px;
-  width:100%;
-  margin-top:50px;
 
+  width:100%;
+  background-color:#263860;
+  padding:10px 0px;
+  
   span{ 
     color:#fff;
-    padding:5px;
-    border:1px solid red; 
-    background-color:#637fa5;
+    padding:5px 15px;
+    background-color:#263860;
+    border:2px solid #6d7be8;
     display: inline-block;
     margin:5px;
     cursor:pointer;
-     -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  outline:0px;
-  
-    }
-    .active{
-      border:3px solid blue;
-    } 
+    line-height: 20px;
+    border-radius:15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    
+    user-select: none;
+    outline:0px;
+    height:20px;
+  }
+    
+  .active{
+    background-color:#6d7be8;
+    color:#fff;
+  } 
+
+  button{
+    background-color:#263860;
+    border:2px solid #6d7be8;
+    display:inline-block;
+    color:#fff;
+    padding:5px 15px;
+    height:30px;
+    line-height: 10px;
+    border-radius:15px;
+    margin:5px;
+    cursor:pointer;
+    font-size:14px;
+    outline:0px;
+  }
 }
+
+//panel do wyświetlania i dodawania tekst dla dymka
+#cloud{
+  display:none;
+
+  textarea{
+    width: 240px;
+    height: 200px;
+    margin: 10px auto;
+    display: block;
+    outline: 0px;
+  }
+
+}
+
 
 #canvas_cloud{
   display:none;
@@ -89,37 +127,63 @@ body {
   }
 }
 
-#excel{
+//style odpowiedzialne za box excela
+#excel_box{
+  
+  width:500px;
+  left:-520px;
+  top:auto;
+  bottom:50px;
+  padding-top:5px;
+  height:355px;
+  
+  span{
+    color:#fff;
+  }
 
-  width:auto;
-  height:240px;
-  //overflow:hidden;
-  border:2px solid blue;
-   overflow:scroll;
-   overflow-x:hidden;
+  h2{
+    top: 165px;
+    left: 355px;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+  }
 
-/*
-&::-webkit-scrollbar {
-    width: 10px;
-}
- 
-&::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
- 
-&::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}*/
-
-  input{
+  & > input{
     display:none;
   }
 
+  button{
+    background-color:#263860;
+    border:2px solid #6d7be8;
+    display:inline-block;
+    color:#fff;
+    padding:5px 20px;
+    height:36px;
+    line-height: 20px;
+    border-radius:15px;
+    margin:5px;
+    cursor:pointer;
+    font-size:14px;
+    outline:0px; 
+    width: 160px;
+    float: right;
+  }
+
+
+#excel_wrapper{
+
+  clear: both;
+  width: 480px;
+  height: 290px;
+  padding: 5px;
+  border: 1px solid #fff;
+  overflow: scroll;
+  margin-top: 15px;
+
   .table{
-    width:100%;
+    width:auto;
     //height:100%;
-    overflow:scroll;
+    //overflow:scroll;
 
     .tr{
       clear:both;
@@ -137,6 +201,7 @@ body {
         margin:1px;
         margin-left:0px;
         position:relative;
+        outline:0px;
 
       }
 
@@ -168,9 +233,8 @@ body {
       }
 
     }
-
   }
-
+}
 }
 
 //style dotyczące panelu kolorów
@@ -179,33 +243,38 @@ body {
   #select{
     span{
       display: inline-block;
-      margin:5px;
+      margin: 2px;
       width:20px;
       height:20px;
+      border:2px solid rgba(0,0,0,0);
     }
     .active{
-      outline: 2px solid red;
+      border: 2px solid red;
     }
+    margin-bottom:10px;
+    margin-top:10px;
   }
 
   #all{
 
     display: block;
-    width:200px;
+    width: 240px;
     height:200px;
     overflow: scroll;
 
     & > span{
       display:block;
-      height:20px;
+      padding: 2px;
+      height: 15px;
       overflow:hidden;
       line-height:20px;
       cursor:pointer;
+      border: 2px solid rgba(0,0,0,0);
       
       span{
         display: block;
         float:left;
-        margin:10px 1px;
+        margin:0px 5px;
         width:15px;
         height:15px;
       }
@@ -223,14 +292,14 @@ body {
   position:relative;
   background-color:#fff;
   margin-left: 10px;
-  margin-top:50px;
+  margin-top:10px;
 
   #bottom_resize{
     position:absolute;
     width:100%;
     bottom:-5px;
     height:5px;
-    background-color: #f00;
+    background-color: #6d7be8;
     cursor:n-resize;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -242,7 +311,7 @@ body {
     right:-5px;
     top:0px;
     width:5px;
-    background-color: #f00;
+    background-color: #6d7be8;
     cursor:w-resize;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -261,7 +330,6 @@ body {
       cursor:w-resize;
       display:none;
     }
-
   }
 }
 
@@ -296,15 +364,52 @@ body {
   }
 }
 
-#pointer_box{
+
+//główny styl dotyczaćy ponterów
+.box{
+
   width:250px;
-  height:320px;
+  height:360px;
   padding:10px;
+  padding-top:0px;
   margin:0px;
   position:absolute;
   right:0px;
   top:110px;
-  background: gray;
+  background: #263860;
+
+  & > div{
+   // display:none;
+    position:absolute;
+  }
+
+  & > ul{
+    width:100%;
+    color:#fff;
+    margin:0px;
+    padding:0px;
+    margin-bottom:10px;
+    display:block;
+    overflow: hidden;
+    background-color:#19284b;
+
+    li{ 
+      margin:0px;
+      padding:0px;
+      display:block;
+      float:left;
+      height:40px;
+      line-height:40px;
+      width:120px;
+      text-align: center;
+      cursor:pointer;  
+    }
+
+    li.active{
+      text-decoration: underline;
+    }
+
+  }
   
   label{
     color:#fff;
@@ -331,22 +436,43 @@ body {
   }
 
   h2{
-    position:absolute;
-    top:150px;
-    left:-190px;
-    margin:0px;
+    position: absolute;
+    top: 165px;
+    left: -205px;
+    margin: 0px;
     transform: rotate(-90deg);
-    background-color:#f00;
-    color:#fff;
-    padding:5px;
-    width:330px;
-    height:30px;
+    background-color: #6d7be8;
+    color: #fff;
+    padding: 5px;
+    width: 360px;
+    height: 30px;
     line-height: 30px;
     text-align: center;
     font-family: arial;
-    cursor:pointer;
+    cursor: pointer;
+    font-weight:normal;
   }
 }
+
+#palets_box{
+  right:-270px;
+  top:500px;
+  h2{
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+  }
+}
+
+#pointer_box{
+  right:-270px;
+  top:110px;
+  h2{
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+  }
+
+}
+
 
 #category_box{
   width:320px;

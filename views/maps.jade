@@ -19,7 +19,7 @@ html(lang='pl')
   body
     section#toolbar_top
       span.logo
-      |biqmap 
+        |biqmap 
 
       button.save
         |save
@@ -32,14 +32,11 @@ html(lang='pl')
           |nowa mapa
 
       span.menu_right
-
-        a(href='/maps') mapa
+        span.login= login
+        a(href='/maps').active mapa
         a(href='/projects') projekt
-
-        |  Jesteś zalogowany jako: 
-        strong= login
-        
         a(href='/logout') wyloguj się
+        
     
     #menu_top
       input.input_base_text.title_project(type='text', name='title_project', obj='canvas', value='nowa mapa')
@@ -77,12 +74,12 @@ html(lang='pl')
       #right_resize(nameclick='right_resize')
       #bottom_resize(nameclick='bottom_resize')
     #category_box
-      h2 -- kategorie --
+      h2 kategorie
       input(type='text', name='add_category')
       button#add_category dodaj
       #list
     #pointer_box
-      h2 -- pointery --
+      h2 pointery
       label Pokaż wszystkie punkty:
       .switch.switch-on(obj='pointers', name='show_all_point', value='true')
         div

@@ -28,7 +28,7 @@ var layers = {
 			}
 		}
 
-		html += '<button class="add">+</button><button class="remove">-</button>';
+		html += '<button class="add"> + </button><button class="remove"> - </button>';
 
 		$('#layers').html(html);
 

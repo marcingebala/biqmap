@@ -23,7 +23,15 @@ legends = {
 		layers.legends[layers.active] = [];
 
 		for(var i = 0, i_max = layers.colors_active[layers.active].length; i < i_max; i++){
-			layers.legends[layers.active].push([  Math.round( (layers.min_value[layers.active]+diffrent*i)*100) / 100, layers.colors_active[layers.active][i] ]);
+			
+			var now_tmp = Math.round( (layers.min_value[layers.active]+diffrent/color_count*i)*100) / 100
+			if(i+1 == i_max ){
+				var next_tmp = layers.max_value[layers.active]
+			}
+			else{
+				var next_tmp = Math.round( ((layers.min_value[layers.active]+diffrent/color_count*(i+1)) - 0.01)  *100) / 100 
+			}
+			layers.legends[layers.active].push([  now_tmp+' - '+next_tmp, layers.colors_active[layers.active][i] ]);
 		}
 		
 		this.show();

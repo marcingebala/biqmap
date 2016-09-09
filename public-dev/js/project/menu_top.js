@@ -8,6 +8,19 @@ menu_top = {
 	category : 0,
 	disable_select : false,
 
+	//zmiana aktualnej zakładki
+	change_box : function(obj){
+		$(obj).parent().children('li').removeClass('active');
+		$(obj).addClass('active');
+
+		var category = $(obj).html();
+		$(obj).parent().parent().children('div').fadeOut(500, function(){
+			$(obj).parent().parent().children('#'+category).delay(100).fadeIn(500);
+		});
+	
+	
+	},
+
 	//funkcja służąca do pobierania danych dotyczących map
 	get_maps : function(){
 	
@@ -101,5 +114,5 @@ menu_top = {
 		$('#canvas_info #width').val(parseInt(canvas.width_canvas) + 'px');
 		$('#canvas_info #height').val(parseInt(canvas.height_canvas) + 'px');
 	}
-	
+
 }

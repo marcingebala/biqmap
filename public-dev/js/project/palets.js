@@ -49,7 +49,7 @@ palets = {
         add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
       }
     }
-    $('#palets .category').html( add_html );
+    $('#excel_box .category').html( add_html );
 
     //wyświetlamy panel do wyboru kolumny wartości
     add_html = '<option col="-1">wybierz kolumnę</option>';
@@ -61,31 +61,31 @@ palets = {
         add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
       }
     }
-    $('#palets .value').html( add_html );
+    $('#excel_box .value').html( add_html );
 
     //kolorujemy odpowiednio excela
-    $('#excel .td').removeClass("value");
-    $('#excel .td').removeClass("category");
+    $('#excel_wrapper .td').removeClass("value");
+    $('#excel_wrapper .td').removeClass("category");
     
     if( layers.value[layers.active] != -1){
-      $('#excel .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
+      $('#excel_wrapper .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
     }
 
     if( layers.category[layers.active] != -1){
-      $('#excel .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
+      $('#excel_wrapper .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
     }
   },
 
   set_category : function(obj){
-    layers.category[layers.active] = parseFloat($("#palets select.category option:selected").attr('col'));
-    $('#excel .td').removeClass("category");
-    $('#excel .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
+    layers.category[layers.active] = parseFloat($("#excel_box select.category option:selected").attr('col'));
+    $('#excel_wrapper .td').removeClass("category");
+    $('#excel_wrapper .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
     categories.color_from_excel();
   }, 
 
   set_value : function(obj){
 
-    var value_tmp = parseFloat($("#palets select.value option:selected").attr('col'));
+    var value_tmp = parseFloat($("#excel_box select.value option:selected").attr('col'));
 
     if($.isNumeric( excel.data[1][value_tmp] )){
       layers.value[layers.active] = value_tmp;
@@ -94,8 +94,8 @@ palets = {
       alert('wybrana kolumna nie zawiera liczb')
     }
   
-    $('#excel .td').removeClass("value");
-    $('#excel .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
+    $('#excel_wrapper .td').removeClass("value");
+    $('#excel_wrapper .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
   
     var tmp_value = layers.value[layers.active];
     
@@ -171,7 +171,7 @@ palets = {
       $(obj).addClass('active');
     }
     this.parse_color();
-    categories.color_from_excel();
+
   },
 
   parse_color : function(){
@@ -182,7 +182,7 @@ palets = {
         layers.colors_active[layers.active].push( rgb2hex($('#palets #select span').eq(i).css('background-color')) );
       }
      }
-
+    categories.color_from_excel();
     //funkcja pomocnicza
     function rgb2hex(rgb) {
       rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -214,5 +214,5 @@ palets = {
 }
 
 //zdarzenia dotyczące palet
-$('#palets select.category').change(function(){ palets.set_category(this); });
-$('#palets select.value').change(function(){ palets.set_value(this); });
+$('#excel_box select.category').change(function(){ palets.set_category(this); });
+$('#excel_box select.value').change(function(){ palets.set_value(this); });

@@ -57,23 +57,48 @@ section{
 
 #toolbar_top{
 
-	height:40px;
-	margin:0px;
-	margin-bottom:10px;
+	height:80px;
+	line-height:80px;
 	padding:0px;
-	background:rgba(105,105,105,0.7);
-	color:#fff;
-	line-height: 40px;
-	position:fixed;
-	top:0px;
-	left:0px;
+	background:#14273e;
+	color:#fff;;
 	width:100%;
-	z-index:9999;
+
+	.select_maps{
+		margin:0px 10px;
+	}
+
+	.save, .delete, a{
+    background-color:#263860;
+    border:2px solid #6d7be8;
+    display:inline-block;
+    color:#fff;
+    padding:5px 20px;
+    //height:36px;
+    line-height: 20px;
+    border-radius:15px;
+    margin:5px;
+    cursor:pointer;
+    font-size:14px;
+		outline:0px;
+		text-decoration:none;
+		font-style:normal;
+		font-weight: bold;
+		font-family: arial;
+	}
+	
+	a.active{
+		background-color:#6d7be8;
+	}
+
+
 
 	.logo{
 		display:block; 
-		width:130px;
-		height:40px;
+    width: 180px;
+    height: 50px;
+    margin-top:15px;
+    margin-left:15px;
 		background:url(../images/biqmap.png);
 		background-size:100%;
 		float:left;
@@ -99,8 +124,28 @@ section{
 		float:right;
     margin-right:20px;
     font-weight: normal;
-    font-style: italic;
 
+
+		span{
+			display: block;
+			font-family: arial;
+			font-size:12px;
+			text-decoration: none;
+			height:20px;
+			line-height: 20px;
+		}
+
+		span.login{
+			display:inline-block;
+			height:80px;
+			line-height: 80px;
+			font-style: normal;
+			margin: 0px 10px;
+    	margin-left: 10px;
+			float: left;
+		}
+
+/*
 		a, button, span{
 			display: block;
 			color:#fff;
@@ -125,7 +170,7 @@ section{
 				cursor:pointer;
 				background-color:rgba(255,0,0,1);
 			}
-		}
+		}*/
 
 		button:first-of-type{
 			margin-left:20px;

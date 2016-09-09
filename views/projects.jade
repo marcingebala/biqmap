@@ -10,10 +10,10 @@ html(lang='pl')
       //var csrf_token = 'EsjWQdIvOn1iz3jfnZN8XTPCoUQ9GbcmjMuVdPgN';
 
     link(rel='stylesheet', href='css/project.css')
-    // colorpicker start
+  
     link(rel='stylesheet', media='screen', type='text/css', href='colorpicker/css/colorpicker.css')
     script(type='text/javascript', src='colorpicker/js/colorpicker.js')
-    // colorpicker stop
+  
     link(rel='stylesheet', href='css/admin.css')
     head
   body
@@ -31,37 +31,17 @@ html(lang='pl')
         option(id='new_map')
           |nowa mapa
 
+      select.select_project
+        option(id='new_project')
+          |nowy projekt
+
       span.menu_right
-
+        span.login= login
         a(href='/maps') mapa
-        a(href='/projects') projekt
-
-        |  Jesteś zalogowany jako: 
-        strong= login
-        
+        a(href='/projects').active projekt
         a(href='/logout') wyloguj się
-    
-    #layers
-
-    #legends
-
-    #palets
-      | kolumna kategorii: 
-      select.category
-      |<br /> kolumna wartości: 
-      select.value
-      #select
-      #all
-
-    #excel
-      input(type="file")
-      button 
-        | wczytaj plik excel
       
-      div.table
-
-    #cloud
-      textarea
+    #layers
 
     #canvas_box
       #canvas_cloud
@@ -71,31 +51,64 @@ html(lang='pl')
       #right_resize(nameclick='right_resize')
       #bottom_resize(nameclick='bottom_resize')
     
-    #pointer_box
-      h2 -- pointery --
-      label Pokaż wszystkie punkty:
-      .switch.switch-on(obj='pointers', name='show_all_point', value='true')
-        div
-      label odstęp poziomy:
-      input.input_base(type='text', value='1', obj='pointers', name='padding_x')
-      button.increment(obj='pointers', nameinput='padding_x') +
-      button.decrement(obj='pointers', nameinput='padding_x') -
-      label odstęp pionowy:
-      input.input_base(type='text', value='1', obj='pointers', name='padding_y')
-      button.increment(obj='pointers', nameinput='padding_y') +
-      button.decrement(obj='pointers', nameinput='padding_y') -
-      label przesunięcie modulo:
-      .switch.switch-off(obj='pointers', name='translate_modulo', value='false')
-        div
-      label wielkość:
-      input.input_base(type='text', value='10', obj='pointers', name='size_pointer')
-      button.increment(obj='pointers', nameinput='size_pointer') +
-      button.decrement(obj='pointers', nameinput='size_pointer') -
-      label rodzaj:
-      select.select_base(name='main_kind', obj='pointers')
-        option(name='square') square
-        option(name='circle') circle
-        option(name='hexagon') hexagon
-        option(name='hexagon2') hexagon2
+    #palets_box.box
+      h2 palets & cloud
+      ul  
+        li.active palets
+        li cloud
+  
+      #palets
+        #select
+        #all
+      #cloud
+        textarea
 
+    #excel_box.box
+      
+      h2 excel
+      input(type="file")
+      button 
+        | wczytaj plik excel
+      span 
+        |kategorie: 
+      select.category
+      span 
+        |<br />wartości: 
+      select.value
+      
+      #excel_wrapper
+        div.table 
+
+    #pointer_box.box
+      h2 pointers & legends
+      ul
+        li.active pointers
+        li legends
+      #pointers
+        label Pokaż wszystkie punkty:
+        .switch.switch-on(obj='pointers', name='show_all_point', value='true')
+          div
+        label odstęp poziomy:
+        input.input_base(type='text', value='1', obj='pointers', name='padding_x')
+        button.increment(obj='pointers', nameinput='padding_x') +
+        button.decrement(obj='pointers', nameinput='padding_x') -
+        label odstęp pionowy:
+        input.input_base(type='text', value='1', obj='pointers', name='padding_y')
+        button.increment(obj='pointers', nameinput='padding_y') +
+        button.decrement(obj='pointers', nameinput='padding_y') -
+        label przesunięcie modulo:
+        .switch.switch-off(obj='pointers', name='translate_modulo', value='false')
+          div
+        label wielkość:
+        input.input_base(type='text', value='10', obj='pointers', name='size_pointer')
+        button.increment(obj='pointers', nameinput='size_pointer') +
+        button.decrement(obj='pointers', nameinput='size_pointer') -
+        label rodzaj:
+        select.select_base(name='main_kind', obj='pointers')
+          option(name='square') square
+          option(name='circle') circle
+          option(name='hexagon') hexagon
+          option(name='hexagon2') hexagon2
+      #legends
+    
     script(src='js/project.js')
