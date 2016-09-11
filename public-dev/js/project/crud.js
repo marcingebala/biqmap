@@ -20,6 +20,8 @@ var crud = {
 	//pobieramy dane z porojektu i zapisujemy je do json-a
 	get_data : function(){
 
+		//pobieramy dane dotyczące mapy (canvasa)
+
 		//zerujemy na nowo całą tablicę pointerów
 		this.map_json = Array();
 
@@ -52,10 +54,29 @@ var crud = {
 			this.map_json[3][5] = image.alpha;
 		}
 
-		//konwertujemy nasza tablice na json
-		console.log('MAP _ JSON', this.map_json, JSON.stringify( this.map_json ));
-		this.map_json = JSON.stringify(this.map_json);
+		//pobieramy dane dotyczące projektów (layers)
+		//tworzymy obiekt warstwy zawierający wszystkie dane dotyczące projektu
+		this.layers = {};
+		this.layers.palets_active = layers.palets_active;
+		this.layers.category = layers.category;
+		this.layers.value = layers.value;
+		this.layers.colors_pos = layers.colors_pos;
+		this.layers.colors_active = layers.colors_active;
+		this.layers.min_valie = layers.min_valie;
+		this.layers.max_value = layers.max_value;
+		this.layers.cloud = layers.cloud;
+		this.layers.cloud_parser = layers.cloud_parser;
+		this.layers.legends = layers.legends;
 
+		//tworzymy obiekt excela
+
+		this.excel = excel.data;
+
+
+		//konwertujemy nasza tablice na json
+		this.map_json = JSON.stringify(this.map_json);
+		this.layers = JSON.stringify(this.layers);
+		this.excel = JSON.stringify(this.excel);
 	},
 
 	//pobranie mapy z bazy danych

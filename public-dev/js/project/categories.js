@@ -26,15 +26,24 @@ var categories = {
 			var color_count = layers.colors_active[layers.active].length - 1 //ilosc kolorów
 			var diffrent = Math.abs( layers.min_value[layers.active] - layers.max_value[layers.active] ) / color_count;
 
+
+			//dwie pętle odpowiedzialne za porównywanie kategorii z excela z katerogiami które mamy w bazie danych
 			for (var i = 1, i_max = this.category.length; i < i_max; i++){
-				
-				for (var i_ex = 0, i_ex_max = excel.data[layers.category[layers.active]].length; i_ex < i_ex_max; i_ex++){
-		
+				for (var i_ex = 0, i_ex_max = excel.data.length; i_ex < i_ex_max; i_ex++){
+					
+
+
+					console.log('compate category: ',i,i_ex, this.category[i][0], excel.data[i_ex][layers.category[layers.active]]);
+
 					if( this.category[i][0] == excel.data[i_ex][layers.category[layers.active]]){
-				
+		
+					//console.log('categoryt',i_ex, this.category[i][0],excel.data[i_ex][layers.category[layers.active]]);
+					
 						var color_i = Math.floor((parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])) / diffrent);
-						console.log(color_i, (parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])), diffrent );
+						//console.log(color_i, (parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])), diffrent );
 						this.category[i][1] = layers.colors_active[layers.active][color_i];
+						//przerywamy pętlę (tak aby nie trzeba było niepotrzebnie sprawdzać dodatkowych rekordów w wybranej kategorii)
+						i_ex = i_ex_max;
 					}
 				}
 			}

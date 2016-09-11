@@ -63,21 +63,27 @@ var excel = {
 		palets.parse_color();
 	},
 
+	//pobieramy plik, z inputa i wyłamy do backendu w celu sparsowania a następnie przypisujemy do tablicy i wyświetlamyw formie tabelski
 	send_file : function() {
 	
 		var excel_form = new FormData(); 
 		excel_form.append("excel_file", $("#excel_box input")[0].files[0]);
 
  		$.ajax( {
+      
       url: '/api/projects/excel_parse',
       type: 'POST',
       data: excel_form,
       processData: false,
       contentType: false
+
     }).done(function( response ) {
+
+    	//po wczytaniu pliku excel przypisujemy dane rysujemy na nowo tabelę oraz wyświetlamy wszystkie palety kolorów
 			console.log( response )
     	excel.data = response.excel[0].data;
     	excel.draw();
+    	palets.show_select();
     });
 	}
 }

@@ -30,7 +30,6 @@ palets = {
   ],
 
   show : function(){
-
     this.show_color();
     this.show_palets();
     this.show_select();
