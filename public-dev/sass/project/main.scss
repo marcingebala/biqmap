@@ -62,6 +62,14 @@ body {
     outline:0px;
     height:20px;
   }
+
+  input.label_layer{
+    width:400px;
+    margin:5px;
+    margin-bottom:0px;
+    padding:5px;
+    outline:0px;
+  }
     
   .active{
     background-color:#6d7be8;
@@ -89,13 +97,21 @@ body {
   display:none;
 
   textarea{
-    width: 240px;
-    height: 200px;
+
     margin: 10px auto;
     display: block;
     outline: 0px;
   }
 
+  .cloud_text{
+    width: 240px;
+    height: 140px;
+  }
+
+  .embed{
+    width: 240px;
+    height: 80px;
+  }
 }
 
 
@@ -480,7 +496,6 @@ body {
     width:150px;
     margin-bottom:10px;
   }
-
 }
 
 

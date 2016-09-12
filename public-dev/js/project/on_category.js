@@ -1,8 +1,8 @@
 //obiekt mówiący nam nad jaką kategoria jesteśmy
 var on_category = {
 	
-	canvas_offset_top : $('#canvas_wrapper').offset().top,
-	canvas_offset_left : $('#canvas_wrapper').offset().left,
+	canvas_offset_top : 187,
+	canvas_offset_left : 10,
 
 	//funkcja zwracająca aktualną kategorię nad którą znajduje się kursor
 	get_name : function(){
@@ -10,7 +10,7 @@ var on_category = {
 		var left = mouse.left - this.canvas_offset_left;
 		var top = mouse.top - this.canvas_offset_top;
 		var row = Math.ceil( top / (pointers.size + pointers.padding_y) );
-		
+		//console.log(left,top,this.canvas_offset_left,this.canvas_offset_top);
 		if((pointers.translate_modulo) && (row % 2 != 0)){
 			var column = Math.ceil( (left + (pointers.size/2))/ (pointers.size + pointers.padding_x) ) - 1;
 		}

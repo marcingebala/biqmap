@@ -14,6 +14,8 @@ var layers = {
 	cloud : [""],
 	cloud_parser : [""],
 	legends : [[[20,"#f7fcfd"],[50,"#e5f5f9"],[80,"#ccece6"],[110,"#99d8c9"],[140,"#66c2a4"],[170,"#41ae76"],[200,"#238b45"],[230,"#006d2c"],[260,"#00441b"]]],
+	labels : [""],
+	main_name : '',
 
 	show : function(){
 		
@@ -30,7 +32,7 @@ var layers = {
 
 		html += '<button class="add"> + </button><button class="remove"> - </button>';
 
-		$('#layers').html(html);
+		$('#layers div').html(html);
 
 		$('#layers .add').click(function(){layers.add();});
 		$('#layers .remove').click(function(){layers.remove();});
@@ -48,12 +50,12 @@ var layers = {
 		palets.show();
 		cloud.set_textarea();
 		categories.color_from_excel();
+		labels.show();
 	},
 
 	add : function(){
 
 		this.list.push( 'warstwa' + parseInt(this.list.length+1));
-
 
 		this.category.push(-1);
 		this.value.push(-1);
@@ -65,6 +67,7 @@ var layers = {
 		this.cloud.push("");
 		this.cloud_parser.push("");
 		this.legends.push([]);
+		this.labels.push("");
 		this.show();
 	},
 
@@ -88,6 +91,7 @@ var layers = {
 		this.cloud.pop();
 		this.cloud_parser.pop();
 		this.legends.pop();
+		this.labels.pop();
 		this.show();
 	},
 

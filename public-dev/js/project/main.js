@@ -36,6 +36,8 @@ $(document).ready(function(){
 	$(document).on("focusin","input",function(){ menu_top.disable_select = true; });
 	$(document).on("focusout","input",function(){ menu_top.disable_select = false; });
 
+	//zaznaczenie dymka do publikacji po kliknięciu
+	$('#cloud .embed').click(function(){	$(this).select();	});
 
 	$('#toolbar_top button.save').click(function(){ 
 

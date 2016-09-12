@@ -48,7 +48,7 @@ palets = {
         add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
       }
     }
-    $('#excel_box .category').html( add_html );
+    $('#excel_box select.category').html( add_html );
 
     //wyświetlamy panel do wyboru kolumny wartości
     add_html = '<option col="-1">wybierz kolumnę</option>';
@@ -60,7 +60,7 @@ palets = {
         add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
       }
     }
-    $('#excel_box .value').html( add_html );
+    $('#excel_box select.value').html( add_html );
 
     //kolorujemy odpowiednio excela
     $('#excel_wrapper .td').removeClass("value");

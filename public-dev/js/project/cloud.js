@@ -1,7 +1,7 @@
 cloud = {
 
 	set_textarea : function(){
-		$('#cloud textarea').val( layers.cloud[layers.active] );
+		$('#cloud .cloud_text').val( layers.cloud[layers.active] );
 	},
 
 	get_textarea : function(obj){
@@ -65,7 +65,7 @@ cloud = {
 }
 
 
-$('#cloud textarea').keyup(function(){
+$('#cloud .cloud_text').keyup(function(){
 
 cloud.get_textarea(this);
 

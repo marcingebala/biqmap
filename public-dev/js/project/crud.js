@@ -67,7 +67,8 @@ var crud = {
 		this.layers.cloud = layers.cloud;
 		this.layers.cloud_parser = layers.cloud_parser;
 		this.layers.legends = layers.legends;
-
+		this.layers.labels = layers.labels;
+		
 		//tworzymy obiekt excela
 
 		this.excel = excel.data;
