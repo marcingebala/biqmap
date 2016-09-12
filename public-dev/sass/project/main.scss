@@ -456,7 +456,7 @@ body {
 
 #palets_box{
   right:-270px;
-  top:500px;
+  top:550px;
   h2{
     border-top-left-radius: 60px;
     border-top-right-radius: 60px;
@@ -466,9 +466,19 @@ body {
 #pointer_box{
   right:-270px;
   top:110px;
+  height:420px;
+
   h2{
+    width:420px;
+    top: 195px;
+    left: -235px;
     border-top-left-radius: 60px;
     border-top-right-radius: 60px;
+  }
+
+  input.project_name{
+    width:150px;
+    margin-bottom:10px;
   }
 
 }

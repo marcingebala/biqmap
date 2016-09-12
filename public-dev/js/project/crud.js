@@ -2,7 +2,7 @@
 var crud = {
 
 	map_json : Array(), //główna zmienna przechowująca wszystkie dane
-	map_hash : null,
+	project_hash : null, //główny hash dotyczący naszego projektu
 
 	select_map : function( id_map ){
 
@@ -74,9 +74,7 @@ var crud = {
 
 
 		//konwertujemy nasza tablice na json
-		this.map_json = JSON.stringify(this.map_json);
-		this.layers = JSON.stringify(this.layers);
-		this.excel = JSON.stringify(this.excel);
+
 	},
 
 	//pobranie mapy z bazy danych
@@ -164,39 +162,28 @@ var crud = {
 		});
 	},
 
-	//tworzymy nową mapę danych
-	create_map : function(){
+	//tworzymy nową projekt
+	create_project : function(){
 
 		//aktualizujemy jsona do wysłania ajaxem
 		this.get_data();
 		var th = this; //zmienna pomocnicza
-		console.log('create',th.map_json);
 
-		//wysysłamy dane ajaxem do bazy danych
-		//canvas.draw_thumnail();
-		//new_image = image.dataURItoBlob( canvas.thumbnail.toDataURL() );
-		//canvas.draw();
 
-		//var formData = new FormData();
-		//formData.append("action",	'create_map' );
-		//formData.append("map_name", canvas.title_project);
-		//formData.append("map_json", th.map_json);
-		//formData.append("map_image", new_image);
-		//formData.append("_method", 'POST');
-		//formData.append("_token", csrf_token);
-		
 		var data = {
-			map_json: th.map_json
+			map_json : th.map_json,
+			layers : th.layers,
+			excel : th.excel
 		}
 
 		jQuery.ajax({
-			url: "api/maps",
-			data: { map_json: th.map_json },
+			url: "api/projects",
+			data: JSON.sringify(data),
 			type: 'POST',
 			success: function(response){
 				th.map_hash = response.hash_map;
-				alert('zapisano nową mapę');
-				menu_top.get_maps();
+				alert('zapisano nowy projekt');
+				//menu_top.get_maps();
 			}
 		});
 

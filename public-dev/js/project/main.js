@@ -41,16 +41,16 @@ $(document).ready(function(){
 
 		//jeśli nie mamy zdefiniowanega hasha tworzymy nową mapę w przeciwnym wypadku aktualizujemy już istniejącą
 		
-		console.log('crud',crud.map_hash)
+		console.log('crud',crud.project_hash)
 
-		if(typeof crud.map_hash == 'string'){
+		if(typeof crud.project_hash == 'string'){
 			
-			crud.update_map();
+			crud.update_project();
 
 		}
 		else{
 			
-			crud.create_map();
+			crud.create_project();
 		
 		}
 
@@ -175,8 +175,10 @@ $(document).ready(function(){
 
 	//zapisujemy lub aktualizujemy mapę po kliknięciu w buttow w zależności od tego czy mamy zdefiniowane id mapy
 	$('.menu_right .save').click(function(){
-		if(crud.map_hash == null){ crud.create_map(); }
-		else{ crud.update_map(); }
+	
+alert('klik')
+	//	if(crud.map_hash == null){ crud.create_map(); }
+	//	else{ crud.update_map(); }
 	});
 
 	//usuwamy mapę po kliknięciu w button

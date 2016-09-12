@@ -30,33 +30,39 @@ var logged = function (req, res, next) {
   }
 };
 
-router.get('/projects/excel', function(req, res, next){
 
-//console.log('test');
-
-//res.send('test');
-try{
-  var workSheetsFromFile = xlsx.parse(`../public/moj_excel.xls`);
-   res.json({status:'OK', excel: workSheetsFromFile});
- }catch(error){
-  res.json({status:'error',message:error});
- }
-
-
-
-/*
-  var parseXlsx = require('excel');
-  parseXlsx('../public/arkusz_biqmap.xlsx', function(err, data) {
-    if(err) throw err;
-      res.json(data);
-      console.log(data);
+//CRUD CREATE tworzymy nowy projekt 
+router.post('/api/projects/',logged_api, function(req, res, next) {
+  //tworzymy nowy projekt
+  mongodb.connect(url, function(err, db) {
+    var collection = db.collection('projects');
+    collection.insert({ id_user : req.session.id_user, data : req.body.data }, function(err,docs){
+      res.json( {status: 'ok', hash_map: docs.ops[0]._id} );
+    });  
+    db.close();  
   });
-*/
 });
 
 
+//CRUD zwracamy jsona z wszystkimi projektami użytkownika
+router.get('/api/projects/',logged_api, function(req, res, next) {
 
-//CRUD zapisujemy nową mapę do bazy
+  mongodb.connect(url, function(err, db) {
+    
+    var collection = db.collection('projects');
+
+    collection.find({ id_user : req.session.id_user }).toArray(function(err, docs) {
+      res.json( {status: 'ok',data : docs} );
+    });
+    
+    db.close();
+  
+  });
+
+});
+
+
+//PARSUJEMY EXCELA
 router.post('/api/projects/excel_parse',logged_api, function(req, res, next) {
   var form = new formidable.IncomingForm();
   form.parse(req);
@@ -67,72 +73,21 @@ router.post('/api/projects/excel_parse',logged_api, function(req, res, next) {
   });
 
   form.on('end', function() {
-
- var temp_path = this.openedFiles[0].path;
+    
+    var temp_path = this.openedFiles[0].path;
     var file_name = this.openedFiles[0].name;
-try{
-  var workSheetsFromFile = xlsx.parse(temp_path);
-   res.json({status:'OK', excel: workSheetsFromFile});
- }catch(error){
-  res.json({status:'error',message:error});
- }
 
-   
-   //res.json({path: temp_path, name : file_name});
-
+    try{
+      var workSheetsFromFile = xlsx.parse(temp_path);
+      res.json({status:'OK', excel: workSheetsFromFile});
+    }catch(error){
+      res.json({status:'error',message:error});
+    }
   });
-
-
-
-
-/*
- form.on('end', function(fields, files) {
-
-        var temp_path = this.openedFiles[0].path;
-        /* The file name of the uploaded file 
-        var file_name = this.openedFiles[0].name;
-  });
-
-        //console.log( temp_path, file_name );
-
-var temp_path = this.openedFiles[0].path;
-    var parseXlsx = require('excel');
-    parseXlsx(temp_path, function(err, data) {
-      if(err) throw err;
-        res.json(data);
-        console.log(data);
-    });
-
-
-/*
-excelParser.worksheets({
-  inFile: temp_path
-}, function(err, worksheets){
-  if(err) console.error(err);
-  console.log(worksheets);
-  res.json( worksheets );
-});
-
-*/
-/*
-    //sprawdzamy co wiemy o danym pliku excel
-    console.log(file.size, );
-
-    var parseXlsx = require('excel');
-    parseXlsx(file.path, function(err, data) {
-      if(err) throw err;
-        res.json(data);
-        console.log(data);
-    });*/
-
-  
-  //console.log(file);
-  //res.json({'file_name' : file.name });
-
 });
 
 
-
+//ZWRACAMY GŁÓWNY WIDOK PROJEKTU
 router.get('/projects',logged, function(req, res, next) {
   var data = { login: req.session.login, id: req.session.id};
   res.render('projects',data);

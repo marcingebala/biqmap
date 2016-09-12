@@ -64,6 +64,50 @@ menu_top = {
 
 	},
 
+
+	//funkcja służąca do pobierania danych dotyczących map
+	get_projects : function(){
+	
+		$.ajax({
+   		url: '/api/projects',
+    	type: "GET",
+    	contentType: "application/json"
+		}).done( function( response ) {
+			
+			//wyświetlamy listę projektów w panelu u góry
+			if(response.status == "ok"){
+
+				var add_html = '';
+				for (var i = 0, i_max = response.data.length; i < i_max ;i++){
+
+					if(response.data[i]._id == crud.map_hash){
+						add_html += '<option selected id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+					}
+					else{
+						add_html += '<option id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+					}
+				
+				}
+
+				$('#toolbar_top select.select_projects').append( add_html );
+			}
+
+		});
+
+		//dodajemu zdarzenie change project 
+		$('.select_projects').change(function(){
+			if (confirm('Czy chcesz wczytać nowy projekt ?')) {
+				if( $(this).find('option:selected').attr('id') == 'new_project' ){
+					location.reload();
+				}
+				else{
+					crud.select_project( $(this).find('option:selected').attr('id') );
+				}
+			}
+		});
+
+	},
+
 	update_canvas_info : function(){
 		canvas.scale = parseInt( $('#canvas_info #size').val() );
 		canvas.width_canvas = parseInt( $('#canvas_info #width').val() );

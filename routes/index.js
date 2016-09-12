@@ -9,14 +9,12 @@ var sha1 = require('sha1');
 
 //middleware sprawdzający czy użytkownik jest zalogowany
 var logged = function (req, res, next) {
-
   if ( req.session.login != undefined){
     next();
   } 
   else{
     res.redirect('/');
   }
-
 };
 
 //kontroler rejestracji użytkowników CRUD
@@ -99,48 +97,17 @@ router.post('/login', function(req, res, next) {
 
 });
 
+
 //wyświetlenie strony indeksowej
 router.get('/logout', function(req, res, next) {
   req.session.destroy();
   res.redirect('/');
 });
 
+
 //wyświetlenie strony indeksowej
 router.get('/', function(req, res, next) {
   res.render('index');
 });
-
-
-router.get('/test1', function(req, res, next) {
-
-  //res.send( req.session.name + 'test' );
-	//req.session.name = 'Napoleon';
-  res.send( req.session.name + 'test' );
-  
-  //res.render('index');
-});
-
-
-//router sprawdzający obsługę plików mp4
-router.get('/mp4', function(req, res, next) {
-
-var ffmpeg = require('fluent-ffmpeg');
-var command = ffmpeg();
-
-ffmpeg(__dirname + '/../public/video/tmp/cracow.avi')
-  .videoCodec('libx264')
-  .audioCodec('libmp3lame')
-  .size('320x240')
-  .on('error', function(err) {
-    console.log('An error occurred: ' + err.message);
-  })
-  .on('end', function() {
-    console.log('Processing finished !');
-  })
-  .save(__dirname + '/../public/video/tmp/cracow.mp4');
-
-  res.send( __dirname + '/../public/video/tmp/cracow.mp4' );
-});
-
 
 module.exports = router;
