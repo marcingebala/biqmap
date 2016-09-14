@@ -80,19 +80,23 @@ $(document).ready(function(){
 	$('.publish .embed').click(function(){	$(this).select();	});
 	$('.publish').click(function(event){
 
-		if (!event) {event = window.event;} //łata dla mozilli
-		console.log( );
-
-		if( ($('.publish .embed').css('display') == 'block') && ($(event.target).hasClass('publish')) ){
-			$('.publish .embed').fadeOut(500);
+		if(crud.project_hash != null){
+			if (!event) {event = window.event;} //łata dla mozilli
+			if( ($('.publish .embed').css('display') == 'block') && ($(event.target).hasClass('publish')) ){
+				$('.publish .embed').fadeOut(500);
+			}
+			else{
+				$('.publish .embed').html('<iframe width="100%" height="'+canvas.height_canvas+'px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://'+location.href.split( '/' )[2]+'/emded/'+crud.project_hash+'"></iframe>');
+				$('.publish .embed').fadeIn(500);
+			}
 		}
 		else{
-			$('.publish .embed').fadeIn(500);
+			alert('brak projektu do opublikowania');
 		}
 	});
 
 	//jeśli chcemy zapisać / zaktualizować / opublikować projekt
-	$('#toolbar_top button.save, #toolbar_top button.publish').click(function(){ 
+	$('#toolbar_top button.save').click(function(){ 
 		if(typeof crud.project_hash == 'string'){	crud.update_project(); }
 		else{ crud.create_project(); }
 	});
