@@ -1,22 +1,21 @@
 var excel = {
 	
 	alpha : ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','w','x','y','z'],
-	data : [["wojewodztwo","wartosc1","wartosc2","wartosc3","wartosc1","wartosc2","wartosc3"],["krowodrza",1.4,20,6,1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["krowodrza",1.4,20,6],["srodmiescie",1.6,50,43],["nowa_huta",2,34,3],["podgorze",1,32,6],["nowa_huta1",2,34,3]],
-	min_row : 10,
+	data : [[]],
+	min_row : 12,
 	min_col : 6,
 
 	init : function(){
-
 		//dodanie eventów przy kliknięciu excela
 		$('#excel_box button').click(function(){ $('#excel_box input').click(); });
 		$('#excel_box input').change(function(){ excel.send_file(); });
 
 		//funkcja tymczasowa do narysowania tabelki excela
-		this.draw();
+		this.show();
 	},
 
 	//funkcja odpowiedziala za poprawne podpisanie osi
-	draw : function(){
+	show : function(){
 
 		add_html = '';
 
@@ -53,14 +52,18 @@ var excel = {
 		$('#excel_box .table').html( add_html );
 
 		//dodajemy możliwość edycji excela
-		$('#excel_box .table .td').blur(function(){ excel.edit(this); });
+		$('#excel_box .table .td').keyup(function(){ excel.edit(this); });
 
 	},
 
 	//funkcja umożliwiająca edycje zawartości komórki
 	edit : function(obj){	
-		excel.data[$(obj).attr('row')][($(obj).attr('col')-1)] = $(obj).html();
-		palets.parse_color();
+		
+		var val = $(obj).html()
+		if($.isNumeric(val)) { val = parseFloat(val); }
+		
+		excel.data[$(obj).attr('row')][($(obj).attr('col')-1)] = val;
+		categories.update_color();
 	},
 
 	//pobieramy plik, z inputa i wyłamy do backendu w celu sparsowania a następnie przypisujemy do tablicy i wyświetlamyw formie tabelski
@@ -82,7 +85,7 @@ var excel = {
     	//po wczytaniu pliku excel przypisujemy dane rysujemy na nowo tabelę oraz wyświetlamy wszystkie palety kolorów
 			console.log( response )
     	excel.data = response.excel[0].data;
-    	excel.draw();
+    	excel.show();
     	palets.show_select();
     });
 	}

@@ -35,11 +35,26 @@ var logged = function (req, res, next) {
 router.post('/api/projects/',logged_api, function(req, res, next) {
   //tworzymy nowy projekt
   mongodb.connect(url, function(err, db) {
+
     var collection = db.collection('projects');
-    collection.insert({ id_user : req.session.id_user, data : req.body.data }, function(err,docs){
-      res.json( {status: 'ok', hash_map: docs.ops[0]._id} );
+    collection.insert({ id_user : req.session.id_user, map_hash : req.body.map_hash , map_json : req.body.map_json, layers : req.body.layers, excel : req.body.excel, project : req.body.project }, function(err,docs){
+    res.json( {status: 'ok', project_hash: docs.ops[0]._id} );
     });  
     db.close();  
+
+  });
+});
+
+//CRUD UPDATE aktualizujemy już istniejacy projekt
+router.put('/api/projects', logged_api, function(req, res, next){
+  mongodb.connect(url, function(err, db) {
+    
+    var collection = db.collection('projects');
+    collection.update({_id: mongodb.ObjectId(req.body.project_hash)}, {  $set: {map_hash : req.body.map_hash , map_json : req.body.map_json, layers : req.body.layers, excel : req.body.excel, project : req.body.project} }, function(err,docs){
+      res.json( {status: 'ok', message: 'zakutalizowano mapę'} );
+    });  
+    db.close();  
+  
   });
 });
 
@@ -51,7 +66,7 @@ router.get('/api/projects/',logged_api, function(req, res, next) {
     
     var collection = db.collection('projects');
 
-    collection.find({ id_user : req.session.id_user }).toArray(function(err, docs) {
+    collection.find({ id_user : req.session.id_user },{project:1}).toArray(function(err, docs) {
       res.json( {status: 'ok',data : docs} );
     });
     
@@ -59,6 +74,61 @@ router.get('/api/projects/',logged_api, function(req, res, next) {
   
   });
 
+});
+
+
+//CRUD DELETE usuwamy projekt z bazy
+router.delete('/api/project/:id',logged_api, function(req, res, next) {
+
+  mongodb.connect(url, function(err, db) {
+    
+    var collection = db.collection('projects');
+
+    collection.deleteOne({ id_user : req.session.id_user, _id: mongodb.ObjectId(req.params.id) }, function(err, docs) {
+      res.json( {status: 'ok' } );
+    });
+    
+    db.close();
+  
+  });
+
+});
+
+
+//CRUD zwracamy jsona z wszystkimi projektami użytkownika
+router.get('/api/projects/test', function(req, res, next) {
+
+  mongodb.connect(url, function(err, db) {
+    
+    var collection = db.collection('projects');
+
+    collection.find({},{project:1}).toArray(function(err, docs) {
+      res.json( {status: 'ok',data : docs} );
+    });
+    
+    db.close();
+  
+  });
+
+});
+
+//CRUD GET pobieramy konkretny projekt
+router.get('/api/project/:id', function(req, res, next) {
+  mongodb.connect(url, function(err, db) {
+    var collection = db.collection('projects');
+    //do pobrania mapy potrzebujemy 2 zmiennyd id_user oraz params.id
+    collection.find({ _id: mongodb.ObjectId(req.params.id) }).toArray(function(err, docs) {
+      
+      if(docs.length){
+        res.json( {status: 'ok',data : docs[0]} );
+      }
+      else{
+        res.json( {status: 'error', message: 'brak projektu'} );
+      }
+    
+    });
+    db.close();
+  });
 });
 
 

@@ -51,12 +51,14 @@ var mouse = {
 				{
 					canvas.resize_width(new_width);
 				}
+				canvas.draw();
 			break;
 
 			case 'bottom_resize':
 				//zmieniamy wysokość canvasa
 				var position = $('#canvas_box #canvas_wrapper').children('canvas').offset();
 				canvas.resize_height(this.top - this.padding_y - position.top);
+				canvas.draw();
 			break;
 
 			case 'image_resize':
@@ -74,71 +76,6 @@ var mouse = {
 						canvas.draw();
 					}
 				}
-			break;
-
-			case 'canvas':
-
-				//przesuwanie zdjęciem (np. mapa / wzorzec)
-				if((menu_top.move_image) && (image.obj !== undefined))
-				{
-					var position = $('#canvas_box #canvas_wrapper').children('canvas').offset();
-
-					var x_actual = this.left - position.left; //aktualna pozycja myszki
-					var y_actual = this.top - position.top; // aktualna pozycja myszki
-
-					var x_translate = x_actual - this.padding_x + mouse.tmp_mouse_x; //przesunięcie obrazka względem aktualnej pozycji myszki
-					var y_translate = y_actual - this.padding_y + mouse.tmp_mouse_y; //przesuniecie obrazka względem aktualnej pozycji myszki
-
-					var x_new = x_translate ;
-					var y_new = y_translate ;
-
-					image.x = x_new;
-      				image.y = y_new;
-      				canvas.draw();
-				}
-
-				//rysowanie
-				else if ((!menu_top.move_image) && (!menu_top.move_canvas))
-				{
-					var row_click = parseInt( (this.top - canvas.offset_top + canvas.context_y*(-1) ) / ( (pointers.size_pointer + pointers.padding_y)*(canvas.scale / 100)  ) );
-					var column_click = parseInt( (this.left - canvas.offset_left + canvas.context_x*(-1) ) / ( (pointers.size_pointer + pointers.padding_x)*(canvas.scale / 100) ) );
-
-				//	console.log('klik',row_click,column_click,canvas.context_x,canvas.context_y);
-
-					if((pointers.translate_modulo) && (row_click%2 ==0)){
-						//column_click = parseInt( (this.left - canvas.offset_left - pointers.size_pointer/2) / ((pointers.size_pointer + pointers.padding_x)*(canvas.scale / 100))  );
-						column_click = parseInt( (this.left - canvas.offset_left + canvas.context_x*(-1) - pointers.size_pointer/2) / ( (pointers.size_pointer + pointers.padding_x)*(canvas.scale / 100) ) );
-					}
-
-					if( (row_click >= 0) && (row_click < canvas.active_row) && (column_click >= 0) && (column_click < canvas.active_column) )
-					{
-						pointers.update_point(row_click,column_click,pointers.last_row,pointers.last_column);
-						pointers.last_column = column_click;
-						pointers.last_row = row_click;
-						canvas.draw();
-					}
-					else{
-						pointers.last_row = null;
-						pointers.last_column = null;
-					}
-				}
-
-				//przesuwanie całym canvasem
-				else if(menu_top.move_canvas)
-				{
-					canvas.reset();
-					canvas.clear();
-
-					canvas.context_new_x = (mouse.left - mouse.offset_x) - mouse.padding_x + canvas.context_x;
-					canvas.context_new_y = (mouse.top - mouse.offset_y) - mouse.padding_y + canvas.context_y;
-
-					if(canvas.context_new_x > 0) canvas.context_new_x = 0;
-					if(canvas.context_new_y > 0) canvas.context_new_y = 0;
-
-					canvas.context.translate( ( canvas.context_new_x / (canvas.scale / 100) ),( canvas.context_new_y / (canvas.scale / 100) ));
-					canvas.draw();
-				}
-
 			break;
 		}
 	}

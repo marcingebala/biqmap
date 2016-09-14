@@ -2,23 +2,14 @@
 var crud = {
 
 	map_json : Array(), //główna zmienna przechowująca wszystkie dane
+	map_hash :null,
+	layers : {},
+	excel : Array(),
+	project : {},
 	project_hash : null, //główny hash dotyczący naszego projektu
 
-	select_map : function( id_map ){
-
-		//jeśli uruchomimy
-		if (id_map == 'new_map') { 
-			this.create_map() 
-		}
-		else{
-			this.map_hash = id_map;
-			this.get_map();
-		}
-
-	},
-
 	//pobieramy dane z porojektu i zapisujemy je do json-a
-	get_data : function(){
+	parse_data : function(){
 
 		//pobieramy dane dotyczące mapy (canvasa)
 
@@ -56,213 +47,281 @@ var crud = {
 
 		//pobieramy dane dotyczące projektów (layers)
 		//tworzymy obiekt warstwy zawierający wszystkie dane dotyczące projektu
-		this.layers = {};
+
 		this.layers.palets_active = layers.palets_active;
-		this.layers.category = layers.category;
 		this.layers.value = layers.value;
 		this.layers.colors_pos = layers.colors_pos;
 		this.layers.colors_active = layers.colors_active;
-		this.layers.min_valie = layers.min_valie;
+		this.layers.min_value = layers.min_value;
 		this.layers.max_value = layers.max_value;
 		this.layers.cloud = layers.cloud;
 		this.layers.cloud_parser = layers.cloud_parser;
 		this.layers.legends = layers.legends;
 		this.layers.labels = layers.labels;
-		
-		//tworzymy obiekt excela
+		this.layers.category = layers.category;
+		this.layers.category_colors = layers.category_colors;
+		this.layers.category_name = layers.category_name;
+		this.layers.list = layers.list;
 
+		//zmienne globalne dotyczące całego projektu
+		this.project.name = layers.project_name;
+		this.project.source = layers.source;
+
+		//tworzymy obiekt excela
 		this.excel = excel.data;
 
 
-		//konwertujemy nasza tablice na json
+	},
+
+
+	//wczytanie zmiennych do obiektów mapy
+
+	set_map : function(data){
+
+		//po zapisaniu danych do bazy aktualizujemy id (w przypadku jeśli istnieje nadpisujemy je)
+		this.map_json = data;
+
+		//pobieramy i wczytujemy dane o canvasie do obiektu
+		canvas.height_canvas = data[0][0];
+		canvas.width_canvas = data[0][1];
+		pointers.padding_x = data[0][2];
+		pointers.padding_y = data[0][3];
+		pointers.translate_modulo = data[0][4];
+		pointers.size_pointer = data[0][5];
+		pointers.main_kind = data[0][6];
+		canvas.title_project = data[0][7];
+
+		$('#pointer_box input[name="padding_x"]').val( data[0][2] );
+		$('#pointer_box input[name="padding_y"]').val( data[0][3] );
+		$('#pointer_box input[name="size_pointer"]').val( data[0][5] );
+		$('input[name="title_project"]').val( data[0][7] );
+
+		if( data[0][4] ){
+			$('#pointer_box div[name="translate_modulo"]').removeClass('switch-off');
+			$('#pointer_box div[name="translate_modulo"]').addClass('switch-on');
+		}
+
+		$('#pointer_box select[name="main_kind"]').html('');
+
+		pointers.kinds.forEach(function(kind){
+
+			if(kind == data[0][6]){
+				$('#pointer_box select[name="main_kind"]').append('<option selected="selected" name="'+kind+'">'+kind+'</option>');
+			}
+			else{
+				$('#pointer_box select[name="main_kind"]').append('<option name="'+kind+'">'+kind+'</option>');
+			}
+
+		});
+
+		//pobieramy dane o pointerach
+		pointers.pointers = data[1];
+
+		//pobieramy dane o kategoriach
+		categories.category = data[2];
+
+
+		//po wczytaniu mapy aktyalizujemy dane dotyczącą kategorii i kolorów
+		layers.category_colors[0] = [];
+		layers.category_name = [];
+
+		for(var i = 0, i_max = categories.category.length; i < i_max; i++){
+			layers.category_name.push(categories.category[i][0]);
+			layers.category_colors[0].push(categories.category[i][1]);
+		}
+
+		//pobieranie danych o zdjęciu jeżeli istnieje
+		if( data[3].length > 2){
+			image.obj = new Image();
+			image.obj.src = data[3][0];
+			image.x = parseInt( data[3][1] );
+			image.y = parseInt( data[3][2] );
+			image.width = parseInt( data[3][3] );
+			image.height = parseInt( data[3][4] );
+			image.alpha = parseInt( data[3][5] );
+
+			//zaznaczenie odpowiedniego selecta alpha w menu top
+			$('#alpha_image option[name="'+	image.alpha +'"]').attr('selected',true);
+
+			image.obj.onload = function() { canvas.draw(); };
+		}
+
+		//zaktualizowanie danych w inputach
+		$('#main_canvas').attr('width', canvas.width_canvas+'px');
+		$('#main_canvas').attr('height', canvas.height_canvas+'px');
+		$('#canvas_box, #canvas_wrapper').css({'width':canvas.width_canvas+'px','height':canvas.height_canvas+'px'});
+
+		canvas.draw();
+		categories.show_list();
 
 	},
 
-	//pobranie mapy z bazy danych
+	set_project : function(data){
+
+		//wczytujemy dane dotyczące mapy
+		this.set_map( JSON.parse(data.map_json) );
+		
+		excel.data = JSON.parse(data.excel);
+
+		data.project = JSON.parse(data.project);  
+		data.layers = JSON.parse(data.layers); 
+
+		//wczytujemy dane dotyczące projektu
+		layers.palets_active = data.layers.palets_active;
+		layers.value = data.layers.value;
+		layers.colors_pos = data.layers.colors_pos;
+		layers.colors_active = data.layers.colors_active;
+		layers.min_value = data.layers.min_value;
+		layers.max_value = data.layers.max_value;
+		layers.cloud = data.layers.cloud;
+		layers.cloud_parser = data.layers.cloud_parser;
+		layers.legends = data.layers.legends;
+		layers.labels = data.layers.labels;
+	 	layers.category = 	data.layers.category;
+		layers.category_colors = data.layers.category_colors;
+		layers.category_name = data.layers.category_name;
+		layers.list = data.layers.list;
+
+		//zmienne globalne dotyczące całego projektu
+		layers.project_name = data.project.name;
+		layers.source = data.project.source;
+
+		$('input[name="project_name"]').val(layers.project_name);
+
+		tinyMCE.editors[0].setContent( layers.cloud[layers.active] );
+		tinyMCE.editors[1].setContent( layers.source );
+
+		excel.show();
+		palets.show();
+		legends.show();
+		layers.show();
+		labels.show();
+
+	},
+
+	//pobranie mapy z bazy danych i przekazujemy do wczytania do obiektów mapy
 	get_map : function(){
-
 		var th = this;
-
 		$.ajax({
-			  url: '/api/maps/' + th.map_hash,
+			  url: '/api/map/' + th.map_hash,
 		  	type: "GET",
 		    contentType: "application/json"
-			}).done(function( data ) {
-
-			console.log( data.data[0] );
-
-			//po zapisaniu danych do bazy aktualizujemy id (w przypadku jeśli istnieje nadpisujemy je)
-			var response = JSON.parse(data.data[0].map_json);
-			th.map_json = response;
-
-			//pobieramy i wczytujemy dane o canvasie do obiektu
-			canvas.height_canvas = response[0][0];
-			canvas.width_canvas = response[0][1];
-			pointers.padding_x = response[0][2];
-			pointers.padding_y = response[0][3];
-			pointers.translate_modulo = response[0][4];
-			pointers.size_pointer = response[0][5];
-			pointers.main_kind = response[0][6];
-			canvas.title_project = response[0][7];
-
-			$('#pointer_box input[name="padding_x"]').val( response[0][2] );
-			$('#pointer_box input[name="padding_y"]').val( response[0][3] );
-			$('#pointer_box input[name="size_pointer"]').val( response[0][5] );
-			$('input[name="title_project"]').val( response[0][7] );
-
-			if( response[0][4] ){
-				$('#pointer_box div[name="translate_modulo"]').removeClass('switch-off');
-				$('#pointer_box div[name="translate_modulo"]').addClass('switch-on');
-			}
-
-			$('#pointer_box select[name="main_kind"]').html('');
-
-			pointers.kinds.forEach(function(kind){
-
-				if(kind == response[0][6]){
-					$('#pointer_box select[name="main_kind"]').append('<option selected="selected" name="'+kind+'">'+kind+'</option>');
-				}
-				else{
-					$('#pointer_box select[name="main_kind"]').append('<option name="'+kind+'">'+kind+'</option>');
-				}
-
-			});
-
-			//pobieramy dane o pointerach
-			pointers.pointers = response[1];
-
-			//pobieramy dane o kategoriach
-			categories.category = response[2];
-
-			//pobieranie danych o zdjęciu jeżeli istnieje
-			if( response[3].length > 2){
-				image.obj = new Image();
-				image.obj.src = response[3][0];
-				image.x = parseInt( response[3][1] );
-				image.y = parseInt( response[3][2] );
-				image.width = parseInt( response[3][3] );
-				image.height = parseInt( response[3][4] );
-				image.alpha = parseInt( response[3][5] );
-
-				//zaznaczenie odpowiedniego selecta alpha w menu top
-				$('#alpha_image option[name="'+	image.alpha +'"]').attr('selected',true);
-
-				image.obj.onload = function() {
-					canvas.draw();
-				};
-			}
-
-			//zaktualizowanie danych w inputach
-			$('#main_canvas').attr('width', canvas.width_canvas+'px');
-			$('#main_canvas').attr('height', canvas.height_canvas+'px');
-			$('#canvas_box, #canvas_wrapper').css({'width':canvas.width_canvas+'px','height':canvas.height_canvas+'px'});
-
-			canvas.draw();
-			categories.show_list();
-			categories.color_from_excel();
-		});
+			}).done(function( data ) { th.set_map( JSON.parse(data.data[0].map_json) ); });
 	},
 
-	//tworzymy nową projekt
+	//pobieranie projektu z bazy danych i wczytanie
+	get_project : function(){
+		
+		var th = this;
+			$.ajax({
+				  url: '/api/project/' + th.project_hash,
+			  	type: "GET",
+			    contentType: "application/json"
+				}).done(function( data ) { 
+					console.log(data.data);
+					if(data.status == 'ok'){
+						th.set_project( data.data ); 
+					}
+					else{
+						alert('nie udało się wczytać projektu');
+						console.log(data);
+					}
+
+				});
+		},
+
+	//tworzymy nowy projekt
 	create_project : function(){
 
 		//aktualizujemy jsona do wysłania ajaxem
-		this.get_data();
+		this.parse_data();
 		var th = this; //zmienna pomocnicza
 
-
 		var data = {
-			map_json : th.map_json,
-			layers : th.layers,
-			excel : th.excel
+			map_json : JSON.stringify(th.map_json),
+			map_hash : th.map_hash,
+			layers : JSON.stringify(th.layers),
+			excel : JSON.stringify(th.excel),
+			project : JSON.stringify(th.project)
 		}
 
 		jQuery.ajax({
 			url: "api/projects",
-			data: JSON.sringify(data),
+			data: data,
 			type: 'POST',
 			success: function(response){
-				th.map_hash = response.hash_map;
-				alert('zapisano nowy projekt');
-				//menu_top.get_maps();
+				if(response.status == 'ok'){
+					alert('zapisano nowy projekt');
+					th.project_hash = response.project_hash;
+					menu_top.get_projects();
+				}
+				else{
+					alert('błąd podczas zapisu');
+					console.log(response);
+				}
 			}
 		});
 
 	},
 
-	//aktualizujemy mapę
-	update_map : function(){
+	//aktualizujemy już istniejący projekt
+	update_project : function(){ 
 
 		//aktualizujemy jsona do wysłania ajaxem
-		this.get_data();
+		this.parse_data();
 		var th = this; //zmienna pomocnicza
 
-		//canvas.draw_thumnail();
-		//new_image = image.dataURItoBlob( canvas.thumbnail.toDataURL() );
-	/*
-		var formData = new FormData();
-		formData.append("map_hash", th.map_hash );
-		formData.append("map_name", canvas.title_project);
-		formData.append("map_json", th.map_json);
-		formData.append("map_image", new_image);
-		formData.append("_method", 'PUT');
-		formData.append("_token", csrf_token);
-
-		jQuery.ajax({
-			url: basic_url + "/map/"+th.map_hash,
-			data: formData,
-			cache: false,
-			contentType: false,
-			processData: false,
-			type: 'POST',
-			success: function(data){
-				alert('zaktualizowano mapę');
-			}
-		});
-	*/
-
 		var data = {
-			map_hash: th.map_hash,
-			map_json: th.map_json
+			map_json : JSON.stringify(th.map_json),
+			map_hash : th.map_hash,
+			project_hash : th.project_hash,
+			layers : JSON.stringify(th.layers),
+			excel : JSON.stringify(th.excel),
+			project : JSON.stringify(th.project)
 		}
 
 		jQuery.ajax({
-			url: "api/maps",
-			//data: JSON.stringify(data),
+			url: "api/projects",
 			data: data,
 			type: 'PUT',
 			success: function(response){
-				alert('zaktualizowano mapę');
+				if(response.status == 'ok'){
+					menu_top.get_projects();
+					alert('zaktualizowano projekt');
+				}
+				else{
+					alert('błąd podczas aktualizacji');
+					console.log(response);
+				}
 			}
 		});
 
 	},
 
 	//usuwamy mapę z bazy danych
-	delete_map : function(){
+	delete_project : function(){
 
 		var th = this; //zmienna pomocnicza
 
 		//sprawdzamy czy mapa do usunięcia posiada swoje id
-		if(this.map_hash != null){
-			$.post( basic_url + "/map/" + th.map_hash, {
-				action: 'delete_map',
-				_method: 'DELETE',
-				_token: csrf_token,
-				map_hash: th.map_hash
-			})
-			.done(function( response ) {
-				response = JSON.parse(response);
-				if (response.status = "OK") {
-					window.location.replace(basic_url +"/map");
-				}
-				else{
-					alert('błąd podczas usuwania mapy');
+		if(this.project_hash != null){			
+
+			jQuery.ajax({
+				url: "api/project/"+th.project_hash,
+				type: 'DELETE',
+				success: function(response){
+					if(response.status == 'ok'){
+						location.reload();
+					}
+					else{
+						alert('błąd podczas usuwania');
+						console.log(response);
+					}
 				}
 			});
 		}
 		else{
-			alert('brak hasha - mapa nie jest zapisana');
+			alert('brak identyfikatora projektu');
 		}
 	}
 }

@@ -7,6 +7,24 @@ body {
   //padding-top:40px !important;
 }
 
+.publish{
+  position:relative;
+
+  textarea{
+    position:absolute;
+    width:300px;
+    height:100px;
+    top:50px;
+    left:-110px;
+    padding:5px;
+    z-index: 9999;
+    outline:0px;
+    border:5px solid #6d7be8;
+    border-radius:10px;
+    display:none;
+  }
+
+}
 
 #legends{
 
@@ -16,7 +34,7 @@ body {
 
   span{
     float: left;
-    width: 170px;
+    width: 100px;
     color: #fff;
     display: block;
     margin-bottom: 5px;
@@ -26,6 +44,14 @@ body {
 
   }
 
+  .from{
+    width:50px;
+  }
+
+  .to{
+    width:50px;
+  }
+    
   span.color{
      border:1px solid rgba(0,0,0,0);
     display: block;
@@ -66,7 +92,7 @@ body {
   input.label_layer{
     width:400px;
     margin:5px;
-    margin-bottom:0px;
+    margin-bottom:5px;
     padding:5px;
     outline:0px;
   }
@@ -97,7 +123,6 @@ body {
   display:none;
 
   textarea{
-
     margin: 10px auto;
     display: block;
     outline: 0px;
@@ -108,7 +133,7 @@ body {
     height: 140px;
   }
 
-  .embed{
+  .source{
     width: 240px;
     height: 80px;
   }
@@ -209,7 +234,7 @@ body {
       .td{
         float:left;
         display:block;
-        width:60px;
+        width: 80px;
         height:20px;
         line-height: 20px;
         font-size:14px;
@@ -473,7 +498,13 @@ body {
 #palets_box{
   right:-270px;
   top:550px;
+  height:450px;
+
   h2{
+    width: 450px;
+    top: 210px;
+    left: -250px;
+
     border-top-left-radius: 60px;
     border-top-right-radius: 60px;
   }

@@ -1,7 +1,7 @@
 palets = {
-  val_max : null,
-  val_min : null,
-  val_interval : null,   
+  //val_max : null,
+  //val_min : null,
+  //val_interval : null,   
   palets_active : 0,
   //value : -1,
   //category : -1,
@@ -75,44 +75,63 @@ palets = {
     }
   },
 
+  //wybieramy kolumnę kategorii (obszarów)
   set_category : function(obj){
     layers.category[layers.active] = parseFloat($("#excel_box select.category option:selected").attr('col'));
     $('#excel_wrapper .td').removeClass("category");
     $('#excel_wrapper .td[col="'+(layers.category[layers.active]+1)+'"]').addClass("category");
-    categories.color_from_excel();
+    //categories.update_color();
   }, 
 
+  //wybieramy kolumne wartości i ustawiamy najmniejszą i największą wartość
   set_value : function(obj){
 
     var value_tmp = parseFloat($("#excel_box select.value option:selected").attr('col'));
 
-    if($.isNumeric( excel.data[1][value_tmp] )){
-      layers.value[layers.active] = value_tmp;
-    }
-    else{
-      alert('wybrana kolumna nie zawiera liczb')
-    }
-  
-    $('#excel_wrapper .td').removeClass("value");
-    $('#excel_wrapper .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
-  
-    var tmp_value = layers.value[layers.active];
-    
-    //wyszukujemy najmniejsza i największą wartość w kolumnie wartości
-    if( layers.value[tmp_value] != -1 ){
-      
-      var tmp_min = excel.data[1][tmp_value]
-      var tmp_max = excel.data[1][tmp_value];
-      for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-        if(tmp_min > excel.data[i][tmp_value]) tmp_min = excel.data[i][tmp_value];
-        if(tmp_max < excel.data[i][tmp_value]) tmp_max = excel.data[i][tmp_value];
-      }
-      console.log("min max value: ",tmp_min, tmp_max);
+
+    //zabezpieczenie przed wybraniem kolumny zawierającej tekst
+    var check = true;
+    for(var i = 1, i_max = excel.data.length; i < i_max; i++){
+        if(!$.isNumeric( excel.data[i][value_tmp])){ check = false; }
     }
 
-    layers.min_value[layers.active] = tmp_min
-    layers.max_value[layers.active] = tmp_max;
-    categories.color_from_excel();
+    //sprawdzamy czy w zaznaczonej kolumnie znajduje się wiersz z tekstem
+    if(check){
+      //jesli nie wybieramy daną kolumnę
+      layers.value[layers.active] = value_tmp;
+      $('#excel_wrapper .td').removeClass("value");
+      $('#excel_wrapper .td[col="'+(layers.value[layers.active]+1)+'"]').addClass("value");
+      this.set_min_max_value();
+    }
+    else{
+      //jeśli tak zwracamy błąd
+      alert('wybrana kolumna zawiera wartości tekstowe')
+      this.show_select();
+    }
+
+  },
+
+  set_min_max_value : function(){
+    var tmp_value = layers.value[layers.active];
+    if(tmp_value != -1){
+      //wyszukujemy najmniejsza i największą wartość w kolumnie wartości
+      if( layers.value[tmp_value] != -1 ){
+        
+        var tmp_min = excel.data[1][tmp_value]
+        var tmp_max = excel.data[1][tmp_value];
+        for(var i = 1, i_max = excel.data.length; i < i_max; i++){
+          if(tmp_min > excel.data[i][tmp_value]) tmp_min = excel.data[i][tmp_value];
+          if(tmp_max < excel.data[i][tmp_value]) tmp_max = excel.data[i][tmp_value];
+        }
+        //console.log("min max value: ",tmp_min, tmp_max);
+      }
+
+      layers.min_value[layers.active] = tmp_min
+      layers.max_value[layers.active] = tmp_max;
+
+      //aktualizujemy tablicę legend
+      legends.update();
+    }
   },
 
   show_color : function(){
@@ -161,18 +180,21 @@ palets = {
 
   //zaznaczamy konkretne kolory do wyświetlenia
   select_color : function(obj){
-    if( $(obj).hasClass('active') ){
-      layers.colors_pos[layers.active][$(obj).index()] = 0;
-      $(obj).removeClass('active');
+    if((layers.value[layers.active] != -1) && (layers.category[layers.active] != -1)){
+      if( $(obj).hasClass('active') ){
+        layers.colors_pos[layers.active][$(obj).index()] = 0;
+        $(obj).removeClass('active');
+      }
+      else{
+        layers.colors_pos[layers.active][$(obj).index()] = 1;
+        $(obj).addClass('active');
+      }
+      this.parse_color();
+      palets.set_min_max_value();
     }
-    else{
-      layers.colors_pos[layers.active][$(obj).index()] = 1;
-      $(obj).addClass('active');
-    }
-    this.parse_color();
-
   },
 
+  //dodajemy do tablicy aktywnych kolorów te które są zaznaczone
   parse_color : function(){
     layers.colors_active[layers.active] = [];
      for (var i = 0, i_max = this.color_arr[0].length; i<i_max; i++){
@@ -181,7 +203,7 @@ palets = {
         layers.colors_active[layers.active].push( rgb2hex($('#palets #select span').eq(i).css('background-color')) );
       }
      }
-    categories.color_from_excel();
+    //categories.color_from_excel();
     //funkcja pomocnicza
     function rgb2hex(rgb) {
       rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
@@ -191,24 +213,37 @@ palets = {
       }
       return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
     }
+    legends.update();
   },
 
   //zaznaczamy palete kolorów
   select_palets : function(obj){
-    $('#palets #all > span').removeClass('active');
-    $(obj).addClass('active');
-    layers.palets_active[layers.active] = $(obj).index();
-    
-    //aktualizujemy paletę aktywnych kolorów
-    layers.colors_active[layers.active] = [];
-    for(var i = 0, i_max = layers.colors_pos[layers.active].length; i < i_max; i++){
-      if(layers.colors_pos[layers.active][i] == 1){
-        layers.colors_active[layers.active].push( palets.color_arr[layers.palets_active[layers.active]][i] );
+    if((layers.value[layers.active] != -1) && (layers.category[layers.active] != -1)){
+      $('#palets #all > span').removeClass('active');
+      $(obj).addClass('active');
+      layers.palets_active[layers.active] = $(obj).index();
+      
+      //aktualizujemy paletę aktywnych kolorów
+      layers.colors_active[layers.active] = [];
+      for(var i = 0, i_max = layers.colors_pos[layers.active].length; i < i_max; i++){
+        if(layers.colors_pos[layers.active][i] == 1){
+          layers.colors_active[layers.active].push( palets.color_arr[layers.palets_active[layers.active]][i] );
+        }
       }
-    }
 
-    this.show_color();
-    categories.color_from_excel();
+      //aktualizujemy kolory w legendzie
+      for(var i = 0, i_max = layers.legends[layers.active].length; i < i_max; i++){
+        layers.legends[layers.active][i][3] = layers.colors_active[layers.active][i];
+      }
+
+      //wyświetlamy okna kolorów do zaznaczenia
+      palets.show_color();
+      //wyświetlamy okno z legendami
+      legends.show();
+
+      //aktualizujemy kolory na mapie
+      categories.update_color();
+    }
   }
 }
 

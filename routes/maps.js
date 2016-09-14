@@ -74,7 +74,7 @@ router.post('/api/maps/',logged_api, function(req, res, next) {
 
 
 //CRUD GET pobieramy konkretną mapę
-router.get('/api/maps/:id',logged, function(req, res, next) {
+router.get('/api/map/:id',logged, function(req, res, next) {
   mongodb.connect(url, function(err, db) {
     var collection = db.collection('maps');
 		//do pobrania mapy potrzebujemy 2 zmiennyd id_user oraz params.id
@@ -90,6 +90,23 @@ router.get('/api/maps/:id',logged, function(req, res, next) {
     });
     db.close();
   });
+});
+
+//CRUD DELETE usuwamy projekt z bazy
+router.delete('/api/map/:id',logged_api, function(req, res, next) {
+
+  mongodb.connect(url, function(err, db) {
+    
+    var collection = db.collection('maps');
+
+    collection.deleteOne({ id_user : req.session.id_user, _id: mongodb.ObjectId(req.params.id) }, function(err, docs) {
+      res.json( {status: 'ok' } );
+    });
+    
+    db.close();
+  
+  });
+
 });
 
 module.exports = router;

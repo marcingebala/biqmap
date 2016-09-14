@@ -64,7 +64,7 @@ var crud = {
 		var th = this;
 
 		$.ajax({
-			  url: '/api/maps/' + th.map_hash,
+			  url: '/api/map/' + th.map_hash,
 		  	type: "GET",
 		    contentType: "application/json"
 			}).done(function( data ) {
@@ -227,31 +227,31 @@ var crud = {
 
 	},
 
-	//usuwamy mapę z bazy danych
+
+		//usuwamy mapę z bazy danych
 	delete_map : function(){
 
 		var th = this; //zmienna pomocnicza
 
 		//sprawdzamy czy mapa do usunięcia posiada swoje id
-		if(this.map_hash != null){
-			$.post( basic_url + "/map/" + th.map_hash, {
-				action: 'delete_map',
-				_method: 'DELETE',
-				_token: csrf_token,
-				map_hash: th.map_hash
-			})
-			.done(function( response ) {
-				response = JSON.parse(response);
-				if (response.status = "OK") {
-					window.location.replace(basic_url +"/map");
-				}
-				else{
-					alert('błąd podczas usuwania mapy');
+		if(this.map_hash != null){			
+
+			jQuery.ajax({
+				url: "api/map/"+th.map_hash,
+				type: 'DELETE',
+				success: function(response){
+					if(response.status == 'ok'){
+						location.reload();
+					}
+					else{
+						alert('błąd podczas usuwania');
+						console.log(response);
+					}
 				}
 			});
 		}
 		else{
-			alert('brak hasha - mapa nie jest zapisana');
+			alert('brak identyfikatora projektu');
 		}
 	}
 }

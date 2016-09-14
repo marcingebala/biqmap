@@ -13,7 +13,7 @@ menu_top = {
 		$(obj).parent().children('li').removeClass('active');
 		$(obj).addClass('active');
 
-		var category = $(obj).html();
+		var category = $(obj).attr('category');
 		$(obj).parent().parent().children('div').fadeOut(500, function(){
 			$(obj).parent().parent().children('#'+category).delay(100).fadeIn(500);
 		});
@@ -32,80 +32,95 @@ menu_top = {
 			
 			//wyświetlamy listę map w panelu u góry
 			if(response.status == "ok"){
-
-				var add_html = '';
+				var add_html = '<option id="select_map">wybierz mapę</option>';
 				for (var i = 0, i_max = response.data.length; i < i_max ;i++){
-
 					if(response.data[i]._id == crud.map_hash){
 						add_html += '<option selected id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
 					}
 					else{
 						add_html += '<option id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
 					}
-				
 				}
+				$('#toolbar_top select.select_map').html( add_html );
 
-				$('#toolbar_top select.select_maps').append( add_html );
+				//dodajemu zdarzenie change map 
+				$('.select_map').change(function(){
+					//sprawdzamy czy wybraliśmy pole z hashem mapy
+					if( $(this).find('option:selected').attr('id') != 'select_map'){
+						//jeśli tak to sprawdzamy czy wczytujemy mapę po raz pierwszy czy drugi
+						if(crud.map_hash != null){
+							//jeśli wczytujemy po raz kolejny to pytamy czy napewno chcemy ją wczytać
+							if (confirm('Czy chcesz wczytać nową mapę ?')) {
+								crud.map_hash = $(this).find('option:selected').attr('id');
+								crud.get_map();
+							}
+						}
+						else{
+							$('.select_map option').eq(0).remove();
+							crud.map_hash = $(this).find('option:selected').attr('id');
+							crud.get_map();
+						}
+					}
+				});
+
+			}
+			else{
+				alert('nie mogę pobrać listy map');
+				console.log( response );
 			}
 
 		});
 
-		//dodajemu zdarzenie change map 
-		$('.select_maps').change(function(){
-			if (confirm('Czy chcesz wczytać nową mapę ?')) {
-				if( $(this).find('option:selected').attr('id') == 'new_map' ){
-					location.reload();
-				}
-				else{
-					crud.select_map( $(this).find('option:selected').attr('id') );
-				}
-			}
-		});
+
 
 	},
 
 
 	//funkcja służąca do pobierania danych dotyczących map
 	get_projects : function(){
-	
 		$.ajax({
    		url: '/api/projects',
     	type: "GET",
     	contentType: "application/json"
 		}).done( function( response ) {
-			
+
 			//wyświetlamy listę projektów w panelu u góry
 			if(response.status == "ok"){
 
-				var add_html = '';
+				var add_html = '<option id="new_project">nowy projekt</option>';
 				for (var i = 0, i_max = response.data.length; i < i_max ;i++){
 
-					if(response.data[i]._id == crud.map_hash){
-						add_html += '<option selected id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+					if(response.data[i]._id == crud.project_hash){
+						add_html += '<option selected id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].project).name + '</option>';
 					}
 					else{
-						add_html += '<option id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+						add_html += '<option id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].project).name + '</option>';
 					}
 				
 				}
 
-				$('#toolbar_top select.select_projects').append( add_html );
+				$('#toolbar_top select.select_project').html( add_html );
+			
+				//dodajemu zdarzenie change project 
+				$('.select_project').change(function(){
+					if (confirm('Czy chcesz wczytać nowy projekt ?')) {
+						if( $(this).find('option:selected').attr('id') == 'new_project' ){
+							location.reload();
+						}
+						else{
+							crud.project_hash = $(this).find('option:selected').attr('id');
+							crud.get_project();
+						}
+					}
+				});
+
+			}
+			else{
+				alert('nie mogę pobrać listy projektów');
+				console.log( response );
 			}
 
 		});
-
-		//dodajemu zdarzenie change project 
-		$('.select_projects').change(function(){
-			if (confirm('Czy chcesz wczytać nowy projekt ?')) {
-				if( $(this).find('option:selected').attr('id') == 'new_project' ){
-					location.reload();
-				}
-				else{
-					crud.select_project( $(this).find('option:selected').attr('id') );
-				}
-			}
-		});
-
 	},
 
 	update_canvas_info : function(){

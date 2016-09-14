@@ -4,18 +4,18 @@ cloud = {
 		$('#cloud .cloud_text').val( layers.cloud[layers.active] );
 	},
 
-	get_textarea : function(obj){
+	/*get_textarea : function(text_tmp){
 
-		var text_tmp = $(obj).val();
+		//var text_tmp = $(obj).val();
 
 		layers.cloud[layers.active] = text_tmp;
 
 		for(var i = 0, i_max = excel.data[0].length; i < i_max; i++){
-			text_tmp = text_tmp.replace('$'+excel.data[0][i],'"+excel.data[tmp_row]['+i+']"+');
+				layers.cloud[layers.active] = layers.cloud[layers.active].replace('{'+excel.data[0][i]+'}','"+excel.data[tmp_row]['+i+']"+');
 		}
 
 		layers.cloud_parser[layers.active] = '"'+text_tmp+'"';
-	},
+	},*/
 
 	//ustawiamy poprawną pozycję dymka
 	set_position : function(){
@@ -39,7 +39,7 @@ cloud = {
 					var text_tmp = layers.cloud[layers.active];
 
 					for(var i = 0, i_max = excel.data[0].length; i < i_max; i++){
-						text_tmp = text_tmp.replace('$'+excel.data[0][i],excel.data[i_row][i]);
+						text_tmp = text_tmp.replace('{'+excel.data[0][i]+'}',excel.data[i_row][i]);
 					}
 					
 					//dopiero jeśli dymek ma mieć jakaś konkretną zawartość wyświetlamy go
@@ -64,9 +64,9 @@ cloud = {
 
 }
 
-
+/*
 $('#cloud .cloud_text').keyup(function(){
 
-cloud.get_textarea(this);
+	cloud.get_textarea(this);
 
-}) ;
+}) ;*/

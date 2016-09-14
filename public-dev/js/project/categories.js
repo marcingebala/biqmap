@@ -1,6 +1,8 @@
 //obiekt kategorii dodanie / aktualizacja / usunięcie / pokazanie kategorii
 var categories = {
-	category : new Array(['pusty','#808080']),
+	
+
+	//category : new Array(['pusty','#808080']),
 
 	add : function(){
 		var name = Array($('#category_box input[name="add_category"]').val(),'#ff0000');
@@ -16,41 +18,48 @@ var categories = {
 		this.show_list();
 	},
 
-	//po wybraniu odpowiedniej kolumny katerogii i wartości aktualizujemy kolor kategorii na podstawie excela
-	color_from_excel : function(){
+
+	//aktualizujemy tablicę kolorów
+	update_color : function(){
 
 		//możliwa aktualizacja jedynie w przypadku wybrania konkretnej kolumny wartości i kategorii w excelu
 		if((crud.map_json.length > 0) && (excel.data.length > 0) && (layers.category[layers.active] != -1) && (layers.value[layers.active] != -1)){
 
-			//ustalamy co ile zmieniamy kolor na kolejny 
-			var color_count = layers.colors_active[layers.active].length - 1 //ilosc kolorów
-			var diffrent = Math.abs( layers.min_value[layers.active] - layers.max_value[layers.active] ) / color_count;
+			for (var i_category = 0, i_category_max =	layers.category_name.length; i_category < i_category_max; i_category++){
+				var name = layers.category_name[i_category];
 
+				for (var i_exel = 0, i_exel_max = excel.data.length; i_exel < i_exel_max; i_exel++){
+					if( excel.data[i_exel][layers.category[layers.active]] == name){
+						//jeśli znaleźliśmy kategorię w excelu
+						var value = excel.data[i_exel][layers.value[layers.active]];
 
-			//dwie pętle odpowiedzialne za porównywanie kategorii z excela z katerogiami które mamy w bazie danych
-			for (var i = 1, i_max = this.category.length; i < i_max; i++){
-				for (var i_ex = 0, i_ex_max = excel.data.length; i_ex < i_ex_max; i_ex++){
-					
+						for ( var i_legends = 0, i_legends_max = layers.legends[layers.active].length; i_legends < i_legends_max; i_legends++ ){
+							if( (value >= layers.legends[layers.active][i_legends][0]) && (value <= layers.legends[layers.active][i_legends][1]) ){
+								//jeśli znaleźlismy
+								layers.category_colors[layers.active][i_category] = layers.legends[layers.active][i_legends][3];
+								i_legends = i_legends_max;
+								i_exel = i_exel_max;
+							}
+						}
 
+						//jeśli wartość wychodzi poza skale u tak przypisujemy jej odpowiedni kolor
+						if(value < layers.legends[layers.active][0][0]){
+							layers.category_colors[layers.active][i_category] = layers.legends[layers.active][0][3];
+						}	
 
-					console.log('compate category: ',i,i_ex, this.category[i][0], excel.data[i_ex][layers.category[layers.active]]);
+						if(value > layers.legends[layers.active][i_legends_max-1][1]){
+							layers.category_colors[layers.active][i_category] = layers.legends[layers.active][i_legends_max-1][3];
+						}
 
-					if( this.category[i][0] == excel.data[i_ex][layers.category[layers.active]]){
-		
-					//console.log('categoryt',i_ex, this.category[i][0],excel.data[i_ex][layers.category[layers.active]]);
-					
-						var color_i = Math.floor((parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])) / diffrent);
-						//console.log(color_i, (parseFloat(excel.data[i_ex][layers.value[layers.active]])-parseFloat(layers.min_value[layers.active])), diffrent );
-						this.category[i][1] = layers.colors_active[layers.active][color_i];
-						//przerywamy pętlę (tak aby nie trzeba było niepotrzebnie sprawdzać dodatkowych rekordów w wybranej kategorii)
-						i_ex = i_ex_max;
 					}
 				}
 			}
-			//po zaktualizowaniu kolorów w kategoriach rysujemy na nowo canvas
-			canvas.draw();
-			legends.update();
 		}
+
+		//po zaktualizowaniu kolorów w kategoriach rysujemy na nowo canvas
+		canvas.draw();
+
+
 	},
 
 	remove : function(id){

@@ -22,6 +22,45 @@ lista obiektów:
  figures = figures()
 
 */
+ 
+//dodajemy CKeditor do 2 textarea
+
+tinymce.init({
+
+	 menubar:false,
+  selector: '.tinyedit',  // change this value according to your HTML
+    toolbar: 'bold italic | link image',
+        setup: function (editor) {
+      editor.on('keyup', function (e) {
+
+      	var target = $(editor.targetElm).attr('name');
+
+
+
+      	//jeśli aktualizujemy dymek
+      	if(target == 'cloud'){
+      		layers.cloud[layers.active] = editor.getContent();
+      		//cloud.get_textarea( editor.getContent() );
+
+      	}
+
+      	//jeśli aktualizujemy żródło projektu
+      	if(target == 'source'){
+ 					layers.source = editor.getContent();
+      	}
+
+    });
+    }
+});
+
+window.onbeforeunload = function (evt) {
+ 	if (typeof evt == 'undefined') {
+  	evt = window.event;
+ 	}
+ 	if (evt) {
+  	if(!confirm('Czy chcesz opuścić tę stronę')) return false
+	}
+}
 
 //po kliknięciu zmieniay aktualny panel
 $('.box > ul > li').click(function(){ menu_top.change_box(this) });
@@ -29,6 +68,7 @@ $('.box > ul > li').click(function(){ menu_top.change_box(this) });
 $(document).ready(function(){
 
 	menu_top.get_maps();
+	menu_top.get_projects();
   layers.show();
   palets.show();
 
@@ -37,30 +77,32 @@ $(document).ready(function(){
 	$(document).on("focusout","input",function(){ menu_top.disable_select = false; });
 
 	//zaznaczenie dymka do publikacji po kliknięciu
-	$('#cloud .embed').click(function(){	$(this).select();	});
+	$('.publish .embed').click(function(){	$(this).select();	});
+	$('.publish').click(function(event){
 
-	$('#toolbar_top button.save').click(function(){ 
+		if (!event) {event = window.event;} //łata dla mozilli
+		console.log( );
 
-		//jeśli nie mamy zdefiniowanega hasha tworzymy nową mapę w przeciwnym wypadku aktualizujemy już istniejącą
-		
-		console.log('crud',crud.project_hash)
-
-		if(typeof crud.project_hash == 'string'){
-			
-			crud.update_project();
-
+		if( ($('.publish .embed').css('display') == 'block') && ($(event.target).hasClass('publish')) ){
+			$('.publish .embed').fadeOut(500);
 		}
 		else{
-			
-			crud.create_project();
-		
+			$('.publish .embed').fadeIn(500);
 		}
-
 	});
 
+	//jeśli chcemy zapisać / zaktualizować / opublikować projekt
+	$('#toolbar_top button.save, #toolbar_top button.publish').click(function(){ 
+		if(typeof crud.project_hash == 'string'){	crud.update_project(); }
+		else{ crud.create_project(); }
+	});
 
-	$('#toolbar_top button.delete').click(function(){ alert('delete'); });
-
+	//jeśli chcemy usunąć projekt
+	$('#toolbar_top button.delete').click(function(){ 
+		if(confirm('Czy chcesz usunąć projekt ?')){
+			crud.delete_project();
+		}
+	});
 
 	//odznaczenie selecta przy zmianie
 	$('#change_category').change(function(){ $('#change_category').blur(); });
@@ -121,15 +163,15 @@ $(document).ready(function(){
 	//$(document).keypress(function(e) { menu_top.switch_mode( e.which ); });
 
 	//zaktualizowanie kategorii
-	$("#list").delegate("input","focusout", function() { categories.update($(this).attr('id_category') ,$(this).val() ); });
-	$("#list").delegate("input","keypress", function(e) { if(e.which == 13) {categories.update($(this).attr('id_category') ,$(this).val() ); } });
+//	$("#list").delegate("input","focusout", function() { categories.update($(this).attr('id_category') ,$(this).val() ); });
+//	$("#list").delegate("input","keypress", function(e) { if(e.which == 13) {categories.update($(this).attr('id_category') ,$(this).val() ); } });
 
 	//usunięcie kategorii
-	$("#list").delegate("button.remove","click", function() { categories.remove($(this).attr('id_category')); });
+//	$("#list").delegate("button.remove","click", function() { categories.remove($(this).attr('id_category')); });
 
-	//zaktualizowanie kategorii
-	$("#list").delegate("input","click", function() { menu_top.mode_key = false;  });
-	$("#list").delegate("input","focusout", function() { menu_top.mode_key = true;  });
+	//zaktualizowanie kategorii/
+//	$("#list").delegate("input","click", function() { menu_top.mode_key = false;  });
+//	$("#list").delegate("input","focusout", function() { menu_top.mode_key = true;  });
 
 	//pokazanie / ukrycie panelu kategorii
 	$('#excel_box h2, #pointer_box h2, #palets_box h2').click(function(event){ global.toogle_panel(event); });
@@ -167,23 +209,12 @@ $(document).ready(function(){
   $('#canvas_box, #canvas_wrapper').css({'width': canvas.width_canvas + 'px','height':canvas.height_canvas + 'px'});
 	$('#canvas_info #width,#canvas_info #height,#canvas_info #size').change(function(){menu_top.update_canvas_info()});
 
-	$('#alpha_image').change(function(){ menu_top.change_alpha() });
+	//$('#alpha_image').change(function(){ menu_top.change_alpha() });
 
-	$('input').click(function(){ menu_top.mode_key = false; });
-	$('input').focusout(function(){ menu_top.mode_key = true; });
+	//$('input').click(function(){ menu_top.mode_key = false; });
+	//$('input').focusout(function(){ menu_top.mode_key = true; });
 
-	$(document).mouseup(function(){ canvas.draw(); });
+	//$(document).mouseup(function(){ canvas.draw(); });
 	canvas.draw(); //rysowanie canvas
-
-	//zapisujemy lub aktualizujemy mapę po kliknięciu w buttow w zależności od tego czy mamy zdefiniowane id mapy
-	$('.menu_right .save').click(function(){
-	
-alert('klik')
-	//	if(crud.map_hash == null){ crud.create_map(); }
-	//	else{ crud.update_map(); }
-	});
-
-	//usuwamy mapę po kliknięciu w button
-	$('.menu_right .remove').click(function(){if(confirm("czy napewno usunąć mapę ?")){crud.delete_map();} });
 
 });

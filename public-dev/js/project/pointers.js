@@ -37,7 +37,7 @@ var pointers = {
 						canvas.context.globalAlpha = 1
 					}
 					try{
-						canvas.context.fillStyle = categories.category[ this.pointers[row][column] ][1];
+						canvas.context.fillStyle = layers.category_colors[layers.active][ this.pointers[row][column] ];
 					}
 					catch(e){
 						console.log('ERROR 39 LINE ! ',this.pointers[row][column],row,column);
