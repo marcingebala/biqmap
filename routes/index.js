@@ -15,7 +15,7 @@ var logged = function (req, res, next) {
   else{
     res.redirect('/');
   }
-};
+}; 
 
 //kontroler rejestracji użytkowników CRUD
 router.post('/register', function(req, res, next){
@@ -47,7 +47,7 @@ router.post('/register', function(req, res, next){
       else{
         //tworzymy nowego użytkownika
         mongodb.connect(url, function(err, db) {
-          var collection = db.collection('maps');
+          var collection = db.collection('users');
           result = collection.insert({login: login, email: email, password: sha1(password) }, function(err,docs){
           
             req.session.login = docs.login;
