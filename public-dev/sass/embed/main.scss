@@ -1,0 +1,112 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat';
+
+html, body{
+	margin:0px;
+	padding:0px;
+	max-width:960px;
+	font-family: 'Montserrat', sans-serif;
+	color:#333;
+}
+
+#labels{
+	text-align:center;
+	font-weight:normal;
+	margin:0px auto;
+}
+
+#area{
+	text-align:center;
+
+	span{
+
+		display: inline-block;
+		cursor:pointer;
+		padding:5px;
+		width:100px;
+		border:1px solid #d7d7d7;
+		border-radius:20px;
+		margin:10px;
+		font-weight: normal;
+		font-size:13px;
+
+		-webkit-user-select: none;  /* Chrome all / Safari all */
+	  -moz-user-select: none;     /* Firefox all */
+	  -ms-user-select: none;      /* IE 10+ */
+	  user-select: none;   
+	  
+	  &:hover{
+	  	border:1px solid #333;
+	  }
+
+	}
+
+	span.active{
+		border:1px solid #333;
+		//text-decoration: underline;
+	}
+
+}
+
+#canvas_box{
+	margin:0px auto;
+}
+
+
+#canvas_cloud{
+  display:none;
+  position:absolute;
+  width:auto;
+  height:auto;
+  text-align: center;
+  top:10px;
+  left:10px;
+  border-radius:10px;
+  background-color:#fff;
+  z-index:99999;
+  padding:5px 10px;
+
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  /*&:after{
+    position:absolute;
+    bottom:-10px;
+    left:0px;
+    content:'';
+    width:10px;
+    height:0px;
+    width:0px;
+    height:0px;
+    border-left: 15px solid #fff;
+    border-right: 0px solid #fff;
+    border-bottom: 20px solid transparent;
+    border-top: 0px solid transparent;
+
+	}*/
+}
+
+
+#canvas_wrapper{
+	position:relative;
+}
+
+#legends{
+	text-align:center;
+
+	div{
+		display:inline-block;
+		span{
+			display:block;
+			float:left;
+			margin:5px;		
+			font-size:13px;
+		}
+
+		span:nth-child(1){
+			width:16px;
+			height:16px;
+			border-radius:8px;
+		}
+
+	}
+}  

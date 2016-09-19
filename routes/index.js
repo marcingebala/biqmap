@@ -49,10 +49,9 @@ router.post('/register', function(req, res, next){
         mongodb.connect(url, function(err, db) {
           var collection = db.collection('users');
           result = collection.insert({login: login, email: email, password: sha1(password) }, function(err,docs){
-          
-            req.session.login = docs.login;
-            req.session.id = docs.ops[0]._id;
-            //console.log('zalogowano:',docs.ops[0]._id);
+            
+            req.session.login = docs.ops[0].login;
+            req.session.id_user = docs.ops[0]._id;
             
             res.json({status : 'logged', message: 'zalogowano'});
             db.close();
@@ -75,7 +74,7 @@ router.post('/login', function(req, res, next) {
 
   mongodb.connect(url, function(err, db) {
     var collection = db.collection('users');
-    collection.find({'login' : login,'password' : password}).toArray(function(err, docs) {
+    collection.find({ $or: [{ "login": login }, { "email": login }], 'password' : password}).toArray(function(err, docs) {
     
       if( Object.keys(docs).length != 0){
 

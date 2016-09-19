@@ -2,7 +2,7 @@ doctype html
 html(lang='pl')
   head
     title BIQmap
-    script(src='js/embed.js')
+    script(src='js/library.js')
 
     script.
       //var basic_url = 'http://php.local/biqmap/public';
@@ -21,10 +21,10 @@ html(lang='pl')
         |biqmap 
 
       button.save
-        |save
+        |zapisz
 
       button.delete
-        |delete
+        |usuń
 
       select.select_maps
         option(id='new_map')
@@ -40,9 +40,9 @@ html(lang='pl')
     #menu_top
       input.input_base_text.title_project(type='text', name='title_project', obj='canvas', value='nowa mapa')
       button#add_image dodaj zdjęcie
-      #move_image.user_mode move image (I)
-      #move_canvas.user_mode move canvas (C)
-      #auto_draw.user_mode auto draw (D)
+      #move_image.user_mode przesuń zdjęcie (I)
+      #move_canvas.user_mode przesuń obszary (C)
+      #auto_draw.user_mode auto rysowanie (D)
       select#change_category.select_base(obj='menu_top', name='category')
         option(name='0') null
       select#alpha_image
@@ -59,7 +59,7 @@ html(lang='pl')
         option(selected='', name='10') 10
       button#increment_canvas +
       button#decrement_canvas -
-      button#reset_canvas R
+      button#reset_canvas FIT
       #canvas_info
         input#size(type='text', value='100%')
         input#width(type='text', value='')
@@ -73,13 +73,13 @@ html(lang='pl')
       #right_resize(nameclick='right_resize')
       #bottom_resize(nameclick='bottom_resize')
     #category_box
-      h2 kategorie
+      h2 obszary
       input(type='text', name='add_category')
       button#add_category dodaj
       #list
     #pointer_box
-      h2 pointery
-      label Pokaż wszystkie punkty:
+      h2 punkty
+      label pokaż punkty tła:
       .switch.switch-on(obj='pointers', name='show_all_point', value='true')
         div
       label odstęp poziomy:
@@ -90,19 +90,19 @@ html(lang='pl')
       input.input_base(type='text', value='1', obj='pointers', name='padding_y')
       button.increment(obj='pointers', nameinput='padding_y') +
       button.decrement(obj='pointers', nameinput='padding_y') -
-      label przesunięcie modulo:
+      label przesuń co drugi wiersz:
       .switch.switch-off(obj='pointers', name='translate_modulo', value='false')
         div
-      label wielkość:
+      label wielkość punktu:
       input.input_base(type='text', value='10', obj='pointers', name='size_pointer')
       button.increment(obj='pointers', nameinput='size_pointer') +
       button.decrement(obj='pointers', nameinput='size_pointer') -
-      label rodzaj:
+      label kształt:
       select.select_base(name='main_kind', obj='pointers')
-        option(name='square') square
-        option(name='circle') circle
-        option(name='hexagon') hexagon
-        option(name='hexagon2') hexagon2
+        option(name='square') kwadrat
+        option(name='circle') koło
+        option(name='hexagon') plaster miodu I
+        option(name='hexagon2') plaster miodu II
   script.
     //crud.map_hash = '86M31cog4u';
     //crud.get_map();

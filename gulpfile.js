@@ -23,6 +23,14 @@ gulp.task('js-embed', function() {
     .pipe(gulp.dest('./public/js/'));
 });
 
+gulp.task('js-library', function() {
+  return gulp.src('./public-dev/js/library/*.js')
+    .pipe(sourcemaps.init())
+    .pipe(concat('library.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./public/js/'));
+});
+
 gulp.task('js-intro', function() {
   return gulp.src('./public-dev/js/intro/*.js')
     .pipe(sourcemaps.init())
@@ -96,5 +104,5 @@ gulp.task('sass-project', function () {
 //obserwujemy wybrane pliki js i sass
 gulp.task('watch', function () {
   gulp.watch('./public-dev/**/*.scss', ['sass-admin','sass-embed','sass-intro','sass-map','sass-project']);
-  gulp.watch('./public-dev/**/*.js', ['js-admin','js-embed','js-intro','js-map','js-project']);
+  gulp.watch('./public-dev/**/*.js', ['js-admin','js-library','js-embed','js-intro','js-map','js-project']);
 });

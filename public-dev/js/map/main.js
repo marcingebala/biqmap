@@ -46,7 +46,13 @@ $(document).ready(function(){
 	});
 
 
-	$('#toolbar_top button.delete').click(function(){ if(typeof crud.map_hash == 'string'){ crud.delete_map(); }});
+	$('#toolbar_top button.delete').click(function(){ 
+		
+		if(confirm('Czy chcesz usunąć mapę ?')){
+			if(typeof crud.map_hash == 'string'){ crud.delete_map(); }
+		}
+
+	});
 
 
 	//odznaczenie selecta przy zmianie

@@ -1,6 +1,6 @@
 //obiekt kategorii dodanie / aktualizacja / usunięcie / pokazanie kategorii
 var categories = {
-	category : new Array(['pusty','#808080']),
+	category : new Array(['gumuj','#808080']),
 
 	add : function(){
 		var name = Array($('#category_box input[name="add_category"]').val(),'#ff0000');

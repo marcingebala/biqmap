@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title
+
+    script(src='../js/library.js')
+    script.
+      var project_hash = "#{id}";
+
+    link(rel='stylesheet', href='../css/embed.css')
+  body
+    h2#labels
+    #area  
+    #canvas_box
+      #canvas_cloud
+      #canvas_wrapper
+        canvas#main_canvas(nameclick='canvas', width='700px', height='400px')
+    #legends
+    #source
+    script(src='../js/embed.js')

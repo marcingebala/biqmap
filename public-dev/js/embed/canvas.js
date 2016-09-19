@@ -7,7 +7,7 @@ var canvas = {
 	canvas : null,
 	context : null,
 	thumbnail : null,
-	title_project : 'nowa mapa',
+	title_project : 'nowy projekt',
 
 	context_x : 0, //obecna pozycja contextu x
 	context_y : 0, //obecna pozycja contextu y
@@ -27,6 +27,7 @@ var canvas = {
 
 	//rysujemy canvas ze zdjęciem
 	draw : function(){
+		console.log('draw');
 		this.clear();
 
 		pointers.create_array();

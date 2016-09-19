@@ -1,4 +1,4 @@
-//funkcje rysujące pojedyńczy punkt (pointer / różne figury)
+//funkcje rysujące pojedyńczy punkt (pointer)
 var figures = {
 
 	square : function(x,y,size){
@@ -14,7 +14,7 @@ var figures = {
 		canvas.context.fill();
 	},
 
-	hexagon : function(x,y,size){
+	hexagon  : function(x,y,size){
 		var a = size/4;
 		var a2 = size/2;
 		var h = size/2*Math.sqrt(3)/2;

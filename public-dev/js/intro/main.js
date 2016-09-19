@@ -76,7 +76,6 @@ var login_box = {
 				window.location.href = "/maps";
 			}
 
-			alert( response );
 			console.log( response );
 		
 		});

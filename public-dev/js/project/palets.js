@@ -39,7 +39,7 @@ palets = {
   show_select : function(){
 
     //wyświetlamy panel do wyboru kolumny kategorii
-    add_html = '<option col="-1">wybierz kolumnę</option>';
+    add_html = '<option col="-1">wybierz</option>';
     for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
       if(i == layers.category[layers.active]){
         add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
@@ -51,7 +51,7 @@ palets = {
     $('#excel_box select.category').html( add_html );
 
     //wyświetlamy panel do wyboru kolumny wartości
-    add_html = '<option col="-1">wybierz kolumnę</option>';
+    add_html = '<option col="-1">wybierz</option>';
     for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
       if(i == layers.value[layers.active]){
         add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
