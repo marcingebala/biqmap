@@ -35,7 +35,6 @@ var categories = {
 				if(pointers.pointers[row][column] > id){
 					pointers.pointers[row][column] = parseInt(pointers.pointers[row][column]) - 1;
 				}
-
 			}
 		}
 

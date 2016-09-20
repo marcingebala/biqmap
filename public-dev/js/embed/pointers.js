@@ -13,7 +13,6 @@ var pointers = {
 	last_column : null,	//kolumna pointera który został ostatnio zmieniony
 	last_row : null,	//wiersz pointera który został ostatnio zmieniony
 
-
 	//rysowanie wszystkich punktów
 	draw : function(){
 

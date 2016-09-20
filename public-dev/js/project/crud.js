@@ -23,7 +23,7 @@ var crud = {
 		this.map_json[0][2] = pointers.padding_x;
 		this.map_json[0][3] = pointers.padding_y;
 		this.map_json[0][4] = pointers.translate_modulo;
-		this.map_json[0][5] = pointers.size_pointer;
+		this.map_json[0][5] = pointers.size;
 		this.map_json[0][6] = pointers.main_kind;
 		this.map_json[0][7] = canvas.title_project;
 
@@ -87,13 +87,13 @@ var crud = {
 		pointers.padding_x = data[0][2];
 		pointers.padding_y = data[0][3];
 		pointers.translate_modulo = data[0][4];
-		pointers.size_pointer = data[0][5];
+		pointers.size = data[0][5];
 		pointers.main_kind = data[0][6];
 		canvas.title_project = data[0][7];
 
 		$('#pointer_box input[name="padding_x"]').val( data[0][2] );
 		$('#pointer_box input[name="padding_y"]').val( data[0][3] );
-		$('#pointer_box input[name="size_pointer"]').val( data[0][5] );
+		$('#pointer_box input[name="size"]').val( data[0][5] );
 		$('input[name="title_project"]').val( data[0][7] );
 
 		if( data[0][4] ){
@@ -218,7 +218,7 @@ var crud = {
 			  	type: "GET",
 			    contentType: "application/json"
 				}).done(function( data ) { 
-					console.log(data.data);
+					//console.log(data.data);
 					if(data.status == 'ok'){
 						th.set_project( data.data ); 
 					}
@@ -257,7 +257,7 @@ var crud = {
 				}
 				else{
 					alert('błąd podczas zapisu');
-					console.log(response);
+					//console.log(response);
 				}
 			}
 		});

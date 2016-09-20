@@ -53,7 +53,7 @@ var crud = {
 		}
 
 		//konwertujemy nasza tablice na json
-		console.log('MAP _ JSON', this.map_json, JSON.stringify( this.map_json ));
+		//console.log('MAP _ JSON', this.map_json, JSON.stringify( this.map_json ));
 		this.map_json = JSON.stringify(this.map_json);
 
 	},
@@ -152,7 +152,7 @@ var crud = {
 		    contentType: "application/json"
 			}).done(function( data ) {
 
-			console.log( data.data[0] );
+			//console.log( data.data[0] );
 
 			//po zapisaniu danych do bazy aktualizujemy id (w przypadku jeśli istnieje nadpisujemy je)
 			var response = JSON.parse(data.data[0].map_json);
@@ -230,7 +230,7 @@ var crud = {
 		//aktualizujemy jsona do wysłania ajaxem
 		this.get_data();
 		var th = this; //zmienna pomocnicza
-		console.log('create',th.map_json);
+		//console.log('create',th.map_json);
 
 		//wysysłamy dane ajaxem do bazy danych
 		//canvas.draw_thumnail();
@@ -328,7 +328,7 @@ var crud = {
 					}
 					else{
 						alert('błąd podczas usuwania');
-						console.log(response);
+						//console.log(response);
 					}
 				}
 			});

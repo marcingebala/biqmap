@@ -30,9 +30,9 @@ var on_category = {
 			return 'null';
 		}
 		
-		if( category_name == 'pusty'){
+		if((category_name == 'pusty') || (category_name == 'gumuj')){
 			return 'null';
-		}
+		} 
 		else{
 			return category_name;		
 		}

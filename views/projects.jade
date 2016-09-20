@@ -29,7 +29,7 @@ html(lang='pl')
       button.publish
         |publikuj
         textarea.embed
-          | <iframe width="100%" height="400px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://biqmap.com/emded/6ff3cf4"></iframe>
+          | <iframe width="100%" height="400px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://biqmap.com/embed/6ff3cf4"></iframe>
 
       select.select_map
         option(id='new_map')
@@ -71,7 +71,7 @@ html(lang='pl')
         #all
       #cloud
         label
-          | dymek:
+          |dymek:
         textarea(name="cloud").cloud_text.tinyedit
         label
           |źródło:
@@ -116,9 +116,9 @@ html(lang='pl')
         .switch.switch-off(obj='pointers', name='translate_modulo', value='false')
           div
         label wielkość:
-        input.input_base(type='text', value='10', obj='pointers', name='size_pointer')
-        button.increment(obj='pointers', nameinput='size_pointer') +
-        button.decrement(obj='pointers', nameinput='size_pointer') -
+        input.input_base(type='text', value='10', obj='pointers', name='size')
+        button.increment(obj='pointers', nameinput='size') +
+        button.decrement(obj='pointers', nameinput='size') -
         label kształt:
         select.select_base(name='main_kind', obj='pointers')
           option(name='square') kwadrat

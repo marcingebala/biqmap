@@ -4,7 +4,7 @@ var pointers = {
 	padding_x : 1,
 	padding_y : 1,
 	translate_modulo : false,
-	size : 10,
+	size: 10,
 	main_kind : 'square',
 	kinds : Array('square','circle','hexagon','hexagon2'),
 

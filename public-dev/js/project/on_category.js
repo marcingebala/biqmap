@@ -15,7 +15,7 @@ var on_category = {
 			var column = Math.ceil( (left + (pointers.size/2))/ (pointers.size + pointers.padding_x) ) - 1;
 		}
 		else{
-			var column = Math.ceil( left/ (pointers.size + pointers.padding_x) );
+			var column = Math.ceil( left / (pointers.size + pointers.padding_x) );
 		}
 
 		try{
@@ -26,7 +26,7 @@ var on_category = {
 			return 'null';
 		}
 		
-		if( category_name == 'pusty'){
+		if((category_name == 'pusty') || (category_name == 'gumuj')){
 			return 'null';
 		}
 		else{

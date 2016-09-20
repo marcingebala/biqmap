@@ -93,8 +93,8 @@ var mouse = {
 					var y_new = y_translate ;
 
 					image.x = x_new;
-      				image.y = y_new;
-      				canvas.draw();
+      		image.y = y_new;
+      		canvas.draw();
 				}
 
 				//rysowanie

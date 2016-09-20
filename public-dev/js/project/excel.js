@@ -1,7 +1,7 @@
 var excel = {
 	
 	alpha : ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','w','x','y','z'],
-	data : [[]],
+	data : [["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""]],
 	min_row : 12,
 	min_col : 6,
 
@@ -53,6 +53,8 @@ var excel = {
 
 		//dodajemy możliwość edycji excela
 		$('#excel_box .table .td').keyup(function(){ excel.edit(this); });
+
+		$('#excel_box .table .td').blur(function(){ palets.show_select(); });
 
 	},
 

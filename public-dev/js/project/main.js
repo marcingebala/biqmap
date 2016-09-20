@@ -86,7 +86,7 @@ $(document).ready(function(){
 				$('.publish .embed').fadeOut(500);
 			}
 			else{
-				$('.publish .embed').html('<iframe width="100%" height="'+canvas.height_canvas+'px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://'+location.href.split( '/' )[2]+'/emded/'+crud.project_hash+'"></iframe>');
+				$('.publish .embed').html('<iframe width="100%" height="'+canvas.height_canvas+'px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://'+location.href.split( '/' )[2]+'/embed/'+crud.project_hash+'"></iframe>');
 				$('.publish .embed').fadeIn(500);
 			}
 		}
