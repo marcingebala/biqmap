@@ -59,6 +59,89 @@ var crud = {
 	},
 
 	//pobranie mapy z bazy danych
+	special : function(){
+
+		var th = this;  
+
+	/*	$.ajax({
+			  url: '/api/map/' + th.map_hash,
+		  	type: "GET",
+		    contentType: "application/json"
+			}).done(function( data ) {
+*/
+		//	console.log( data.data[0] );
+
+			//po zapisaniu danych do bazy aktualizujemy id (w przypadku jeśli istnieje nadpisujemy je)
+			var response = crud.data;
+
+			//pobieramy i wczytujemy dane o canvasie do obiektu
+			canvas.height_canvas = response[0][0];
+			canvas.width_canvas = response[0][1];
+			pointers.padding_x = response[0][2];
+			pointers.padding_y = response[0][3];
+			pointers.translate_modulo = response[0][4];
+			pointers.size_pointer = response[0][5];
+			pointers.main_kind = response[0][6];
+			canvas.title_project = response[0][7];
+
+			$('#pointer_box input[name="padding_x"]').val( response[0][2] );
+			$('#pointer_box input[name="padding_y"]').val( response[0][3] );
+			$('#pointer_box input[name="size_pointer"]').val( response[0][5] );
+			$('input[name="title_project"]').val( response[0][7] );
+
+			if( response[0][4] ){
+				$('#pointer_box div[name="translate_modulo"]').removeClass('switch-off');
+				$('#pointer_box div[name="translate_modulo"]').addClass('switch-on');
+			}
+
+			$('#pointer_box select[name="main_kind"]').html('');
+
+			pointers.kinds.forEach(function(kind){
+
+				if(kind == response[0][6]){
+					$('#pointer_box select[name="main_kind"]').append('<option selected="selected" name="'+kind+'">'+kind+'</option>');
+				}
+				else{
+					$('#pointer_box select[name="main_kind"]').append('<option name="'+kind+'">'+kind+'</option>');
+				}
+
+			});
+
+			//pobieramy dane o pointerach
+			pointers.pointers = response[1];
+
+			//pobieramy dane o kategoriach
+			categories.category = response[2];
+
+			//pobieranie danych o zdjęciu jeżeli istnieje
+			if( response[3].length > 2){
+				image.obj = new Image();
+				image.obj.src = response[3][0];
+				image.x = parseInt( response[3][1] );
+				image.y = parseInt( response[3][2] );
+				image.width = parseInt( response[3][3] );
+				image.height = parseInt( response[3][4] );
+				image.alpha = parseInt( response[3][5] );
+
+				//zaznaczenie odpowiedniego selecta alpha w menu top
+				$('#alpha_image option[name="'+	image.alpha +'"]').attr('selected',true);
+
+				image.obj.onload = function() {
+					canvas.draw();
+				};
+			}
+
+			//zaktualizowanie danych w inputach
+			$('#main_canvas').attr('width', canvas.width_canvas+'px');
+			$('#main_canvas').attr('height', canvas.height_canvas+'px');
+			$('#canvas_box, #canvas_wrapper').css({'width':canvas.width_canvas+'px','height':canvas.height_canvas+'px'});
+
+			canvas.draw();
+			categories.show_list();
+		//});
+	},
+
+	//pobranie mapy z bazy danych
 	get_map : function(){
 
 		var th = this;
