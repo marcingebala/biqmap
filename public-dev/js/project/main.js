@@ -8,48 +8,50 @@
 varsion 3.0 by Marcin Gębala
 
 lista obiektów:
-
- canvas = canvas() - obiekt canvasa
- crud = crud() - obiekt canvasa
- image = image() - obiekt zdjęcia od którego odrysowujemy mapy
- mouse = mouse()
- models = models()
- global = global() - funkcje nie przypisany do innych obiektów
- categories = categories()
- pointers = pointers()
- colorpicker = colorpicker()
- menu_top = menu_top()
- figures = figures()
+canvas - obiekt canvasa
+categories
+cloud
+color_picker
+crud - obiekt canvasa
+excel
+figures
+global
+image - obiekt zdjęcia od którego odrysowujemy mapy
+input
+labels
+layers
+legends
+main
+menu_top
+models
+mouse
+on_category
+palets
+pointers
 
 */
  
-//dodajemy CKeditor do 2 textarea
-
+//dodajemy tinymce do 2 textarea (dymek źródło)
 tinymce.init({
-
-	 menubar:false,
+	menubar:false,
   selector: '.tinyedit',  // change this value according to your HTML
-    toolbar: 'bold italic | link image',
-        setup: function (editor) {
+  toolbar: 'bold italic | link image',
+    setup: function (editor) {
       editor.on('keyup', function (e) {
+        var target = $(editor.targetElm).attr('name');
+        
+        //jeśli aktualizujemy dymek
+        if(target == 'cloud'){
+        	layers.cloud[layers.active] = editor.getContent();
+        	//cloud.get_textarea( editor.getContent() );
+        }
 
-      	var target = $(editor.targetElm).attr('name');
+        //jeśli aktualizujemy żródło projektu
+        if(target == 'source'){
+   				layers.source = editor.getContent();
+        }
 
-
-
-      	//jeśli aktualizujemy dymek
-      	if(target == 'cloud'){
-      		layers.cloud[layers.active] = editor.getContent();
-      		//cloud.get_textarea( editor.getContent() );
-
-      	}
-
-      	//jeśli aktualizujemy żródło projektu
-      	if(target == 'source'){
- 					layers.source = editor.getContent();
-      	}
-
-    });
+      });
     }
 });
 

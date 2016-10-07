@@ -47,8 +47,7 @@ var mouse = {
 				//rozszerzanie canvasa w prawo
 				var position = $('#canvas_box #canvas_wrapper').children('canvas').offset();
 				var new_width = this.left - this.padding_x - position.left
-				if(new_width < screen.width - 100)
-				{
+				if(new_width < screen.width - 100){
 					canvas.resize_width(new_width);
 				}
 				canvas.draw();

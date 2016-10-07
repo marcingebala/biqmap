@@ -7,6 +7,9 @@ $(document).ready(function(){
 	$('.login_box .login span a, .register span a').click(function(){ login_box.change(); });
 	$('.login_box .login button').click(function(){ login_box.login(); });
 	$('.login_box .register button').click(function(){ login_box.register(); });
+	
+	//logowanie użytkownika po kliknięciu enter
+	$(".login_box input[name=password]").keydown(function (e) { if (e.keyCode == 13) { login_box.login(); } });
 
 });
 

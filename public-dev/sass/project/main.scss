@@ -180,15 +180,15 @@ body {
   top:auto;
   bottom:50px;
   padding-top:5px;
-  height:355px;
+  height:395px;
   
   span{
     color:#fff;
   }
 
   h2{
-    top: 165px;
-    left: 355px;
+    top: 185px;
+    left: 334px;
     border-bottom-left-radius: 60px;
     border-bottom-right-radius: 60px;
   }
@@ -236,8 +236,6 @@ body {
       //overflow:hidden;
         
       .td{
-        float:left;
-        display:block;
         width: 80px;
         height:20px;
         line-height: 20px;
@@ -251,7 +249,7 @@ body {
       }
 
       .td:first-child{
-        width:20px;
+        width:30px;
         text-align:center;
         font-weight: bold;
         margin-right:3px;
@@ -304,8 +302,9 @@ body {
 
     display: block;
     width: 240px;
-    height:200px;
+    height: 335px;
     overflow: scroll;
+    overflow-x: hidden;
 
     & > span{
       display:block;
@@ -489,7 +488,7 @@ body {
     background-color: #6d7be8;
     color: #fff;
     padding: 5px;
-    width: 360px;
+    width: 401px;
     height: 30px;
     line-height: 30px;
     text-align: center;

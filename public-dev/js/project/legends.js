@@ -38,13 +38,10 @@ legends = {
 	},
 
 	edit: function(obj){
+
 		var row = $(obj).parent().attr('row');
 		var name = $(obj).attr('name');
 		var val = $(obj).html();
-
-
-		console.log(row,name,val);
-
 
 		switch(name){
 			

@@ -25,28 +25,29 @@ var excel = {
 
 		//renderujemy całą tablicę excel
 		for(var i = 0;i < this.min_row; i++){
-			add_html += '<div class="tr">';
+			add_html += '<tr class="tr">';
 			for(var j = 0;j < this.min_col; j++){
 
 				if((j == 0) && (i > 0)){
-					add_html += '<div class="td" row="' + i + '" col="' + j + '" >'+ i +'</div>';
+					add_html += '<td class="td" row="' + i + '" col="' + j + '" >'+ i +'</td>';
 				}
 				else{
 					try{
 						if(typeof(excel.data[i][(j-1)]) != "undefined"){
-							add_html += '<div class="td" contenteditable="true" row="' + i + '" col="' + j + '">'+excel.data[i][(j-1)]+'</div>';
+							add_html += '<td class="td" contenteditable="true" row="' + i + '" col="' + j + '">'+excel.data[i][(j-1)]+'</td>';
 						}
 						else{
-							add_html += '<div class="td"  row="' + i + '" col="' + j + '"></div>';
+							add_html += '<td class="td"  row="' + i + '" col="' + j + '"></td>';
 						}
 						//console.log(excel.data[i][(j+1)]);
 					}catch(error){
-						add_html += '<div class="td" row="' + i + '" col="' + j + '"></div>';
+						console.log(error,i,j);
+						add_html += '<td class="td" row="' + i + '" col="' + j + '"></td>';
 					}
 				}
 
 			}
-			add_html += '</div>';
+			add_html += '</tr>';
 		}
 
 		$('#excel_box .table').html( add_html );
@@ -83,13 +84,27 @@ var excel = {
       contentType: false
 
     }).done(function( response ) {
-
     	//po wczytaniu pliku excel przypisujemy dane rysujemy na nowo tabelę oraz wyświetlamy wszystkie palety kolorów
 			console.log( response )
     	excel.data = response.excel[0].data;
+    	excel.change_dots();
     	excel.show();
     	palets.show_select();
     });
+	},
+
+	//funckja zamieniająca krtopki na przecinki przy komórkach liczbowych
+	change_dots : function(){
+		
+		for(var i = 0, i_max = excel.data.length; i < i_max; i++){
+			add_html += '<tr class="tr">';
+			for(var j = 0, j_max = excel.data[0].length; j < j_max; j++){
+				if($.isNumeric( excel.data[i][j] )){
+					console.log(excel.data[i][j])
+					excel.data[i][j] = String(excel.data[i][j]).replace('.',',');
+				}
+			}
+		}
 	}
 }
 

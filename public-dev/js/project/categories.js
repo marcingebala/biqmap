@@ -1,7 +1,6 @@
 //obiekt kategorii dodanie / aktualizacja / usunięcie / pokazanie kategorii
 var categories = {
 	
-
 	//category : new Array(['pusty','#808080']),
 
 	add : function(){
@@ -27,9 +26,12 @@ var categories = {
 
 			for (var i_category = 0, i_category_max =	layers.category_name.length; i_category < i_category_max; i_category++){
 				var name = layers.category_name[i_category];
+				var find = false;
 
 				for (var i_exel = 0, i_exel_max = excel.data.length; i_exel < i_exel_max; i_exel++){
 					if( excel.data[i_exel][layers.category[layers.active]] == name){
+
+						find = true;
 						//jeśli znaleźliśmy kategorię w excelu
 						var value = excel.data[i_exel][layers.value[layers.active]];
 
@@ -50,15 +52,25 @@ var categories = {
 						if(value > layers.legends[layers.active][i_legends_max-1][1]){
 							layers.category_colors[layers.active][i_category] = layers.legends[layers.active][i_legends_max-1][3];
 						}
+						
+						//jeśli dany kraj w excelu ma wartość null domyślnie otrzymuje kolor biały
+						if(value == null){
+							layers.category_colors[layers.active][i_category] = '#fff';
+						}
 
 					}
 				}
+
+				//w przypadku gdy dany kraj nie występuje w pliku excel otrzymuje kolor biały
+				if(!find){
+					layers.category_colors[layers.active][i_category] = '#fff';
+				}
+
 			}
 		}
 
 		//po zaktualizowaniu kolorów w kategoriach rysujemy na nowo canvas
 		canvas.draw();
-
 
 	},
 
