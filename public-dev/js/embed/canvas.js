@@ -27,7 +27,6 @@ var canvas = {
 
 	//rysujemy canvas ze zdjęciem
 	draw : function(){
-		console.log('draw');
 		this.clear();
 
 		pointers.create_array();

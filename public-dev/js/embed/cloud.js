@@ -22,7 +22,7 @@ cloud = {
 		var left = mouse.left - on_category.canvas_offset_left;
 		var top = mouse.top - on_category.canvas_offset_top;
 
-		$("#canvas_cloud").css({top:parseInt(top - $("#canvas_cloud").height()-30)+'px',left:left+10+'px'});
+		$("#canvas_cloud").css({top:parseInt(top - $("#canvas_cloud").height()-30)+'px',left:left+'px'});
 	},
 
 	//funkcja odpowiedzialna za wyświetlenie dymka z odpowiednią zawartością
@@ -43,8 +43,8 @@ cloud = {
 					}
 					
 					//dopiero jeśli dymek ma mieć jakaś konkretną zawartość wyświetlamy go
-					if(text_tmp!=""){
-						$("#canvas_cloud").fadeIn(200);
+					if((text_tmp!="") && ( excel.data[i_row][layers.value[layers.active]] != null )){
+						$("#canvas_cloud").fadeIn(0);
 						$("#canvas_cloud").html(text_tmp);
 						find = 1;
 					}
@@ -53,12 +53,12 @@ cloud = {
 
 			//jeśli nie znaleziono odpowiedniej kategorii
 			if (!find) { 
-				$("#canvas_cloud").fadeOut(200);
+				$("#canvas_cloud").fadeOut(0);
 			}
 
 		}
 		else{
-			$("#canvas_cloud").fadeOut(200);
+			$("#canvas_cloud").fadeOut(0);
 		}
 	}
 

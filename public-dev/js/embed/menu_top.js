@@ -10,6 +10,7 @@ menu_top = {
 
 	//zmiana aktualnej zakładki
 	change_box : function(obj){
+		console.log(obj);
 		$(obj).parent().children('li').removeClass('active');
 		$(obj).addClass('active');
 
@@ -18,7 +19,7 @@ menu_top = {
 			$(obj).parent().parent().children('#'+category).delay(100).fadeIn(500);
 		});
 	
-	
+	 
 	},
 
 	//funkcja służąca do pobierania danych dotyczących map

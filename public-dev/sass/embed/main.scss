@@ -16,6 +16,7 @@ html, body{
 
 #area{
 	text-align:center;
+  margin-bottom:10px;
 
 	span{
 
@@ -27,7 +28,7 @@ html, body{
 		border-radius:20px;
 		margin:10px;
 		font-weight: normal;
-		font-size:13px;
+		font-size:12px;
 
 		-webkit-user-select: none;  /* Chrome all / Safari all */
 	  -moz-user-select: none;     /* Firefox all */
@@ -64,10 +65,18 @@ html, body{
   background-color:#fff;
   z-index:99999;
   padding:5px 10px;
-
+  border:1px solid lightgrey;
+/*
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+*/
+  p{
+    margin:0px;
+    font-size:12px;
+    padding:0px;
+  }
+
   /*&:after{
     position:absolute;
     bottom:-10px;
@@ -92,21 +101,75 @@ html, body{
 
 #legends{
 	text-align:center;
+  margin:0px auto;
+  max-width:620px;
+  margin-top:20px;
 
 	div{
 		display:inline-block;
 		span{
 			display:block;
 			float:left;
-			margin:5px;		
-			font-size:13px;
+			margin:0px 5px;;		
+			font-size:11px;
 		}
 
 		span:nth-child(1){
-			width:16px;
-			height:16px;
-			border-radius:8px;
+			width:12px;
+			height:12px;
+			border-radius:6px;
+      border:1px solid #efefef;
 		}
+
+    span:nth-child(2){
+      margin-left:0px; 
+    }
 
 	}
 }  
+
+//source
+#source{
+  display:inline-block;
+  padding:10px;
+  font-size:11px;
+  line-height: 11px;
+  max-width: 780px;
+  p{
+    margin:0px;
+  }
+}
+
+.source_ico{
+  display:inline-block;
+  width:35px;
+  height:35px;
+  background-image:url('../images/sprite_ico.jpg');
+  background-size:auto 100%;
+  float:right;
+  margin:4px;
+}
+
+.source_ico.wyborcza{
+  background-position:0px 0px;
+}
+
+.source_ico.biqdata{
+  background-position:-35px 0px;
+}
+
+.source_ico.biqmap{
+  background-position:-70px 0px;
+}
+
+@media (max-width:950px){
+  #source{
+  max-width: 600px;
+}
+  }
+
+  @media (max-width:700px){
+  #source{
+  max-width: 450px;
+}
+  }

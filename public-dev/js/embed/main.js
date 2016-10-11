@@ -93,7 +93,7 @@ $('#canvas_wrapper').mouseleave(function(){ $("#canvas_cloud").fadeOut(200); });
 $('#canvas_wrapper').mousemove(function(){
 var text = on_category.get_name() 
 
-console.log( text)
+//console.log( text)
  cloud.update_text(text ); 
 });
 $("#canvas_cloud").mousemove(function(){ cloud.set_position(); });

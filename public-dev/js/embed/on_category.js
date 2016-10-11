@@ -9,7 +9,7 @@ var on_category = {
 
 		var left = mouse.left - canvas.offset_left;
 		var top = mouse.top - canvas.offset_top;
-		console.log(left,top);
+		//console.log(left,top);
 		var row = Math.ceil( top / (pointers.size + pointers.padding_y) );
 		//console.log(left,top,this.canvas_offset_left,this.canvas_offset_top);
 		if((pointers.translate_modulo) && (row % 2 != 0)){
@@ -23,7 +23,7 @@ var on_category = {
 
 			var category_num = pointers.pointers[row-1][column-1];
 			var category_name = layers.category_name[category_num];
-			console.log('test',category_name);
+			//console.log('test',category_name);
 
 		}
 		catch(e){

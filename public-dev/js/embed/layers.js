@@ -42,11 +42,14 @@ var layers = {
 
 		$('#area span').removeClass('active');
 		$(obj).addClass('active');
+
+		console.log(obj);
+
 		layers.active = $(obj).index();
 
 		legends.show(); 
 		labels.show();
-		layers.show();
+		//layers.show();
 		canvas.draw();
 	
 	},

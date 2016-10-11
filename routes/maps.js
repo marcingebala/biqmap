@@ -8,7 +8,6 @@ var xss = require('xss');
 var sha1 = require('sha1');
 var formidable = require('formidable');
 
-
 //middleware sprawdzający czy użytkownik jest zalogowany
 var logged_api = function (req, res, next) {
   if ( req.session.login != undefined){
@@ -18,7 +17,6 @@ var logged_api = function (req, res, next) {
     res.json({status:'error','message':'brak dostępu do danych - zaloguj się'});
   }
 }
-
 
 //sprawdzamy czy uzytkownik jest zalogowany a jeśli nie to go przekierowujemy na stronę logowania (jesli to nie jest zapytanie)
 var logged = function (req, res, next) {

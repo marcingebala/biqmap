@@ -125,6 +125,7 @@ crud = {
 		legends.show(); 
 		labels.show();
 		layers.show();
+		source.show();
 
 		var offset = $('#canvas_box').offset();
   	canvas.offset_left = offset.left;
