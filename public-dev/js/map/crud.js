@@ -17,6 +17,29 @@ var crud = {
 
 	},
 
+	duplicate : function(){
+		canvas.title_project = canvas.title_project + ' - kopia';
+		//aktualizujemy jsona do wysłania ajaxem
+		this.get_data();
+		var th = this; //zmienna pomocnicza
+		
+		var data = {
+			map_json: th.map_json
+		}
+
+		jQuery.ajax({
+			url: "api/maps",
+			data: { map_json: th.map_json },
+			type: 'POST',
+			success: function(response){
+				th.map_hash = response.hash_map;
+				alert('zapisano nową mapę');
+				location.reload();
+			}
+		});
+
+	},
+
 	//pobieramy dane z porojektu i zapisujemy je do json-a
 	get_data : function(){
 

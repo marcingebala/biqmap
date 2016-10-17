@@ -97,7 +97,7 @@ palets = {
     //zabezpieczenie przed wybraniem kolumny zawierającej tekst
     var check = true;
     for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-      if ((!$.isNumeric(excel.data[i][value_tmp])) &&  (excel.data[i][value_tmp] != '')){ check = false; }
+      if ((!$.isNumeric(String(excel.data[i][value_tmp]).replace(',','.'))) &&  (excel.data[i][value_tmp] != '')){ check = false; }
     }
 
     //sprawdzamy czy w zaznaczonej kolumnie znajduje się wiersz z tekstem
@@ -122,11 +122,11 @@ palets = {
       //wyszukujemy najmniejsza i największą wartość w kolumnie wartości
       if( layers.value[tmp_value] != -1 ){
         
-        var tmp_min = excel.data[1][tmp_value]
-        var tmp_max = excel.data[1][tmp_value];
+        var tmp_min = String(excel.data[1][tmp_value]).replace(',','.')
+        var tmp_max = String(excel.data[1][tmp_value]).replace(',','.');
         for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-          if(tmp_min > excel.data[i][tmp_value]) tmp_min = excel.data[i][tmp_value];
-          if(tmp_max < excel.data[i][tmp_value]) tmp_max = excel.data[i][tmp_value];
+          if(tmp_min > String(excel.data[i][tmp_value]).replace('.',',')) tmp_min = String(excel.data[i][tmp_value]).replace('.',',');
+          if(tmp_max < String(excel.data[i][tmp_value]).replace('.',',')) tmp_max = String(excel.data[i][tmp_value]).replace('.',',');
         }
         //console.log("min max value: ",tmp_min, tmp_max);
       }

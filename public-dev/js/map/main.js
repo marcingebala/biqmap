@@ -143,6 +143,8 @@ $(document).ready(function(){
 
 	$('#menu_top #reset_canvas').click(function(){ canvas.set_default(); });
 
+	$('#duplicate').click(function(){ if(confirm("czy chcesz skopiować aktualną mapę ? ?")){crud.duplicate();} });
+
 	//przypisanie podstawowowych danych do obiektu canvas
 	canvas.canvas = document.getElementById('main_canvas');
   canvas.context = canvas.canvas.getContext('2d');

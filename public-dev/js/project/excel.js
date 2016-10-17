@@ -104,11 +104,11 @@ var excel = {
 				//jeśli mamy pustą wartość null zamieniamy ją na zamknięty string
 				if(excel.data[i][j] == null){ excel.data[i][j] = ''; }
 				
-
-				/*if($.isNumeric( excel.data[i][j] )){
-					console.log(excel.data[i][j])
+				if($.isNumeric( excel.data[i][j] )){
+					//console.log(excel.data[i][j])
 					excel.data[i][j] = String(excel.data[i][j]).replace('.',',');
-				}*/
+				}
+
 			}
 		}
 	}

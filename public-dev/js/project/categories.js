@@ -34,8 +34,9 @@ var categories = {
 
 							find = true;
 							//jeśli znaleźliśmy kategorię w excelu
-							var value = excel.data[i_exel][layers.value[i_layers]];
-
+							var value = String(excel.data[i_exel][layers.value[i_layers]]).replace(',','.');
+							console.log(excel.data[i_exel][layers.value[i_layers]]+' | '+value);
+							
 							for ( var i_legends = 0, i_legends_max = layers.legends[i_layers].length; i_legends < i_legends_max; i_legends++ ){
 								if( (value >= layers.legends[i_layers][i_legends][0]) && (value <= layers.legends[i_layers][i_legends][1]) ){
 									//jeśli znaleźlismy
@@ -117,13 +118,13 @@ var categories = {
 			add_category += '<tr><td><span>'+(i-1)+'</span></td><td><input type="text" name="category_name" id_category="'+(i-1)+'" value="'+this.category[(i-1)][0]+'" /></td><td><div class="colorpicker_box" style="background-color:'+this.category[(i-1)][1]+'" id_category="'+(i-1)+'"></div></td><td><button class="remove" id_category="'+(i-1)+'">usun</button></td></tr>';
 			add_select += '<option name="'+(i-1)+'">'+this.category[(i-1)][0]+'</option>';
 		}
+
 		if(menu_top.category == 0){
 			add_select += '<option selected name="0">'+this.category[0][0]+'</option>';
 		}
 		else{
 			add_select += '<option name="0">'+this.category[0][0]+'</option>';
 		}
-
 
 		add_category += "</table>";
 

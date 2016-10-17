@@ -30,7 +30,7 @@ legends = {
 				var next_tmp = Math.round( ((layers.min_value[layers.active]+diffrent/color_count*(i+1)) - 0.01)  *100) / 100 
 			}
 			
-			layers.legends[layers.active].push([now_tmp,next_tmp,  now_tmp+' - '+next_tmp, layers.colors_active[layers.active][i] ]);
+			layers.legends[layers.active].push([now_tmp,next_tmp,  String(now_tmp).replace('.',',')+' - '+String(next_tmp).replace('.',','), layers.colors_active[layers.active][i] ]);
 		
 		}
 		this.show();

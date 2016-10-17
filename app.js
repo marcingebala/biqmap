@@ -14,7 +14,7 @@ var session = require('express-session')
 
 var app = express();
 
-app.use(session({ secret: '$#%!@#@@#SSDASASDVV@@@@', cookie: { maxAge: 3600000 }, resave: true, saveUninitialized: true }))
+app.use(session({ secret: '$#%!@#@@#SSDASASDVV@@@@', cookie: { maxAge: 12000000 }, resave: true, saveUninitialized: true }))
 
 //view engine setup
 app.set('views', path.join(__dirname, 'views'));

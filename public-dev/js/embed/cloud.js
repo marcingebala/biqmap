@@ -33,7 +33,7 @@ cloud = {
 			var tmp_row = null;
 			var find = 0;
 			for( var i_row = 0, i_row_max = excel.data.length; i_row < i_row_max; i_row++ ){
-				if(name.toLowerCase() == excel.data[i_row][layers.category[layers.active]].toLowerCase()){
+				if(String(name).toLowerCase() == String(excel.data[i_row][layers.category[layers.active]]).toLowerCase()){
 					
 					this.set_position();
 					var text_tmp = layers.cloud[layers.active];

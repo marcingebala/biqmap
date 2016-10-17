@@ -91,6 +91,8 @@ var canvas = {
 		canvas.scale = 100;
 		canvas.context_x = 0;
 		canvas.context_y = 0;
+		context_new_x = 0;
+		context_new_y = 0;
 		canvas.context.scale( canvas.scale / 100 , canvas.scale / 100 );
 
 		var new_width = canvas.width_canvas * (canvas.scale/100);
