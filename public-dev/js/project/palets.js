@@ -41,23 +41,28 @@ palets = {
     //wyświetlamy panel do wyboru kolumny kategorii
     add_html = '<option col="-1">wybierz</option>';
     for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
-      if(i == layers.category[layers.active]){
-        add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
-      }
-      else{
-        add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
+      if(excel.data[0][i]!= ''){
+        if(i == layers.category[layers.active]){
+          add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
+        }
+        else{
+          add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
+        }
       }
     }
+
     $('#excel_box select.category').html( add_html );
 
     //wyświetlamy panel do wyboru kolumny wartości
     add_html = '<option col="-1">wybierz</option>';
     for(var i = 0, i_max = excel.data[0].length;  i < i_max; i++){
-      if(i == layers.value[layers.active]){
-        add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
-      }
-      else{
-        add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
+      if(excel.data[0][i]!= ''){
+        if(i == layers.value[layers.active]){
+          add_html += '<option col="'+i+'" selected>' +excel.data[0][i]+ '</option>';  
+        }
+        else{
+          add_html += '<option col="'+i+'">' +excel.data[0][i]+ '</option>';  
+        }
       }
     }
     $('#excel_box select.value').html( add_html );

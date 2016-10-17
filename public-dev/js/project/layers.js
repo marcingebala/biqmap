@@ -53,7 +53,7 @@ var layers = {
 			};
 		});
 		
-		$('#layers span').click(function(){ layers.select(this);});
+		$('#layers span').click(function(){ layers.select(this); });
 
 		$( "#layers > div span" ).keyup(function(){
 			layers.list[layers.active] = $(this).html();
@@ -62,7 +62,7 @@ var layers = {
 		$( "#layers > div span" ).dblclick(function(){
 			$(this).addClass('contenteditable');
 			$(this).blur(function(){ $(this).removeClass('contenteditable') });
-		})
+		});
 
 		$( "#layers > div" ).sortable({ 
 			axis: 'x',

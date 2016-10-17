@@ -146,16 +146,22 @@ body {
 
 #canvas_cloud{
   display:none;
-  position:absolute;
-  width:120px;
-  height:60px;
-  top:10px;
-  left:10px;
-  border-radius:10px;
-  background-color:#fff;
-  z-index:99999;
-  padding:5px;
+  position: absolute;
+  width: auto;
+  height: auto;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #fff;
+  z-index: 99999;
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
 
+  p{
+    margin: 0px;
+    font-size: 12px;
+    padding: 0px;
+  }
+/*
   &:after{
     position:absolute;
     bottom:-10px;
@@ -170,6 +176,7 @@ body {
     border-bottom: 20px solid transparent;
     border-top: 0px solid transparent;
   }
+  */
 }
 
 //style odpowiedzialne za box excela

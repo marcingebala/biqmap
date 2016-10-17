@@ -15,10 +15,10 @@ var pointers = {
 
 	//rysowanie wszystkich punktów
 	draw : function(){
-
+		console.log('draw',layers.category_colors); 
 		var width_pointer = this.size + this.padding_x;
 		var height_pointer = this.size + this.padding_y;
-		var none_color = "rgba(0,0,0,0)"
+		var none_color = "rgba(0,0,0,0)";
 
 		//if(this.show_all_point) none_color = "rgba(128,128,128,1)";
 
@@ -27,7 +27,7 @@ var pointers = {
 
 				if(this.pointers[row][column] == 0){
 					canvas.context.fillStyle = none_color;
-					canvas.context.globalAlpha = 0.5;
+					canvas.context.globalAlpha = 0.5; 
 				}
 				else{
 					if( (this.pointers[row][column] != menu_top.category) && (menu_top.category != 0) ){

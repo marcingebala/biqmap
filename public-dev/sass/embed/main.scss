@@ -1,5 +1,11 @@
 @import 'https://fonts.googleapis.com/css?family=Montserrat';
 
+@font-face {
+    font-family: montserrat-light;
+    src: url(../fonts/montserrat-light.ttf);
+}
+
+
 html, body{
 	margin:0px;
 	padding:0px;
@@ -12,6 +18,8 @@ html, body{
 	text-align:center;
 	font-weight:normal;
 	margin:0px auto;
+  margin-bottom: 25px;
+  line-height: 30px;
 }
 
 #area{
@@ -29,7 +37,8 @@ html, body{
 		margin:10px;
 		font-weight: normal;
 		font-size:12px;
-
+    height: 24px;
+    line-height: 24px;
 		-webkit-user-select: none;  /* Chrome all / Safari all */
 	  -moz-user-select: none;     /* Firefox all */
 	  -ms-user-select: none;      /* IE 10+ */
@@ -100,10 +109,11 @@ html, body{
 }
 
 #legends{
-	text-align:center;
-  margin:0px auto;
-  max-width:620px;
-  margin-top:20px;
+    text-align: center;
+    margin: 0px auto;
+    max-width: 620px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 
 	div{
 		display:inline-block;
@@ -130,13 +140,18 @@ html, body{
 
 //source
 #source{
-  display:inline-block;
-  padding:10px;
-  font-size:11px;
-  line-height: 11px;
-  max-width: 780px;
+  display: inline-block;
+  padding: 10px;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0px;
+  max-width: 810px;
+  color: #a7a9ac;
+  float:right;
   p{
     margin:0px;
+    text-align: right;
+    font-family: montserrat-light;
   }
 }
 
@@ -159,6 +174,7 @@ html, body{
 }
 
 .source_ico.biqmap{
+  margin-left:0px;
   background-position:-70px 0px;
 }
 

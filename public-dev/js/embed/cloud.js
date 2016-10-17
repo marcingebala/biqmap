@@ -22,7 +22,7 @@ cloud = {
 		var left = mouse.left - on_category.canvas_offset_left;
 		var top = mouse.top - on_category.canvas_offset_top;
 
-		$("#canvas_cloud").css({top:parseInt(top - $("#canvas_cloud").height()-30)+'px',left:left+'px'});
+		$("#canvas_cloud").css({top:parseInt(top - $("#canvas_cloud").height())+'px',left:left+'px'});
 	},
 
 	//funkcja odpowiedzialna za wyświetlenie dymka z odpowiednią zawartością

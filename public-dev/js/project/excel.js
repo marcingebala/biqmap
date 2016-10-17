@@ -87,7 +87,7 @@ var excel = {
     	//po wczytaniu pliku excel przypisujemy dane rysujemy na nowo tabelę oraz wyświetlamy wszystkie palety kolorów
 			console.log( response )
     	excel.data = response.excel[0].data;
-    	excel.change_dots();
+    	//excel.change_dots();
     	excel.show();
     	palets.show_select();
     });

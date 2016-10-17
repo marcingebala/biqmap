@@ -120,6 +120,8 @@ crud = {
 		layers.project_name = data.project.name;
 		layers.source = data.project.source;
 
+		console.log( data.layers.category_colors );
+
 		$('input[name="project_name"]').val(layers.project_name);
 
 		legends.show(); 
