@@ -22,7 +22,7 @@ crud = {
 		pointers.padding_x = data[0][2];
 		pointers.padding_y = data[0][3];
 		pointers.translate_modulo = data[0][4];
-		pointers.size_pointer = data[0][5];
+		pointers.size = data[0][5];
 		pointers.main_kind = data[0][6];
 		canvas.title_project = data[0][7];
 
@@ -87,7 +87,7 @@ crud = {
 		$('#main_canvas').attr('height', canvas.height_canvas+'px');
 		$('#canvas_box, #canvas_wrapper').css({'width':canvas.width_canvas+'px','height':canvas.height_canvas+'px'});
 
-		canvas.draw();
+		//canvas.draw();
 
 	},
 

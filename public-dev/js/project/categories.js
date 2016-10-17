@@ -28,43 +28,46 @@ var categories = {
 				var name = layers.category_name[i_category];
 				var find = false;
 
-				for (var i_exel = 0, i_exel_max = excel.data.length; i_exel < i_exel_max; i_exel++){
-					if( excel.data[i_exel][layers.category[layers.active]] == name){
+				for (var i_layers = 0, i_layers_max = layers.list.length; i_layers < i_layers_max; i_layers++){
+					for (var i_exel = 0, i_exel_max = excel.data.length; i_exel < i_exel_max; i_exel++){
+						if(( excel.data[i_exel][layers.category[i_layers]].toLowerCase() == name.toLowerCase()) && (excel.data[i_exel][layers.category[i_layers]] != '')){
 
-						find = true;
-						//jeśli znaleźliśmy kategorię w excelu
-						var value = excel.data[i_exel][layers.value[layers.active]];
+							find = true;
+							//jeśli znaleźliśmy kategorię w excelu
+							var value = excel.data[i_exel][layers.value[i_layers]];
 
-						for ( var i_legends = 0, i_legends_max = layers.legends[layers.active].length; i_legends < i_legends_max; i_legends++ ){
-							if( (value >= layers.legends[layers.active][i_legends][0]) && (value <= layers.legends[layers.active][i_legends][1]) ){
-								//jeśli znaleźlismy
-								layers.category_colors[layers.active][i_category] = layers.legends[layers.active][i_legends][3];
-								i_legends = i_legends_max;
-								i_exel = i_exel_max;
+							for ( var i_legends = 0, i_legends_max = layers.legends[i_layers].length; i_legends < i_legends_max; i_legends++ ){
+								if( (value >= layers.legends[i_layers][i_legends][0]) && (value <= layers.legends[i_layers][i_legends][1]) ){
+									//jeśli znaleźlismy
+									layers.category_colors[i_layers][i_category] = layers.legends[i_layers][i_legends][3];
+									i_legends = i_legends_max;
+									i_exel = i_exel_max;
+								}
 							}
-						}
 
-						//jeśli wartość wychodzi poza skale u tak przypisujemy jej odpowiedni kolor
-						if(value < layers.legends[layers.active][0][0]){
-							layers.category_colors[layers.active][i_category] = layers.legends[layers.active][0][3];
-						}	
+							//jeśli wartość wychodzi poza skale u tak przypisujemy jej odpowiedni kolor
+							if(value < layers.legends[i_layers][0][0]){
+								layers.category_colors[i_layers][i_category] = layers.legends[i_layers][0][3];
+							}	
 
-						if(value > layers.legends[layers.active][i_legends_max-1][1]){
-							layers.category_colors[layers.active][i_category] = layers.legends[layers.active][i_legends_max-1][3];
-						}
-						
-						//jeśli dany kraj w excelu ma wartość null domyślnie otrzymuje kolor biały
-						if(value == null){
-							layers.category_colors[layers.active][i_category] = '#fff';
-						}
+							if(value > layers.legends[i_layers][i_legends_max-1][1]){
+								layers.category_colors[i_layers][i_category] = layers.legends[i_layers][i_legends_max-1][3];
+							}
+							
+							//jeśli dany kraj w excelu ma wartość null domyślnie otrzymuje kolor biały
+							if(value == null){
+								layers.category_colors[i_layers][i_category] = '#fff';
+							}
 
+						}
+					}
+
+					//w przypadku gdy dany kraj nie występuje w pliku excel otrzymuje kolor biały
+					if(!find){
+						layers.category_colors[i_layers][i_category] = '#fff';
 					}
 				}
 
-				//w przypadku gdy dany kraj nie występuje w pliku excel otrzymuje kolor biały
-				if(!find){
-					layers.category_colors[layers.active][i_category] = '#fff';
-				}
 
 			}
 		}

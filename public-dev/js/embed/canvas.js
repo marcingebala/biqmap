@@ -27,6 +27,7 @@ var canvas = {
 
 	//rysujemy canvas ze zdjęciem
 	draw : function(){
+		//console.log('canvas draw');
 		this.clear();
 
 		pointers.create_array();
@@ -100,8 +101,8 @@ var canvas = {
 
 		canvas.reset();
 		canvas.context.translate( ( canvas.context_x / (canvas.scale / 100) ),( canvas.context_y / (canvas.scale / 100) ));
-		canvas.draw();
+		//canvas.draw();
 		menu_top.show_info();
-		canvas.draw();
+		//canvas.draw();
 	}
 }

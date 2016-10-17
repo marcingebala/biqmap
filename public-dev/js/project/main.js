@@ -37,11 +37,12 @@ tinymce.init({
   selector: '.tinyedit',  // change this value according to your HTML
   toolbar: 'bold italic | link image',
     setup: function (editor) {
-      editor.on('keyup', function (e) {
+      editor.on('change', function (e) {
         var target = $(editor.targetElm).attr('name');
         
         //jeśli aktualizujemy dymek
         if(target == 'cloud'){
+          console.log()
         	layers.cloud[layers.active] = editor.getContent();
         	//cloud.get_textarea( editor.getContent() );
         }

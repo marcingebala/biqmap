@@ -27,13 +27,13 @@ cloud = {
 
 	//funkcja odpowiedzialna za wyświetlenie dymka z odpowiednią zawartością
 	update_text : function(name){
-
-		if(name != "null"){
+		
+		if((name != "") && (name != 'null')){
 
 			var tmp_row = null;
 			var find = 0;
 			for( var i_row = 0, i_row_max = excel.data.length; i_row < i_row_max; i_row++ ){
-				if(name == excel.data[i_row][layers.category[layers.active]]){
+				if(name.toLowerCase() == excel.data[i_row][layers.category[layers.active]].toLowerCase()){
 					
 					this.set_position();
 					var text_tmp = layers.cloud[layers.active];
@@ -41,9 +41,9 @@ cloud = {
 					for(var i = 0, i_max = excel.data[0].length; i < i_max; i++){
 						text_tmp = text_tmp.replace('{'+excel.data[0][i]+'}',excel.data[i_row][i]);
 					}
-					
+
 					//dopiero jeśli dymek ma mieć jakaś konkretną zawartość wyświetlamy go
-					if((text_tmp!="") && ( excel.data[i_row][layers.value[layers.active]] != null )){
+					if(text_tmp!=""){
 						$("#canvas_cloud").fadeIn(0);
 						$("#canvas_cloud").html(text_tmp);
 						find = 1;

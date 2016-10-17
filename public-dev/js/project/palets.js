@@ -97,7 +97,7 @@ palets = {
     //zabezpieczenie przed wybraniem kolumny zawierającej tekst
     var check = true;
     for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-      if ((!$.isNumeric(excel.data[i][value_tmp])) && (excel.data[i][value_tmp]!= null)){ check = false; }
+      if ((!$.isNumeric(excel.data[i][value_tmp])) &&  (excel.data[i][value_tmp] != '')){ check = false; }
     }
 
     //sprawdzamy czy w zaznaczonej kolumnie znajduje się wiersz z tekstem

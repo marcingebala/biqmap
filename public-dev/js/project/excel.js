@@ -87,22 +87,28 @@ var excel = {
     	//po wczytaniu pliku excel przypisujemy dane rysujemy na nowo tabelę oraz wyświetlamy wszystkie palety kolorów
 			console.log( response )
     	excel.data = response.excel[0].data;
-    	//excel.change_dots();
+    	excel.transition();
     	excel.show();
     	palets.show_select();
     });
 	},
 
 	//funckja zamieniająca krtopki na przecinki przy komórkach liczbowych
-	change_dots : function(){
-		
+	transition : function(){
 		for(var i = 0, i_max = excel.data.length; i < i_max; i++){
-			add_html += '<tr class="tr">';
 			for(var j = 0, j_max = excel.data[0].length; j < j_max; j++){
-				if($.isNumeric( excel.data[i][j] )){
+				
+				//usuwamy spacje występujące za lub przed tekstem
+				excel.data[i][j] = $.trim(excel.data[i][j])
+
+				//jeśli mamy pustą wartość null zamieniamy ją na zamknięty string
+				if(excel.data[i][j] == null){ excel.data[i][j] = ''; }
+				
+
+				/*if($.isNumeric( excel.data[i][j] )){
 					console.log(excel.data[i][j])
 					excel.data[i][j] = String(excel.data[i][j]).replace('.',',');
-				}
+				}*/
 			}
 		}
 	}
