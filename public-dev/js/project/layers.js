@@ -123,30 +123,30 @@ var layers = {
 
 	//usuwamy aktualną warstwę
 	remove : function(){
+		if(this.active > 0){
+			if(this.active == (this.list.length-1)){
+				var i_tmp = this.list.length-1;
+				this.select( $('#layers span').eq( i_tmp ) );
+			} 
 
-		if(this.active == (this.list.length-1)){
-			var i_tmp = this.list.length-1;
-			this.select( $('#layers span').eq( i_tmp ) );
-		} 
-
-		//pobieramy numer ostatniej zakładki
-		for (var i_layers= this.active, i_layers_max = layers.list.length-1; i_layers < i_layers_max; i_layers++) {
-			for (var i= 0, i_max = this.db_name.length; i < i_max; i++) {
-				this[this.db_name[i]][i_layers] = this[this.db_name[i]][i_layers+1];
+			//pobieramy numer ostatniej zakładki
+			for (var i_layers= this.active, i_layers_max = layers.list.length-1; i_layers < i_layers_max; i_layers++) {
+				for (var i= 0, i_max = this.db_name.length; i < i_max; i++) {
+					this[this.db_name[i]][i_layers] = this[this.db_name[i]][i_layers+1];
+				}
 			}
-		}
 
-		//usuwamy ostatnią zakładkę / warstwę
-		var last_i = layers.list.length - 1;
-		for (var i= 0, i_max = this.db_name.length; i < i_max; i++) {
-			this[this.db_name[i]].pop()
-			console.log(this[this.db_name[i]][last_i]);
-		}
+			//usuwamy ostatnią zakładkę / warstwę
+			var last_i = layers.list.length - 1;
+			for (var i= 0, i_max = this.db_name.length; i < i_max; i++) {
+				this[this.db_name[i]].pop()
+				console.log(this[this.db_name[i]][last_i]);
+			}
 
-		this.show();
-		this.select($('#layers span.active')); 
+			this.show();
+			this.select($('#layers span.active')); 
+		}
 	}
-
 }
 
 //zmiana nazwy projektu przy wpisaniu nowej nazwy do inputa
