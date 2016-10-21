@@ -4,11 +4,11 @@ legends = {
 	//wyświetlamy wszystkie legendy w panelu map
 	show : function(){
 
-		var html = "";
+		var html = "<table><tr><th>kolor:</th><th>od:</th><th>do:</th><th>opis:</th></tr>";
 		for(var i = 0, i_max = layers.legends[layers.active].length; i < i_max; i++){
-			html += "<div row='"+i+"'><span style='background-color:"+layers.legends[layers.active][i][3]+"' class='color'></span><span class='from' name='from' contenteditable='true'>"+layers.legends[layers.active][i][0]+"</span><span class='to' name='to' contenteditable='true'>"+layers.legends[layers.active][i][1]+"</span><span class='description' name='description' contenteditable='true'>"+layers.legends[layers.active][i][2]+"</span></div>";
+			html += "<tr row='"+i+"'><td style='background-color:"+layers.legends[layers.active][i][3]+"' class='color'></td><td class='from' name='from' contenteditable='true'>"+layers.legends[layers.active][i][0]+"</td><td class='to' name='to' contenteditable='true'>"+layers.legends[layers.active][i][1]+"</td><td class='description' name='description' contenteditable='true'>"+layers.legends[layers.active][i][2]+"</td></tr>";
 		}
-		
+		html += "</table>";
 		$('#legends').html(html);
 	},
 
@@ -21,13 +21,18 @@ legends = {
 
 		for(var i = 0, i_max = layers.colors_active[layers.active].length; i < i_max; i++){
 
-			var now_tmp = Math.round( (layers.min_value[layers.active]+diffrent/color_count*i)*100) / 100
+			console.log( parseInt(layers.min_value[layers.active]),layers.min_value[layers.active] );
+
+			var now_tmp = Math.round( (parseInt(layers.min_value[layers.active])+diffrent/color_count*i)*100) / 100
 			
+			//console.log(layers.min_value[layers.active]+diffrent/color_count*i);
+
+
 			if(i+1 == i_max ){
 				var next_tmp = layers.max_value[layers.active]
 			}
 			else{
-				var next_tmp = Math.round( ((layers.min_value[layers.active]+diffrent/color_count*(i+1)) - 0.01)  *100) / 100 
+				var next_tmp = Math.round( ((parseInt(layers.min_value[layers.active])+diffrent/color_count*(i+1)) - 0.01)  *100) / 100 
 			}
 			
 			layers.legends[layers.active].push([now_tmp,next_tmp,  String(now_tmp).replace('.',',')+' - '+String(next_tmp).replace('.',','), layers.colors_active[layers.active][i] ]);
@@ -69,4 +74,4 @@ legends.show();
 
 
 //dodajemy zdarzenie edycji wartości w legendzie
-$('#legends').on('keyup','span', function(){ legends.edit(this); });
+$('#legends').on('keyup','td', function(){ legends.edit(this); });

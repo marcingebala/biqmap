@@ -125,8 +125,8 @@ palets = {
         var tmp_min = String(excel.data[1][tmp_value]).replace(',','.')
         var tmp_max = String(excel.data[1][tmp_value]).replace(',','.');
         for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-          if(tmp_min > String(excel.data[i][tmp_value]).replace('.',',')) tmp_min = String(excel.data[i][tmp_value]).replace('.',',');
-          if(tmp_max < String(excel.data[i][tmp_value]).replace('.',',')) tmp_max = String(excel.data[i][tmp_value]).replace('.',',');
+          if((tmp_min > String(excel.data[i][tmp_value]).replace(',','.')) &&  (excel.data[i][tmp_value] != "")) tmp_min = String(excel.data[i][tmp_value]).replace(',','.');
+          if((tmp_max < String(excel.data[i][tmp_value]).replace(',','.')) &&  (excel.data[i][tmp_value] != "")) tmp_max = String(excel.data[i][tmp_value]).replace(',','.');
         }
         //console.log("min max value: ",tmp_min, tmp_max);
       }

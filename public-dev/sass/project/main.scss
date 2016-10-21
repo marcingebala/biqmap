@@ -29,19 +29,29 @@ body {
 #legends{
 
   display:none;
-  color:#fff;
-  overflow: hidden;
+  color:#000;
+  overflow-y: hidden;
+  overflow-x: auto;
+  width:300px;
+  height:300px;
 
-  span{
-    float: left;
-    width: 100px;
-    color: #fff;
-    display: block;
-    margin-bottom: 5px;
-    border: 1px solid #aaa;
+  th{
+    font-weight: normal;
+    text-align: center;
     outline: 0px;
     padding: 2px;
+    color: #000;
+    background:#fff;
+    font-size:12px;
+  }
 
+  td{
+    white-space: nowrap;
+    color: #000;
+    background:#fff;
+    outline: 0px;
+    padding: 2px 5px;
+    font-size:12px;
   }
 
   .from{
@@ -52,14 +62,14 @@ body {
     width:50px;
   }
     
-  span.color{
-     border:1px solid rgba(0,0,0,0);
+  td.color{
+    border:1px solid rgba(0,0,0,0);
     display: block;
-    float:left;
-    clear:left;
-    width:20px;
+    //float:left;
+    //clear:left;
+    width:40px;
     height:20px;
-    margin-right:10px;
+    //margin-right:10px;
   }
 }
 
@@ -521,9 +531,10 @@ body {
 }
 
 #pointer_box{
-  right:-270px;
+  right:-320px;
   top:110px;
   height:420px;
+  width:300px;
 
   h2{
     width:420px;
