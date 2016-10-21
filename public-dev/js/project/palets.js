@@ -1,9 +1,9 @@
-palets = {
+var palets = {
   //val_max : null,
   //val_min : null,
   //val_interval : null,   
-  palets_active : 0,
-  //value : -1,
+  //palets_active : 0,
+  //value : -1, 
   //category : -1,
 
   //podstawowe palety kolorów ( ostatnia paleta jest naszą własną do zdefiniowania )
@@ -97,7 +97,11 @@ palets = {
     //zabezpieczenie przed wybraniem kolumny zawierającej tekst
     var check = true;
     for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-      if ((!$.isNumeric(String(excel.data[i][value_tmp]).replace(',','.'))) &&  (excel.data[i][value_tmp] != '')){ check = false; }
+      if ((!$.isNumeric(String(excel.data[i][value_tmp]).replace(',','.'))) &&  (excel.data[i][value_tmp] != '')){ 
+
+        check = false;
+        console.log('to nie jest liczba!: '+excel.data[i][value_tmp]);
+       }
     }
 
     //sprawdzamy czy w zaznaczonej kolumnie znajduje się wiersz z tekstem

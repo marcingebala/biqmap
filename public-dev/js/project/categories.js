@@ -30,7 +30,7 @@ var categories = {
 
 				for (var i_layers = 0, i_layers_max = layers.list.length; i_layers < i_layers_max; i_layers++){
 					for (var i_exel = 0, i_exel_max = excel.data.length; i_exel < i_exel_max; i_exel++){
-						if(( excel.data[i_exel][layers.category[i_layers]].toLowerCase() == name.toLowerCase()) && (excel.data[i_exel][layers.category[i_layers]] != '')){
+						if(( String(excel.data[i_exel][layers.category[i_layers]]).toLowerCase() == String(name).toLowerCase()) && (excel.data[i_exel][layers.category[i_layers]] != '')){
 
 							find = true;
 							//jeśli znaleźliśmy kategorię w excelu

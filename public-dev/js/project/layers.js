@@ -76,7 +76,6 @@ var layers = {
 		 	},
 		 	cancel: '.add,.remove,.contenteditable'
 		});
-
 	},
 
 	select : function(obj){

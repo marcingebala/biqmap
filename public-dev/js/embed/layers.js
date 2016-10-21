@@ -25,17 +25,21 @@ var layers = {
 
 	show : function(){
 
-		var html = "";
-		html += '<span num="'+0+'" class="active">' + this.list[0] + '</span>';
-		
-		for(var i = 1, i_max = this.list.length; i < i_max; i++){
-			html += '<span num="'+i+'">' + this.list[i] + '</span>';
+		if( this.list.length > 1 ){
+			var html = "";
+			html += '<span num="'+0+'" class="active">' + this.list[0] + '</span>';
+			
+			for(var i = 1, i_max = this.list.length; i < i_max; i++){
+				html += '<span num="'+i+'">' + this.list[i] + '</span>';
+			}
+
+			$('#area').html(html);
+			$('#area span').click(function(){ layers.select(this); });
+			}
+		else{
+			$('#area').css('display','none');
 		}
 
-		$('#area').html(html);
-		$('#area span').click(function(){
-			layers.select(this);
-		});
 	},
 
 	select : function(obj){

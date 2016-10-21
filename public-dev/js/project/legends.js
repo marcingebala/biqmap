@@ -5,11 +5,37 @@ legends = {
 	show : function(){
 
 		var html = "<table><tr><th>kolor:</th><th>od:</th><th>do:</th><th>opis:</th></tr>";
+
 		for(var i = 0, i_max = layers.legends[layers.active].length; i < i_max; i++){
-			html += "<tr row='"+i+"'><td style='background-color:"+layers.legends[layers.active][i][3]+"' class='color'></td><td class='from' name='from' contenteditable='true'>"+layers.legends[layers.active][i][0]+"</td><td class='to' name='to' contenteditable='true'>"+layers.legends[layers.active][i][1]+"</td><td class='description' name='description' contenteditable='true'>"+layers.legends[layers.active][i][2]+"</td></tr>";
+			html += "<tr row='"+i+"'><td row='"+i+"' col_num='' style='background-color:"+layers.legends[layers.active][i][3]+"' class='color colorpicker_box'></td><td class='from' name='from' contenteditable='true'>"+layers.legends[layers.active][i][0]+"</td><td class='to' name='to' contenteditable='true'>"+layers.legends[layers.active][i][1]+"</td><td class='description' name='description' contenteditable='true'>"+layers.legends[layers.active][i][2]+"</td></tr>";
 		}
+
 		html += "</table>";
 		$('#legends').html(html);
+
+		var row = 1;
+		for(var i = 0, i_max = layers.colors_pos[layers.active].length; i < i_max; i++){
+			if( layers.colors_pos[layers.active][i] == 1){
+				$('#legends table tr').eq(row).children('td').eq(0).attr('col_num', i);
+				row++;
+			}
+		}
+
+		if(18 == layers.palets_active[layers.active]) {
+			var row = 0;
+			for(var i = 0, i_max = layers.colors_pos[layers.active].length; i < i_max; i++){
+				if( layers.colors_pos[layers.active][i] == 1){
+					palets.color_arr[18][i] = layers.colors_active[layers.active][row];
+					row++;
+				}
+				else{
+					palets.color_arr[18][i] = '#fff';
+				}
+			}
+			palets.show()
+		}
+
+		colorpicker.add();
 	},
 
 	//funkcja akutalizująca kolory w palecie kolorów

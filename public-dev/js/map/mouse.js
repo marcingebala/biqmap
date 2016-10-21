@@ -1,5 +1,8 @@
+var biqmap = biqmap || {};
+biqmap.map = biqmap.map || {}; 
+
 //obiekt myszki (do ogarniecia)
-var mouse = {
+biqmap.map.mouse = {
 	mouse_down : false,
 	click_obj : null,
 
@@ -28,7 +31,7 @@ var mouse = {
 			this.offset_y = position.top;
 			this.padding_x = this.left - position.left;
 			this.padding_y = this.top - position.top;
-			mouse.mouse_down = true;
+			this.mouse_down = true;
 
 			this.tmp_mouse_x = image.x;
 			this.tmp_mouse_y = image.y;
@@ -42,6 +45,9 @@ var mouse = {
 
 	//funkcja wykonywana podczas wciśniecia przyciksku myszki (w zależności od klikniętego elementu wykonujemy różne rzeczy)
 	mousemove : function(){
+
+		var canvas = biqmap.map.canvas;
+
 		switch(this.click_obj){
 			case 'right_resize':
 				//rozszerzanie canvasa w prawo
