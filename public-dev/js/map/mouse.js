@@ -46,7 +46,7 @@ var mouse = {
 	//funkcja wykonywana podczas wciśniecia przyciksku myszki (w zależności od klikniętego elementu wykonujemy różne rzeczy)
 	mousemove : function(){
 
-		switch(this.click_obj){
+		switch(this.click_obj){ 
 			case 'right_resize':
 				//rozszerzanie canvasa w prawo
 				var position = $('#canvas_box #canvas_wrapper').children('canvas').offset();
