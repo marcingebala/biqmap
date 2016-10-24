@@ -1,8 +1,8 @@
-var biqmap = biqmap || {};
-biqmap.map = biqmap.map || {}; 
+//var biqmap = biqmap || {};
+//biqmap.map = biqmap.map || {}; 
 
 //obiekt myszki (do ogarniecia)
-biqmap.map.mouse = {
+var mouse = {
 	mouse_down : false,
 	click_obj : null,
 

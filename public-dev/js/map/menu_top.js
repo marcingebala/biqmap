@@ -1,5 +1,5 @@
 //obiekt menu_top
-menu_top = {
+var menu_top = {
 
 	move_image : false,
 	move_canvas : false,
