@@ -46,8 +46,6 @@ var mouse = {
 	//funkcja wykonywana podczas wciśniecia przyciksku myszki (w zależności od klikniętego elementu wykonujemy różne rzeczy)
 	mousemove : function(){
 
-		var canvas = biqmap.map.canvas;
-
 		switch(this.click_obj){
 			case 'right_resize':
 				//rozszerzanie canvasa w prawo
