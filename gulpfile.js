@@ -4,7 +4,11 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
-var sourcemaps = require('gulp-sourcemaps');
+var gutil = require('gulp-util');
+var autoprefixer = require('gulp-autoprefixer');
+var cleanCSS = require('gulp-clean-css');
+
+//var minify = require('gulp-minify');
 
 //przenosimy kod z folderu deb/js do csripts
 gulp.task('js-admin', function() {
@@ -17,10 +21,75 @@ gulp.task('js-admin', function() {
 
 gulp.task('js-embed', function() {
   return gulp.src('./public-dev/js/embed/*.js')
-    .pipe(sourcemaps.init())
+  .pipe(sourcemaps.init())
+  .pipe(concat('embed.js'))
+  .pipe(sourcemaps.write())
+  .pipe(gulp.dest('./public/js/'));
+});
+
+// taski produkcyjne
+gulp.task('production', function() {
+    
+  gulp.src('./public-dev/js/embed/*.js')
     .pipe(concat('embed.js'))
-    .pipe(sourcemaps.write())
+    .pipe(uglify())
     .pipe(gulp.dest('./public/js/'));
+
+  gulp.src('./public-dev/js/map/*.js')
+    .pipe(concat('map.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./public/js/'));
+
+  gulp.src('./public-dev/js/project/*.js')
+    .pipe(concat('project.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./public/js/'));
+
+  gulp.src('./public-dev/js/intro/*.js')
+    .pipe(concat('intro.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./public/js/'));
+
+  gulp.src('./public-dev/js/library/*.js')
+    .pipe(concat('library.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./public/js/'));
+
+  gulp.src('./public-dev/sass/embed/*.scss')
+    .pipe(concat('embed.css'))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('./public/css/'));
+
+  gulp.src('./public-dev/sass/intro/*.scss')
+    .pipe(concat('intro.css'))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('./public/css/'));
+
+  gulp.src('./public-dev/sass/map/*.scss')
+    .pipe(concat('map.css'))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('./public/css/'));
+
+  gulp.src('./public-dev/sass/project/*.scss')
+    .pipe(concat('project.css'))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('./public/css/'));
+
+  gulp.src('./public-dev/sass/admin/*.scss')
+    .pipe(concat('admin.css'))
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('./public/css/'));
+
 });
 
 gulp.task('js-library', function() {

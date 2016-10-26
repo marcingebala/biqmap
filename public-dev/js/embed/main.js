@@ -86,8 +86,9 @@ $(document).ready(function(){
 
 	crud.get_project();
 
-
+  //parent.postMessage($('body').height(),'http://'+location.href.split( '/' )[2]);
 });
+   
 
 $('#canvas_wrapper').mouseleave(function(){ $("#canvas_cloud").fadeOut(200); });
 

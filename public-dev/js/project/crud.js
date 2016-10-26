@@ -73,6 +73,30 @@ var crud = {
 
 	},
 
+	publish : function(event){
+		if(crud.project_hash != null){
+			if (!event) {event = window.event;} //łata dla mozilli
+			if( ($('.publish .embed').css('display') == 'block') && ($(event.target).hasClass('publish')) ){
+				$('.publish .embed').fadeOut(500);
+			}
+			else{
+				$('.publish .embed').html('<iframe width="100%" height="'+canvas.height_canvas+'px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://'+location.href.split( '/' )[2]+'/embed/'+crud.project_hash+'"></iframe>');
+				$('#iframe').html('<iframe  onload="crud.publish_getSize(this)" width="100%" height="'+canvas.height_canvas+'px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://'+location.href.split( '/' )[2]+'/embed/'+crud.project_hash+'"></iframe>');
+
+				$('.publish .embed').fadeIn(500);
+			}
+		}
+		else{
+			alert('najpierw zapisz projekt a następnie go publikuj');
+		}
+	},
+
+	publish_getSize : function(obj){
+		console.log(obj.contentWindow.document.body);
+		console.log($(obj.contentWindow.document.body).height() ,$(obj.contentWindow.document.body).width());
+    //obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+	},
+
 
 	//wczytanie zmiennych do obiektów mapy
 

@@ -4,24 +4,17 @@ cloud = {
 		$('#cloud .cloud_text').val( layers.cloud[layers.active] );
 	},
 
-	/*get_textarea : function(text_tmp){
-
-		//var text_tmp = $(obj).val();
-
-		layers.cloud[layers.active] = text_tmp;
-
-		for(var i = 0, i_max = excel.data[0].length; i < i_max; i++){
-				layers.cloud[layers.active] = layers.cloud[layers.active].replace('{'+excel.data[0][i]+'}','"+excel.data[tmp_row]['+i+']"+');
-		}
-
-		layers.cloud_parser[layers.active] = '"'+text_tmp+'"';
-	},*/
-
 	//ustawiamy poprawną pozycję dymka
 	set_position : function(){
 		var left = mouse.left - on_category.canvas_offset_left;
 		var top = mouse.top - on_category.canvas_offset_top;
+		var width = $("#canvas_cloud").width();
 
+		if((left + width) > $("body").width()-20){
+			left = left - width-20;
+		}
+
+ 
 		$("#canvas_cloud").css({top:parseInt(top - $("#canvas_cloud").height())+'px',left:left+'px'});
 	},
 
@@ -63,10 +56,3 @@ cloud = {
 	}
 
 }
-
-/*
-$('#cloud .cloud_text').keyup(function(){
-
-	cloud.get_textarea(this);
-
-}) ;*/

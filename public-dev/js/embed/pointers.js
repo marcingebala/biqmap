@@ -15,7 +15,7 @@ var pointers = {
 
 	//rysowanie wszystkich punktów
 	draw : function(){
-		console.log('draw',this.size,layers.category_colors); 
+		//console.log('draw',this.size,layers.category_colors); 
 		var width_pointer = this.size + this.padding_x;
 		var height_pointer = this.size + this.padding_y;
 		var none_color = "rgba(0,0,0,0)";

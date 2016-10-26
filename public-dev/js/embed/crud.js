@@ -8,7 +8,7 @@ crud = {
 	excel : Array(),
 	project : {},
 	project_hash : project_hash, //główny hash dotyczący naszego projektu
-
+ 
 	//wczytanie zmiennych do obiektów mapy
 
 	set_map : function(data){
@@ -120,7 +120,7 @@ crud = {
 		layers.project_name = data.project.name;
 		layers.source = data.project.source;
 
-		console.log( data.layers.category_colors );
+		//console.log( data.layers.category_colors );
 
 		$('input[name="project_name"]').val(layers.project_name);
 
@@ -141,7 +141,7 @@ crud = {
 			url: '/api/project/' + crud.project_hash,
 		  type: "GET",
 		  contentType: "application/json"
-		}).done(function( data ) { console.log(data.data); crud.set_project( data.data );  });
-	},
+		}).done(function( data ) { crud.set_project( data.data );  });
+	}
 
 }

@@ -1,6 +1,5 @@
 //obiekt dotycząsy wyswietlania akutalizacji i edycji panelu legend
 legends = {
-
 	//wyświetlamy wszystkie legendy w panelu map
 	show : function(){
   		var html = "";
@@ -10,5 +9,3 @@ legends = {
       $('#legends').html(html);
 	}
 }
-
-

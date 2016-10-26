@@ -1,5 +1,5 @@
 //obiekt kategorii dodanie / aktualizacja / usunięcie / pokazanie kategorii
-var categories = {}
+var categories = {};
 /*	
 
 	//category : new Array(['pusty','#808080']),

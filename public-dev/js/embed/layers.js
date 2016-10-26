@@ -4,7 +4,7 @@ var layers = {
 	active : 0,
 
 	//tablica z podstawowywmi danymi zagregowanymi dla każdej warstwy
-	palets_active : [0],
+	palets_active : [0], 
 
 	value : [-1],
 	colors_pos : [[1,1,1,1,1,1,1,1,1]],
@@ -56,7 +56,5 @@ var layers = {
 		//layers.show();
 		canvas.draw();
 	
-	},
-
-
+	}
 }

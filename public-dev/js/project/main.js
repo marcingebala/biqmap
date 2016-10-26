@@ -30,6 +30,17 @@ palets
 pointers
 
 */
+
+
+// Create IE + others compatible event handler
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+// Listen to message from child window
+eventer(messageEvent,function(e) {
+  console.log('parent received message!:  ',e.data);
+},false);
  
 //dodajemy tinymce do 2 textarea (dymek źródło)
 tinymce.init({
@@ -81,22 +92,7 @@ $(document).ready(function(){
 
 	//zaznaczenie dymka do publikacji po kliknięciu
 	$('.publish .embed').click(function(){	$(this).select();	});
-	$('.publish').click(function(event){
-
-		if(crud.project_hash != null){
-			if (!event) {event = window.event;} //łata dla mozilli
-			if( ($('.publish .embed').css('display') == 'block') && ($(event.target).hasClass('publish')) ){
-				$('.publish .embed').fadeOut(500);
-			}
-			else{
-				$('.publish .embed').html('<iframe width="100%" height="'+canvas.height_canvas+'px" border="0" frameborder="0" border="0" allowtransparency="true" vspace="0" hspace="0" src="http://'+location.href.split( '/' )[2]+'/embed/'+crud.project_hash+'"></iframe>');
-				$('.publish .embed').fadeIn(500);
-			}
-		}
-		else{
-			alert('brak projektu do opublikowania');
-		}
-	});
+	$('.publish').click(function(event){ crud.publish(event); });
 
 	//jeśli chcemy zapisać / zaktualizować / opublikować projekt
 	$('#toolbar_top button.save').click(function(){ 

@@ -1,91 +1,70 @@
 @import 'https://fonts.googleapis.com/css?family=Montserrat';
-
 @font-face {
-    font-family: montserrat-light;
-    src: url(../fonts/montserrat-light.ttf);
+  font-family: montserrat-light;
+  src: url(../fonts/montserrat-light.ttf); }
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Montserrat', sans-serif;
+  color: #333; 
+  max-width: 960px;
 }
 
-
-html, body{
-	margin:0px;
-	padding:0px;
-	max-width:960px;
-	font-family: 'Montserrat', sans-serif;
-	color:#333;
-}
-
-#labels{
-	text-align:center;
-	font-weight:normal;
-	margin:0px auto;
+#labels {
+  text-align: center;
+  font-weight: normal;
+  margin: 0px auto;
   margin-bottom: 25px;
-  line-height: 30px;
-}
+  line-height: 30px; }
 
-#area{
-	text-align:center;
-  margin-bottom:10px;
-
-	span{
-
-		display: inline-block;
-		cursor:pointer;
-		padding:5px 10px;
-		//width:100px;
-		border:1px solid #d7d7d7;
-		border-radius:20px;
-		margin:10px;
-		font-weight: normal;
-		font-size:12px;
+#area {
+  text-align: center;
+  margin-bottom: 10px; }
+  #area span {
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #d7d7d7;
+    border-radius: 20px;
+    margin: 10px;
+    font-weight: normal;
+    font-size: 12px;
     height: 24px;
     line-height: 24px;
-		-webkit-user-select: none;  /* Chrome all / Safari all */
-	  -moz-user-select: none;     /* Firefox all */
-	  -ms-user-select: none;      /* IE 10+ */
-	  user-select: none;   
-	  
-	  &:hover{
-	  	border:1px solid #333;
-	  }
+    -webkit-user-select: none;
+    /* Chrome all / Safari all */
+    -moz-user-select: none;
+    /* Firefox all */
+    -ms-user-select: none;
+    /* IE 10+ */
+    user-select: none; }
+    #area span:hover {
+      border: 1px solid #333; }
+  #area span.active {
+    border: 1px solid #333; }
 
-	}
+#canvas_box {
+  margin: 0px auto; }
 
-	span.active{
-		border:1px solid #333;
-		//text-decoration: underline;
-	}
-
-}
-
-#canvas_box{
-	margin:0px auto;
-}
-
-
-#canvas_cloud{
-  display:none;
-  position:absolute;
-  width:auto;
-  height:auto;
+#canvas_cloud {
+  display: none;
+  position: absolute;
+  width: auto;
+  height: auto;
   text-align: center;
-  top:10px;
-  left:10px;
-  border-radius:10px;
-  background-color:#fff;
-  z-index:99999;
-  padding:5px 10px;
-  border:1px solid lightgrey;
-/*
+  top: 10px;
+  left: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+  z-index: 99999;
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
+  /*
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 */
-  p{
-    margin:0px;
-    font-size:12px;
-    padding:0px;
-  }
-
   /*&:after{
     position:absolute;
     bottom:-10px;
@@ -100,46 +79,37 @@ html, body{
     border-bottom: 20px solid transparent;
     border-top: 0px solid transparent;
 
-	}*/
-}
+  }*/ }
+  #canvas_cloud p {
+    margin: 0px;
+    font-size: 12px;
+    padding: 0px; }
 
+#canvas_wrapper {
+  position: relative; }
 
-#canvas_wrapper{
-	position:relative;
-}
+#legends {
+  text-align: center;
+  margin: 0px auto;
+  max-width: 620px;
+  margin-bottom: 20px;
+  margin-top: 20px; }
+  #legends div {
+    display: inline-block; }
+    #legends div span {
+      display: block;
+      float: left;
+      margin: 0px 5px;
+      font-size: 11px; }
+    #legends div span:nth-child(1) {
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      border: 1px solid #efefef; }
+    #legends div span:nth-child(2) {
+      margin-left: 0px; }
 
-#legends{
-    text-align: center;
-    margin: 0px auto;
-    max-width: 620px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-
-	div{
-		display:inline-block;
-		span{
-			display:block;
-			float:left;
-			margin:0px 5px;;		
-			font-size:11px;
-		}
-
-		span:nth-child(1){
-			width:12px;
-			height:12px;
-			border-radius:6px;
-      border:1px solid #efefef;
-		}
-
-    span:nth-child(2){
-      margin-left:0px; 
-    }
-
-	}
-}  
-
-//source
-#source{
+#source {
   display: inline-block;
   padding: 10px;
   font-size: 11px;
@@ -147,45 +117,35 @@ html, body{
   letter-spacing: 0px;
   max-width: 810px;
   color: #a7a9ac;
-  float:right;
-  p{
-    margin:0px;
+  float: right; }
+  #source p {
+    margin: 0px;
     text-align: right;
-    font-family: montserrat-light;
-  }
-}
+    font-family: montserrat-light; }
 
-.source_ico{
-  display:inline-block;
-  width:35px;
-  height:35px;
-  background-image:url('../images/sprite_ico.jpg');
-  background-size:auto 100%;
-  float:right;
-  margin:4px;
-}
+.source_ico {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-image: url("../images/sprite_ico.jpg");
+  background-size: auto 100%;
+  float: right;
+  margin: 4px; }
 
-.source_ico.wyborcza{
-  background-position:0px 0px;
-}
+.source_ico.wyborcza {
+  background-position: 0px 0px; }
 
-.source_ico.biqdata{
-  background-position:-35px 0px;
-}
+.source_ico.biqdata {
+  background-position: -35px 0px; }
 
-.source_ico.biqmap{
-  margin-left:0px;
-  background-position:-70px 0px;
-}
+.source_ico.biqmap {
+  margin-left: 0px;
+  background-position: -70px 0px; }
 
-@media (max-width:950px){
-  #source{
-  max-width: 600px;
-}
-  }
+@media (max-width: 950px) {
+  #source {
+    max-width: 600px; } }
 
-  @media (max-width:700px){
-  #source{
-  max-width: 450px;
-}
-  }
+@media (max-width: 700px) {
+  #source {
+    max-width: 450px; } }

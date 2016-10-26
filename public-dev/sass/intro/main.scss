@@ -15,18 +15,16 @@ body{
 .no-link{
   cursor: pointer;
   color:#6d7be8;
-  text-decoration: nonel
-  
+  text-decoration: none;
   &:hover{
     color:#6d7be8;
     text-decoration: underline;
-  }
-  
-}
+  } 
+} 
 
 .login_box{
   position:absolute;
-  display: box;
+  display: block;
   left:50%;
   top:50%;
   transform: translate(-50%,-50%);
