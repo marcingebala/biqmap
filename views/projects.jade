@@ -104,6 +104,9 @@ html(lang='pl')
         label pokaż punkty tła:
         .switch.switch-on(obj='pointers', name='show_all_point', value='true')
           div
+        label pokaż granice:
+        .switch.switch-on(obj='pointers', name='border_show', value='true')
+          div
         label odstęp poziomy:
         input.input_base(type='text', value='1', obj='pointers', name='padding_x')
         button.increment(obj='pointers', nameinput='padding_x') +

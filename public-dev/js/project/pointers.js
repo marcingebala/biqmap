@@ -1,6 +1,7 @@
 //menu pointer
 var pointers = {
 	show_all_point : true,
+	border_show : true,
 	padding_x : 1,
 	padding_y : 1,
 	translate_modulo : false,
@@ -13,6 +14,63 @@ var pointers = {
 	last_column : null,	//kolumna pointera który został ostatnio zmieniony
 	last_row : null,	//wiersz pointera który został ostatnio zmieniony
 
+	draw_border: function(){
+		if(this.main_kind != 'hexagon2'){
+			for(var row = 0; row < canvas.active_row; row++){
+				for(var column = 0; column < canvas.active_column; column++){
+
+					if(this.pointers[row][column] != 0){
+
+						var border = {
+							top : false,
+							bottom: false,
+							left: false,
+							right: false
+						};
+
+						if(row-1 >= 0){
+							if((this.pointers[row-1][column] != 0)&&(this.pointers[row-1][column] != this.pointers[row][column])){
+								border.top = true;
+							}
+						}		
+
+						if(row+1 <= canvas.active_row){
+							if((this.pointers[row+1][column] != 0)&&(this.pointers[row+1][column] != this.pointers[row][column])){
+								border.bottom = true;
+							}
+						}
+
+						if(column-1 >= 0){
+							if((this.pointers[row][column] != 0)&&(this.pointers[row][column-1] != this.pointers[row][column])){
+								border.left = true;
+							}
+						}		
+
+						if(column+1 <= canvas.active_column){
+							if((this.pointers[row][column+1] != 0)&&(this.pointers[row][column+1] != this.pointers[row][column])){
+								border.right = true;
+							}
+						}
+
+						try{
+							canvas.context.fillStyle = layers.category_colors[layers.active][ this.pointers[row][column] ];
+						}
+						catch(e){
+							console.log('ERROR 39 LINE ! ',this.pointers[row][column],row,column);
+						}
+
+						if( (row % 2 == 0) && (pointers.translate_modulo) ){
+							window['figures'][this.main_kind+'_border']( column*width_pointer + width_pointer/2 , row*height_pointer , this.size);
+						}
+						else{
+							window['figures'][this.main_kind+'_border']( column*width_pointer , row*height_pointer , this.size);
+						}
+						
+					}	
+				}
+			}
+		}
+	},
 
 	//rysowanie wszystkich punktów
 	draw : function(){
@@ -22,14 +80,14 @@ var pointers = {
 
 		if(this.show_all_point) none_color = "rgba(128,128,128,1)";
 
-		for(var row = 0; row < canvas.active_row; row++){
-			for(var column = 0; column < canvas.active_column; column++){
+	
 
 				if(this.pointers[row][column] == 0){
 					canvas.context.fillStyle = none_color;
 					canvas.context.globalAlpha = 0.5;
 				}
-				else{
+				else{				
+
 					if( (this.pointers[row][column] != menu_top.category) && (menu_top.category != 0) ){
 						canvas.context.globalAlpha = 0.2
 					}
