@@ -68,7 +68,7 @@ var colorpicker = {
 				$('.color_border').css('backgroundColor', '#' + hex);
 				
 				if(pointers.show_border){
-					pointers.draw_border();
+					pointers.draw_border(false);
 				}
 
 			}

@@ -46,42 +46,136 @@ var figures = {
 		canvas.context.fill();
 	},
 
-  square_border : function(data){
+  square_border_small : function(data){
 
-    if(data.border.top){
-      canvas.context.fillRect(
-        data.x-data.line_width_x,
-        data.y-data.line_width_y,
-        data.size+2*data.line_width_x,
-        data.line_width_y
-      );
-    }
+  if(data.line_width_y < 2){
+    y_trans = -2;
+  }
+  else{
+    y_trans = -3;
+  }
+
+  if(data.line_width_x < 3){
+    x_trans = -2;
+  }
+  else{
+    x_trans = -1*data.line_width_x;
+  }
+
+  if(data.border.top){
+    canvas.context.fillRect(
+      data.x+x_trans+1,
+      data.y+y_trans+1,
+      data.size+data.line_width_x+1,
+      1
+    );
+  }
 
     if(data.border.top_left){
       canvas.context.fillRect(
-        data.x,
-        data.y-data.line_width_y,
-        Math.ceil(data.size/2),
-        data.line_width_y
+        data.x+x_trans+1,
+        data.y+y_trans+1,
+        parseInt((data.size+data.line_width_x+1)/2),
+        1
       );
     }
 
     if(data.border.top_right){
       canvas.context.fillRect(
-        data.x+Math.floor(data.size/2),
-        data.y-data.line_width_y,
-        Math.ceil(data.size/2)+data.line_width_x,
-        data.line_width_y
+        data.x+x_trans+1+parseInt((data.size+data.line_width_x+1)/2),
+        data.y+y_trans+1,
+        Math.ceil((data.size+data.line_width_x+1)/2),
+        1
       );
     }
 
     if(data.border.right){
+      if(data.line_width_x < 2){
+        x_trans = -1;
+      }
+      else{
+        x_trans = 0;
+      }
+
+      if(data.line_width_y < 2){
+        y_trans = 2;
+      }
+      else{
+        y_trans = data.line_width_y;
+      }
+
       canvas.context.fillRect(
-        data.x+data.size,
-        data.y-data.line_width_y,
-        data.line_width_x,
-        data.size+2*data.line_width_y
-        );
+        data.x+data.size+x_trans+1,
+        data.y-1,
+        1,
+        data.size+y_trans 
+      );
+    }
+  },
+square_border_big : function(data){
+
+  if(data.line_width_y < 2){
+    y_trans = -2;
+  }
+  else{
+    y_trans = -3;
+  }
+
+  if(data.line_width_x < 3){
+    x_trans = -2;
+  }
+  else{
+    x_trans = -1*data.line_width_x;
+  }
+
+  if(data.border.top){
+    canvas.context.fillRect(
+      data.x+x_trans,
+      data.y+y_trans,
+      data.size+data.line_width_x+3,
+      3
+    );
+  }
+
+    if(data.border.top_left){
+      canvas.context.fillRect(
+        data.x+x_trans,
+        data.y+y_trans,
+        parseInt((data.size+data.line_width_x+3)/2),
+        3
+      );
+    }
+
+    if(data.border.top_right){
+      canvas.context.fillRect(
+        data.x+x_trans+parseInt((data.size+data.line_width_x+3)/2),
+        data.y+y_trans,
+        Math.ceil((data.size+data.line_width_x+3)/2),
+        3
+      );
+    }
+
+    if(data.border.right){
+      if(data.line_width_x < 2){
+        x_trans = -1;
+      }
+      else{
+        x_trans = 0;
+      }
+
+      if(data.line_width_y < 2){
+        y_trans = 2;
+      }
+      else{
+        y_trans = data.line_width_y;
+      }
+
+      canvas.context.fillRect(
+        data.x+data.size+x_trans,
+        data.y,
+        3,
+        data.size+y_trans 
+      );
     }
   }
 }

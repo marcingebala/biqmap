@@ -15,16 +15,31 @@ var pointers = {
 	last_column : null,	//kolumna pointera który został ostatnio zmieniony
 	last_row : null,	//wiersz pointera który został ostatnio zmieniony
 
-		draw_border: function(){
+		draw_border: function(next){
+
 		var width_pointer = this.size + this.padding_x,
 				height_pointer = this.size + this.padding_y,
 				none_color = "rgba(0,0,0,0)",
 				border = {},
 				data = {};
+		
+		var next = next || false;
 
 		if((this.main_kind == 'square') || (this.main_kind == 'circle') || (this.main_kind == 'hexagon')){
 				
-			canvas.context.fillStyle = this.color_border;
+			//canvas.context.fillStyle = this.color_border;
+			canvas.context.globalAlpha=1;
+			//canvas.context.fillStyle = 'rgba(128,0,0,1)';
+
+			if(!next){
+				canvas.context.globalAlpha=1;
+				canvas.context.fillStyle = 'rgba(255,255,255,1)';
+			}
+			else{
+				canvas.context.globalAlpha=0.5;
+				canvas.context.fillStyle = this.color_border;
+			}
+
 
 			for(var row = 0; row < canvas.active_row; row++){
 				for(var column = 0; column < canvas.active_column; column++){
@@ -91,11 +106,20 @@ var pointers = {
 						if( (row % 2 == 0) && (pointers.translate_modulo) ){
 							data.x = column*width_pointer + width_pointer/2;
 						}
-						
-						figures.square_border(data);
+
+						if(!next){
+							figures.square_border_big(data);
+						}
+						else{
+							figures.square_border_small(data);
+						}
 					}
 				}	
 			}
+		}
+
+		if(!next){
+			this.draw_border(true);
 		}
 	},
 

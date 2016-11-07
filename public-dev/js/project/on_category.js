@@ -21,8 +21,8 @@ var on_category = {
 		}
 
 		try{
-			var category_num = pointers.pointers[row-1][column-1] 
-			var category_name = categories.category[category_num][0]
+			var category_num = pointers.pointers[row-1][column-1];
+			var category_name = categories.category[category_num][0];
 		}
 		catch(e){
 			this.name = null;
