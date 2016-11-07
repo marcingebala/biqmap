@@ -116,14 +116,14 @@ var crud = {
 		pointers.size = data[0][5];
 		pointers.main_kind = data[0][6];
 		canvas.title_project = data[0][7];
-
-		if(typeof data[0][8] == undefined){
+		
+		if(typeof data[0][8] == 'undefined'){
 			pointers.color_border = "#000";
 		}else{
 			pointers.color_border = data[0][8];
 		}
 
-		if(typeof data[0][9] == undefined){
+		if(typeof data[0][9] == 'undefined'){
 			pointers.show_border = false;
 		}else{
 			pointers.show_border = data[0][9];
