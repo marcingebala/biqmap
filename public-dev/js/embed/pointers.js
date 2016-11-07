@@ -3,6 +3,8 @@ var pointers = {
 	show_all_point : true,
 	padding_x : 1,
 	padding_y : 1,
+	show_border : false,
+	color_border: '#333',
 	translate_modulo : false,
 	size : 10,
 	main_kind : 'square',
@@ -12,6 +14,90 @@ var pointers = {
 
 	last_column : null,	//kolumna pointera który został ostatnio zmieniony
 	last_row : null,	//wiersz pointera który został ostatnio zmieniony
+
+		draw_border: function(){
+		var width_pointer = this.size + this.padding_x,
+				height_pointer = this.size + this.padding_y,
+				none_color = "rgba(0,0,0,0)",
+				border = {},
+				data = {};
+
+		if((this.main_kind == 'square') || (this.main_kind == 'circle') || (this.main_kind == 'hexagon')){
+				
+			canvas.context.fillStyle = this.color_border;
+
+			for(var row = 0; row < canvas.active_row; row++){
+				for(var column = 0; column < canvas.active_column; column++){
+
+					if(this.pointers[row][column] != 0){
+
+						border = {
+							top: false,
+							top_left : false,
+							top_right : false,
+							right: false
+						};
+
+						//rysujemy połówkami
+						//sprawdzamy czy mamy włączoną opcje modulo
+						if(row-1 >= 0){
+							if(!pointers.translate_modulo){
+								//jeśli nie to sprawdzamy tradycyjnie włączoną granicę nad 
+								if((this.pointers[row-1][column] != 0)&&(this.pointers[row-1][column] != this.pointers[row][column])){
+									border.top = true;
+								}
+							}
+							else{
+								//jeśli tak to: sprawdzamy czy wiersz jest przesunięty
+								if(row % 2 == 0){
+									if((column-1) > 0){
+										if((this.pointers[row-1][column] != 0)&&(this.pointers[row-1][column] != this.pointers[row][column])){
+											border.top_left = true;
+										}
+									}
+									if((this.pointers[row-1][column+1] != 0)&&(this.pointers[row-1][column+1] != this.pointers[row][column])){
+										border.top_right = true;
+									}
+								}
+								else{
+									if((this.pointers[row-1][column-1] != 0)&&(this.pointers[row-1][column-1] != this.pointers[row][column])){
+										border.top_left = true;
+									}
+									if((column+1) <= canvas.active_column){
+										if((this.pointers[row-1][column] != 0)&&(this.pointers[row-1][column] != this.pointers[row][column])){
+											border.top_right = true;
+										}
+									}
+								}
+							}	
+						}
+
+						if((column+1) <= canvas.active_column){
+							if((this.pointers[row][column+1] != 0)&&(this.pointers[row][column+1] != this.pointers[row][column])){
+								border.right = true;
+							}
+						}
+
+						data = {
+							x : column*width_pointer,
+							y : row*height_pointer,
+							size : this.size,
+							border : border,
+							line_width_x : pointers.padding_x,
+							line_width_y : pointers.padding_y,
+							t_modulo : false
+						}
+
+						if( (row % 2 == 0) && (pointers.translate_modulo) ){
+							data.x = column*width_pointer + width_pointer/2;
+						}
+						
+						figures.square_border(data);
+					}
+				}	
+			}
+		}
+	},
 
 	//rysowanie wszystkich punktów
 	draw : function(){
@@ -53,6 +139,11 @@ var pointers = {
 
 			}
 		}
+
+		if(this.show_border){
+			this.draw_border();
+		}
+		
 	},
 
 	//tworzymy tablice ponterów (jeśli jakiś ponter istnieje zostawiamy go, w przypadku gdy pointera nie ma tworzymy go na nowo)

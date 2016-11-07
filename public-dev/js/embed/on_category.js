@@ -3,9 +3,11 @@ var on_category = {
 	
 	canvas_offset_top : $('#canvas_wrapper').offset().top,
 	canvas_offset_left : $('#canvas_wrapper').offset().left,
+	name : null,
+	number : null,
 
 	//funkcja zwracająca aktualną kategorię nad którą znajduje się kursor
-	get_name : function(){
+	set : function(){
 
 		var left = mouse.left - canvas.offset_left;
 		var top = mouse.top - canvas.offset_top;
@@ -27,14 +29,18 @@ var on_category = {
 
 		}
 		catch(e){
-			return 'null';
+			this.name = null;
+			this.number = null;
 		}
 		
 		if((category_name == 'pusty') || (category_name == 'gumuj')){
-			return 'null';
+			this.name = null;
+			this.number = null;
 		} 
 		else{
-			return category_name;		
+
+			this.name = category_name;
+			this.number = category_num;
 		}
 
 	}

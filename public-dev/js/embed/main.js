@@ -93,8 +93,8 @@ $(document).ready(function(){
 $('#canvas_wrapper').mouseleave(function(){ $("#canvas_cloud").fadeOut(200); });
 
 $('#canvas_wrapper').mousemove(function(){
-  var text = on_category.get_name() 
-  cloud.update_text(text ); 
+  on_category.set();
+  cloud.update_text(); 
 });
 
 $("#canvas_cloud").mousemove(function(){ cloud.set_position(); });

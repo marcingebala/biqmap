@@ -5,7 +5,6 @@ var colorpicker = {
 	col_num : null,
 
 	add : function(){
-		this.remove();
 		$('.colorpicker_box').ColorPicker({
 
 			color: '#ff0000',
@@ -41,7 +40,38 @@ var colorpicker = {
 		});
 	},
 
-	remove : function(){
-		$('.colorpicker').remove();
+	color_border : function(){
+		$('.color_border').ColorPicker({
+
+		onBeforeShow: function () {
+			$(this).ColorPickerSetColor(pointers.color_border);
+		},
+				
+			onShow: function (colpkr) {
+				if($(colpkr).css('display')=='none'){
+					$(colpkr).fadeIn(200);
+					//colorpicker.row = $(this).attr('row');
+					//colorpicker.col_num = $(this).attr('col_num');
+				}
+				return false;
+			},
+			
+			onHide: function (colpkr) {
+				$(colpkr).fadeOut(200);
+				return false;
+			},
+			
+			onChange: function (hsb, hex, rgb) {
+				
+				pointers.color_border =  '#' + hex;
+
+				$('.color_border').css('backgroundColor', '#' + hex);
+				
+				if(pointers.show_border){
+					pointers.draw_border();
+				}
+
+			}
+		});
 	}
 }

@@ -45,5 +45,44 @@ var figures = {
     canvas.context.lineTo(x+a2,y);
 		canvas.context.fill();
 
-	}
+	},
+
+  square_border : function(data){
+
+    if(data.border.top){
+      canvas.context.fillRect(
+        data.x-data.line_width_x,
+        data.y-data.line_width_y,
+        data.size+2*data.line_width_x,
+        data.line_width_y
+      );
+    }
+
+    if(data.border.top_left){
+      canvas.context.fillRect(
+        data.x,
+        data.y-data.line_width_y,
+        Math.ceil(data.size/2),
+        data.line_width_y
+      );
+    }
+
+    if(data.border.top_right){
+      canvas.context.fillRect(
+        data.x+Math.floor(data.size/2),
+        data.y-data.line_width_y,
+        Math.ceil(data.size/2)+data.line_width_x,
+        data.line_width_y
+      );
+    }
+
+    if(data.border.right){
+      canvas.context.fillRect(
+        data.x+data.size,
+        data.y-data.line_width_y,
+        data.line_width_x,
+        data.size+2*data.line_width_y
+        );
+    }
+  }
 }

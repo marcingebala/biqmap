@@ -86,6 +86,8 @@ $(document).ready(function(){
   layers.show();
   palets.show();
 
+  colorpicker.color_border();
+
 	//zablokowanie możliwości zaznaczania buttonów podczas edycji pola
 	$(document).on("focusin","input",function(){ menu_top.disable_select = true; });
 	$(document).on("focusout","input",function(){ menu_top.disable_select = false; });

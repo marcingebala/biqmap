@@ -26,14 +26,14 @@ cloud = {
 	},
 
 	//funkcja odpowiedzialna za wyświetlenie dymka z odpowiednią zawartością
-	update_text : function(name){
+	update_text : function(){
 		
-		if((name != "") && (name != 'null')){
+		if((on_category.name != "") && (on_category.name != 'null')){
 
 			var tmp_row = null;
 			var find = 0;
 			for(var i_row = 0, i_row_max = excel.data.length; i_row < i_row_max; i_row++ ){
-				if(String(name).toLowerCase() == String(excel.data[i_row][layers.category[layers.active]]).toLowerCase()){
+				if(String(on_category.name).toLowerCase() == String(excel.data[i_row][layers.category[layers.active]]).toLowerCase()){
 					
 					this.set_position();
 					var text_tmp = layers.cloud[layers.active];

@@ -3,9 +3,11 @@ var on_category = {
 	
 	canvas_offset_top : 187,
 	canvas_offset_left : 10,
+	name : null,
+	number : null,
 
 	//funkcja zwracająca aktualną kategorię nad którą znajduje się kursor
-	get_name : function(){
+	set : function(){
 		
 		var left = mouse.left - this.canvas_offset_left;
 		var top = mouse.top - this.canvas_offset_top;
@@ -23,14 +25,17 @@ var on_category = {
 			var category_name = categories.category[category_num][0]
 		}
 		catch(e){
-			return 'null';
+			this.name = null;
+			this.number = null;
 		}
 		
 		if((category_name == 'pusty') || (category_name == 'gumuj')){
-			return 'null';
+			this.name = null;
+			this.number = null;
 		}
 		else{
-			return category_name;		
+			this.name = category_name;
+			this.number = category_num;
 		}
 
 	}
@@ -38,5 +43,10 @@ var on_category = {
 }
 
 $('#canvas_wrapper').mouseleave(function(){ $("#canvas_cloud").fadeOut(200); });
-$('#canvas_wrapper').mousemove(function(){ cloud.update_text( on_category.get_name() ); });
-$("#canvas_cloud").mousemove(function(){ cloud.set_position(); });
+
+$('#canvas_wrapper').mousemove(function(){ 
+	on_category.set();
+	cloud.update_text();
+	cloud.set_position();
+});
+

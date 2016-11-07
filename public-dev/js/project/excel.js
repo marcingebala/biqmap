@@ -84,6 +84,12 @@ var excel = {
       contentType: false
 
     }).done(function( response ) {
+    	//$("#excel_box input")[0].files[0].reset();
+
+			$("#excel_box input").remove();
+			$("#excel_box").append('<input type="file" />')
+			$('#excel_box input').change(function(){ excel.send_file(); });
+
     	//po wczytaniu pliku excel przypisujemy dane rysujemy na nowo tabelę oraz wyświetlamy wszystkie palety kolorów
 			console.log( response )
     	excel.data = response.excel[0].data;

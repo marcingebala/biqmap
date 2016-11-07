@@ -16,7 +16,7 @@ var crud = {
 		//zerujemy na nowo całą tablicę pointerów
 		this.map_json = Array();
 
-		// data[x] = zmienne podstawowe dotyczące mapy
+		//data[x] = zmienne podstawowe dotyczące mapy
 		this.map_json[0] = Array();
 		this.map_json[0][0] = canvas.height_canvas;
 		this.map_json[0][1] = canvas.width_canvas;
@@ -26,6 +26,8 @@ var crud = {
 		this.map_json[0][5] = pointers.size;
 		this.map_json[0][6] = pointers.main_kind;
 		this.map_json[0][7] = canvas.title_project;
+		this.map_json[0][8] = pointers.color_border;
+		this.map_json[0][9] = pointers.show_border;
 
 		// data[1] = tablica punktów (pointers.pointers) [wiersz][kolumna] = "none" || (numer kategorii)
 		this.map_json[1] = pointers.pointers;
@@ -115,6 +117,20 @@ var crud = {
 		pointers.main_kind = data[0][6];
 		canvas.title_project = data[0][7];
 
+		if(typeof data[0][8] == undefined){
+			pointers.color_border = "#000";
+		}else{
+			pointers.color_border = data[0][8];
+		}
+
+		if(typeof data[0][9] == undefined){
+			pointers.show_border = false;
+		}else{
+			pointers.show_border = data[0][9];
+		}
+ 
+ 		$('#pointer_box .color_border').css('background-color',pointers.color_border);
+
 		$('#pointer_box input[name="padding_x"]').val( data[0][2] );
 		$('#pointer_box input[name="padding_y"]').val( data[0][3] );
 		$('#pointer_box input[name="size"]').val( data[0][5] );
@@ -123,6 +139,11 @@ var crud = {
 		if( data[0][4] ){
 			$('#pointer_box div[name="translate_modulo"]').removeClass('switch-off');
 			$('#pointer_box div[name="translate_modulo"]').addClass('switch-on');
+		}
+
+		if( pointers.show_border ){
+			$('#pointer_box div[name="show_border"]').removeClass('switch-off');
+			$('#pointer_box div[name="show_border"]').addClass('switch-on');
 		}
 
 		$('#pointer_box select[name="main_kind"]').html('');
@@ -205,6 +226,8 @@ var crud = {
 		layers.category_colors = data.layers.category_colors;
 		layers.category_name = data.layers.category_name;
 		layers.list = data.layers.list;
+
+
 
 		//zmienne globalne dotyczące całego projektu
 		layers.project_name = data.project.name;

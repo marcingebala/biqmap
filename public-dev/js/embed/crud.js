@@ -26,6 +26,18 @@ crud = {
 		pointers.main_kind = data[0][6];
 		canvas.title_project = data[0][7];
 
+		if(typeof data[0][8] == undefined){
+			pointers.color_border = "#000";
+		}else{
+			pointers.color_border = data[0][8];
+		}
+
+		if(typeof data[0][9] == undefined){
+			pointers.show_border = false;
+		}else{
+			pointers.show_border = data[0][9];
+		}
+
 		$('#pointer_box input[name="padding_x"]').val( data[0][2] );
 		$('#pointer_box input[name="padding_y"]').val( data[0][3] );
 		$('#pointer_box input[name="size_pointer"]').val( data[0][5] );
