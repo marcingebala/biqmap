@@ -248,14 +248,13 @@ body {
 
   .table{
     width:auto;
-    //height:100%;
-    //overflow:scroll;
+    user-select: auto;
 
     .tr{
       clear:both;
       height:20px;
-      //overflow:hidden;
-        
+      user-select: auto;
+      
       .td{
         width: 80px;
         height:20px;
@@ -266,7 +265,7 @@ body {
         margin-left:0px;
         position:relative;
         outline:0px;
-
+        user-select: auto;
       }
 
       .td:first-child{

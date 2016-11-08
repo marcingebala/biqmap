@@ -20,21 +20,20 @@ var excel = {
 		add_html = '';
 
 		//jeśli ilośc wierszy jest większa aktualizujemy wielkość tablicy
-		if(excel.data.length > excel.min_row) excel.min_row = excel.data.length;
-		if(excel.data[0].length > excel.min_col) excel.min_col = excel.data[0].length;
+		if(excel.data.length >= excel.min_row) excel.min_row = excel.data.length;
+		if(excel.data[0].length >= excel.min_col) excel.min_col = excel.data[0].length+1;
 
 		//renderujemy całą tablicę excel
 		for(var i = 0;i < this.min_row; i++){
 			add_html += '<tr class="tr">';
 			for(var j = 0;j < this.min_col; j++){
-
 				if((j == 0) && (i > 0)){
 					add_html += '<td class="td" row="' + i + '" col="' + j + '" >'+ i +'</td>';
 				}
 				else{
 					try{
 						if(typeof(excel.data[i][(j-1)]) != "undefined"){
-							add_html += '<td class="td" contenteditable="true" row="' + i + '" col="' + j + '">'+excel.data[i][(j-1)]+'</td>';
+							add_html += '<td class="td" contenteditable="false" row="' + i + '" col="' + j + '">'+excel.data[i][(j-1)]+'</td>';
 						}
 						else{
 							add_html += '<td class="td"  row="' + i + '" col="' + j + '"></td>';
@@ -52,10 +51,12 @@ var excel = {
 
 		$('#excel_box .table').html( add_html );
 
+		$('#excel_box .table .td').dblclick(function(){ $(this).attr('contenteditable','true'); $(this).selectText(); });
+
 		//dodajemy możliwość edycji excela
 		$('#excel_box .table .td').keyup(function(){ excel.edit(this); });
 
-		$('#excel_box .table .td').blur(function(){ palets.show_select(); });
+		$('#excel_box .table .td').blur(function(){ $(this).attr('contenteditable','false');  palets.show_select(); });
 
 	},
 

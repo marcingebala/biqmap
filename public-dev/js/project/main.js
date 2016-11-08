@@ -179,7 +179,9 @@ $(document).ready(function(){
 //	$("#list").delegate("input","focusout", function() { menu_top.mode_key = true;  });
 
 	//pokazanie / ukrycie panelu kategorii
-	$('#excel_box h2, #pointer_box h2, #palets_box h2').click(function(){ global.toogle_panel(this); });
+	$('#excel_box h2').click(function(){ global.toogle_left(this); });
+  $('#pointer_box h2').click(function(){ global.toogle_right(this); }); 
+  $('#palets_box h2').click(function(){ global.toogle_right(this); });
 
 	//obsługa buttonów do inkrementacji i dekrementacji inputów
 	$('button.increment').click(function(){ models.button_increment( $(this) ) });

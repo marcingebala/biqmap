@@ -35,7 +35,7 @@ var categories = {
 							find = true;
 							//jeśli znaleźliśmy kategorię w excelu
 							var value = String(excel.data[i_exel][layers.value[i_layers]]).replace(',','.');
-							console.log(excel.data[i_exel][layers.value[i_layers]]+' | '+value);
+							//console.log(excel.data[i_exel][layers.value[i_layers]]+' | '+value);
 							
 							for ( var i_legends = 0, i_legends_max = layers.legends[i_layers].length; i_legends < i_legends_max; i_legends++ ){
 								if( (value >= layers.legends[i_layers][i_legends][0]) && (value <= layers.legends[i_layers][i_legends][1]) ){
