@@ -179,7 +179,7 @@ $(document).ready(function(){
 //	$("#list").delegate("input","focusout", function() { menu_top.mode_key = true;  });
 
 	//pokazanie / ukrycie panelu kategorii
-	$('#excel_box h2, #pointer_box h2, #palets_box h2').click(function(event){ global.toogle_panel(event); });
+	$('#excel_box h2, #pointer_box h2, #palets_box h2').click(function(){ global.toogle_panel(this); });
 
 	//obsługa buttonów do inkrementacji i dekrementacji inputów
 	$('button.increment').click(function(){ models.button_increment( $(this) ) });

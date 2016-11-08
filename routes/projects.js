@@ -4,6 +4,9 @@ var mongodb = require('mongodb');
 var Mp4Convert = require('mp4-convert');
 var ffmpeg = require('fluent-ffmpeg');
 var url = 'mongodb://localhost:27017/biqmap';
+
+//var url = 'mongodb://biqmap:poiuy@mongo-biqmap01.gazeta.pl:27017';
+
 var xss = require('xss');
 var sha1 = require('sha1');
 var formidable = require('formidable');

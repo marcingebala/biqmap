@@ -171,6 +171,7 @@ var crud = {
 		layers.category_name = [];
 
 		for(var i = 0, i_max = categories.category.length; i < i_max; i++){
+			console.log( categories.category[i][0] );
 			layers.category_name.push(categories.category[i][0]);
 			layers.category_colors[0].push(categories.category[i][1]);
 		}
