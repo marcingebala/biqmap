@@ -11,6 +11,7 @@ var maps = require('./routes/maps');
 var projects = require('./routes/projects');
 var embed = require('./routes/embed');
 var session = require('express-session')
+var router = express.Router();
 
 var app = express();
 
@@ -35,6 +36,10 @@ app.use('/', maps);
 app.use('/', projects);
 app.use('/', routes);
 app.use('/', embed);
+
+router.get('/:x', function(req, res, next) {
+  res.send('done');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
