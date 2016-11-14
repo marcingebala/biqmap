@@ -1,12 +1,13 @@
-var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var concat = require('gulp-concat');
-var plumber = require('gulp-plumber');
-var gutil = require('gulp-util');
-var autoprefixer = require('gulp-autoprefixer');
-var cleanCSS = require('gulp-clean-css');
+var gulp = require('gulp'),
+    uglify = require('gulp-uglify'),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    concat = require('gulp-concat'),
+    plumber = require('gulp-plumber'),
+    gutil = require('gulp-util'),
+    autoprefixer = require('gulp-autoprefixer'),
+    cleanCSS = require('gulp-clean-css'),
+    browserify = require("browserify");
 
 //var minify = require('gulp-minify');
 
