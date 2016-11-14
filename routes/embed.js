@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var mongodb = require('mongodb');
-var Mp4Convert = require('mp4-convert');
-var ffmpeg = require('fluent-ffmpeg');
-var url = 'mongodb://localhost:27017/biqmap';
-var xss = require('xss');
-var sha1 = require('sha1');
+var express = require('express'),
+    router = express.Router(),
+    mongodb = require('mongodb'),
+    mongourl = process.env.MONGO_URL,
+    Mp4Convert = require('mp4-convert'),
+    ffmpeg = require('fluent-ffmpeg'),
+    xss = require('xss'),
+    sha1 = require('sha1');
 
 //wyświetlenie strony indeksowej
 router.get('/embed/:id', function(req, res, next) {

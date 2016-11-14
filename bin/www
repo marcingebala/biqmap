@@ -3,6 +3,8 @@
 /**
  * Module dependencies.
  */
+var dotenv = require('dotenv');
+dotenv.load();
 
 var app = require('../app');
 var debug = require('debug')('biqmap:server');
@@ -14,6 +16,8 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3002');
 app.set('port', port);
+
+console.log('uruchomiono serwer na porcie: '+process.env.PORT )
 
 /**
  * Create HTTP server.

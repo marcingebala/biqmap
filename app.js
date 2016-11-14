@@ -1,19 +1,21 @@
 var express = require('express');
+var app = express();
+
 var path = require('path');
 var favicon = require('serve-favicon');
-
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
+var router = express.Router();
+
+
 
 var routes = require('./routes/index');
 var maps = require('./routes/maps');
 var projects = require('./routes/projects');
 var embed = require('./routes/embed');
-var session = require('express-session')
-var router = express.Router();
 
-var app = express();
 
 app.use(session({ secret: '$#%!@#@@#SSDASASDVV@@@@', cookie: { maxAge: 2*24*60*60*1000 }, resave: true, saveUninitialized: true }))
 
@@ -27,7 +29,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser());
-
 
 //obsługa routingu
 app.use('/', express.static( path.join(__dirname, 'public')) );
@@ -43,13 +44,13 @@ router.get('/:x', function(req, res, next) {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.redirect('/');
+  //var err = new Error('Not Found');
+  //err.status = 404;
+  //next(err);
 });
 
-
-if (app.get('env') === 'development') {
+if (process.env.MODE === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
@@ -59,7 +60,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-
+/*
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -67,5 +68,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
+*/
 module.exports = app;

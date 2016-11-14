@@ -9,6 +9,7 @@
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
+    "dotenv": "^2.0.0",
     "excel": "^0.1.6",
     "excel-parser": "^0.2.2",
     "express": "~4.13.4",

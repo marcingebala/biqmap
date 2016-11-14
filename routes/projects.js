@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var mongodb = require('mongodb');
-var Mp4Convert = require('mp4-convert');
-var ffmpeg = require('fluent-ffmpeg');
-var url = 'mongodb://localhost:27017/biqmap';
+var express = require('express'),
+    router = express.Router(),
+    mongodb = require('mongodb'),
+    mongourl = process.env.MONGO_URL,
+    Mp4Convert = require('mp4-convert'),
+    ffmpeg = require('fluent-ffmpeg');
 
-//var url = 'mongodb://biqmap:poiuy@mongo-biqmap01.gazeta.pl:27017';
+//var mongourl = 'mongodb://biqmap:poiuy@mongo-biqmap01.gazeta.pl:27017';
 
 var xss = require('xss');
 var sha1 = require('sha1');
@@ -36,7 +36,7 @@ var logged = function (req, res, next) {
 //CRUD CREATE tworzymy nowy projekt 
 router.post('/api/projects/',logged_api, function(req, res, next) {
   //tworzymy nowy projekt
-  mongodb.connect(url, function(err, db) {
+  mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('projects');
     collection.insert({ id_user : req.session.id_user, map_hash : req.body.map_hash , map_json : req.body.map_json, layers : req.body.layers, excel : req.body.excel, project : req.body.project }, function(err,docs){
       res.json( {status: 'ok', project_hash: docs.ops[0]._id} );
@@ -48,7 +48,7 @@ router.post('/api/projects/',logged_api, function(req, res, next) {
 
 //CRUD UPDATE aktualizujemy już istniejacy projekt
 router.put('/api/projects', logged_api, function(req, res, next){
-  mongodb.connect(url, function(err, db) {
+  mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('projects');
     collection.update({_id: mongodb.ObjectId(req.body.project_hash)}, {  $set: {map_hash : req.body.map_hash , map_json : req.body.map_json, layers : req.body.layers, excel : req.body.excel, project : req.body.project} }, function(err,docs){
       res.json( {status: 'ok', message: 'zakutalizowano mapę'} );
@@ -60,7 +60,7 @@ router.put('/api/projects', logged_api, function(req, res, next){
 
 //CRUD zwracamy jsona z wszystkimi projektami użytkownika
 router.get('/api/projects/',logged_api, function(req, res, next) {
-  mongodb.connect(url, function(err, db) {
+  mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('projects');
     collection.find({ id_user : req.session.id_user },{project:1}).toArray(function(err, docs) {
       res.json( {status: 'ok',data : docs} );
@@ -72,7 +72,7 @@ router.get('/api/projects/',logged_api, function(req, res, next) {
 
 //CRUD DELETE usuwamy projekt z bazy
 router.delete('/api/project/:id',logged_api, function(req, res, next) {
-  mongodb.connect(url, function(err, db) {
+  mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('projects');
     collection.deleteOne({ id_user : req.session.id_user, _id: mongodb.ObjectId(req.params.id) }, function(err, docs) {
       res.json( {status: 'ok' } );
@@ -83,7 +83,7 @@ router.delete('/api/project/:id',logged_api, function(req, res, next) {
 
 //CRUD GET pobieramy konkretny projekt
 router.get('/api/project/:id', function(req, res, next) {
-  mongodb.connect(url, function(err, db) {
+  mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('projects');
     //do pobrania mapy potrzebujemy 2 zmiennyd id_user oraz params.id
     collection.find({ _id: mongodb.ObjectId(req.params.id) }).toArray(function(err, docs) { 

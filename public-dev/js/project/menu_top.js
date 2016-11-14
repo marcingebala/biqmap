@@ -168,7 +168,7 @@ menu_top = {
 		}
 	},
 
-	show_info : function(){
+	show_info : function(){ 
 		$('#canvas_info #size').val(parseInt(canvas.scale) + '%');
 		$('#canvas_info #width').val(parseInt(canvas.width_canvas) + 'px');
 		$('#canvas_info #height').val(parseInt(canvas.height_canvas) + 'px');

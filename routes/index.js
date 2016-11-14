@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var mongodb = require('mongodb');
-var Mp4Convert = require('mp4-convert');
-var ffmpeg = require('fluent-ffmpeg');
-var url = 'mongodb://localhost:27017/biqmap';
-var xss = require('xss');
-var sha1 = require('sha1');
+var express = require('express'),
+    router = express.Router(),
+    mongodb = require('mongodb'),
+    mongourl = process.env.MONGO_URL,
+    Mp4Convert = require('mp4-convert'),
+    ffmpeg = require('fluent-ffmpeg'),
+    xss = require('xss'),
+    sha1 = require('sha1');
 
 //middleware sprawdzający czy użytkownik jest zalogowany
 var logged = function (req, res, next) {
@@ -36,7 +36,7 @@ router.post('/register', function(req, res, next){
   }
 
   //sprawdzamy czy taki użytkownik już istnieje
-  mongodb.connect(url, function(err, db) {
+  mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('users');
     collection.find(  { $or: [ { login: login }, { email: email } ] }  ).toArray(function(err, docs){
     
@@ -46,7 +46,7 @@ router.post('/register', function(req, res, next){
       }
       else{
         //tworzymy nowego użytkownika
-        mongodb.connect(url, function(err, db) {
+        mongodb.connect(mongourl, function(err, db) {
           var collection = db.collection('users');
           result = collection.insert({login: login, email: email, password: sha1(password) }, function(err,docs){
             
@@ -71,7 +71,7 @@ router.post('/login', function(req, res, next) {
   var login = xss( req.body.login );
   var password = sha1( xss( req.body.password ) );
 
-  mongodb.connect(url, function(err, db) {
+  mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('users');
     collection.find({ $or: [{ "login": login }, { "email": login }], 'password' : password}).toArray(function(err, docs) {
     
