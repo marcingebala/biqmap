@@ -47,7 +47,7 @@ legends = {
 
 		for(var i = 0, i_max = layers.colors_active[layers.active].length; i < i_max; i++){
 
-			console.log( parseInt(layers.min_value[layers.active]),layers.min_value[layers.active] );
+			console.log( parseInt(layers.min_value[layers.active]),layers.max_value[layers.active] );
 
 			var now_tmp = Math.round( (parseInt(layers.min_value[layers.active])+diffrent/color_count*i)*100) / 100
 			

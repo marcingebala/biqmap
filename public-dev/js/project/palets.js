@@ -120,20 +120,26 @@ var palets = {
 
   },
 
-  set_min_max_value : function(){
+  set_min_max_value : function(){ 
     var tmp_value = layers.value[layers.active];
     if(tmp_value != -1){
       //wyszukujemy najmniejsza i największą wartość w kolumnie wartości
       if( layers.value[tmp_value] != -1 ){
         
-        var tmp_min = String(excel.data[1][tmp_value]).replace(',','.')
-        var tmp_max = String(excel.data[1][tmp_value]).replace(',','.');
+        var tmp_min = parseFloat(String(excel.data[1][tmp_value]).replace(',','.'));
+        var tmp_max =  parseFloat(String(excel.data[1][tmp_value]).replace(',','.'));
+
         for(var i = 1, i_max = excel.data.length; i < i_max; i++){
-          if((tmp_min > String(excel.data[i][tmp_value]).replace(',','.')) &&  (excel.data[i][tmp_value] != "")) tmp_min = String(excel.data[i][tmp_value]).replace(',','.');
-          if((tmp_max < String(excel.data[i][tmp_value]).replace(',','.')) &&  (excel.data[i][tmp_value] != "")) tmp_max = String(excel.data[i][tmp_value]).replace(',','.');
+
+          var num_tmp = parseFloat(String(excel.data[i][tmp_value]).replace(',','.'));
+
+          if((tmp_min > num_tmp) && (num_tmp != "")){ tmp_min = num_tmp; }
+          if((tmp_max < num_tmp) && (num_tmp != "")){ tmp_max = num_tmp; }
         }
         //console.log("min max value: ",tmp_min, tmp_max);
       }
+      
+      console.log('wynik: ',tmp_min,tmp_max);
 
       layers.min_value[layers.active] = tmp_min
       layers.max_value[layers.active] = tmp_max;
