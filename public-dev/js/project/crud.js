@@ -203,6 +203,9 @@ var crud = {
 	},
 
 	set_project : function(data){
+		
+		console.log(data)
+		console.log(data.map_json)
 
 		//wczytujemy dane dotyczące mapy
 		this.set_map( JSON.parse(data.map_json) );
@@ -300,7 +303,7 @@ var crud = {
 			success: function(response){
 				if(response.status == 'ok'){
 					alert('zapisano nowy projekt');
-					th.project_hash = response.project_hash;
+					th.project_hash = response.hash;
 					menu_top.get_projects();
 				}
 				else{
@@ -322,7 +325,7 @@ var crud = {
 		var data = {
 			map_json : JSON.stringify(th.map_json),
 			map_hash : th.map_hash,
-			project_hash : th.project_hash,
+			hash : th.project_hash,
 			layers : JSON.stringify(th.layers),
 			excel : JSON.stringify(th.excel),
 			project : JSON.stringify(th.project)

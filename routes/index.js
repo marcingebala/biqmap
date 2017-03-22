@@ -5,7 +5,11 @@ var express = require('express'),
     Mp4Convert = require('mp4-convert'),
     ffmpeg = require('fluent-ffmpeg'),
     xss = require('xss'),
-    sha1 = require('sha1');
+    sha1 = require('sha1'),
+    empty = require('empty-value'),
+    mysql = require('mysql2');
+
+var connection = mysql.createConnection({host:process.env.DB_HOST, user:process.env.DB_USER,password:process.env.DB_PASSWORD, database:process.env.DB_DATABASE});
 
 //middleware sprawdzający czy użytkownik jest zalogowany
 var logged = function (req, res, next) {
@@ -13,9 +17,28 @@ var logged = function (req, res, next) {
     next();
   } 
   else{
-    res.redirect('/');
+    res.redirect('/'); 
   }
-}; 
+};
+
+ 
+router.get('/show-maps', function(req, res, next){
+  connection.query("SELECT * FROM maps", function (error, results, fields) {
+    res.json(results)
+  });
+});
+
+router.get('/show-projects', function(req, res, next){
+  connection.query("SELECT * FROM projects", function (error, results, fields) {
+    res.json(results)
+  });
+});
+
+router.get('/show-users', function(req, res, next){
+  connection.query("SELECT * FROM users", function (error, results, fields) {
+    res.json(results)
+  });
+});
 
 //kontroler rejestracji użytkowników CRUD
 router.post('/register', function(req, res, next){
@@ -35,6 +58,29 @@ router.post('/register', function(req, res, next){
     res.json({status : 'error', message: 'podano niepoprawny adres email'});
   }
 
+  connection.query("SELECT * FROM users WHERE login='"+login+"' OR email='"+email+"'", function (error, results, fields) {
+  
+    if( empty(results) ){
+
+      connection.query("INSERT INTO users (login, email, password) VALUES ('"+login+"','"+email+"','"+sha1(password)+"')", function (error, results, fields) {  
+
+        connection.query("SELECT * FROM users WHERE login='"+login+"'", function (error, results, fields) {  
+        
+          req.session.login = results.login;
+          req.session.id_user = results.id;
+          res.json({status : 'logged', message: 'zalogowano'});
+        
+        });
+ 
+      });
+
+    }else{
+      res.json({status : 'error', message: 'podany uzytkownik już istnieje'});
+    }
+
+  });
+
+  /*
   //sprawdzamy czy taki użytkownik już istnieje
   mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('users');
@@ -61,7 +107,7 @@ router.post('/register', function(req, res, next){
       }
     });
     db.close();
-  });
+  });*/
 });
 
 
@@ -70,7 +116,21 @@ router.post('/login', function(req, res, next) {
   
   var login = xss( req.body.login );
   var password = sha1( xss( req.body.password ) );
+  
+  connection.query("SELECT * FROM users WHERE (login='"+login+"' OR email='"+login+"') AND password='"+password+"'", function (error, results, fields) {
 
+    if( empty(results) ){
+      res.json({status : 'error', message: 'nieprawidłowy login lub hasło'});
+    }
+    else{
+      req.session.login = results[0].login;
+      req.session.id_user = results[0].id;
+      res.json({status : 'logged', message: 'zalogowano'});
+    }
+
+  });
+  
+/*
   mongodb.connect(mongourl, function(err, db) {
     var collection = db.collection('users');
     collection.find({ $or: [{ "login": login }, { "email": login }], 'password' : password}).toArray(function(err, docs) {
@@ -92,7 +152,7 @@ router.post('/login', function(req, res, next) {
     });
     db.close();
   });
-
+*/
 });
 
 

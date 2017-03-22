@@ -47,8 +47,6 @@ var layers = {
 		$('#area span').removeClass('active');
 		$(obj).addClass('active');
 
-		console.log(obj);
-
 		layers.active = $(obj).index();
 
 		legends.show(); 

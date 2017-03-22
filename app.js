@@ -9,8 +9,9 @@ var bodyParser = require('body-parser');
 var session = require('express-session')
 var router = express.Router();
 
-
-
+var mysql = require('mysql2');
+var connection = mysql.createConnection({host:'localhost', user: 'root',password: '123', database: 'biqmap_db'});
+ 
 var routes = require('./routes/index');
 var maps = require('./routes/maps');
 var projects = require('./routes/projects');

@@ -25,11 +25,11 @@ var menu_top = {
 
 					console.log( JSON.parse(response.data[i].map_json)[0][7] );
 					
-					if(response.data[i]._id == crud.map_hash){
-						add_html += '<option selected id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+					if(response.data[i].map_hash == crud.map_hash){
+						add_html += '<option selected id="' + response.data[i].map_hash + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
 					}
 					else{
-						add_html += '<option id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+						add_html += '<option id="' + response.data[i].map_hash + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
 					}
 				
 				}

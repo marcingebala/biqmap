@@ -34,11 +34,11 @@ menu_top = {
 			if(response.status == "ok"){
 				var add_html = '<option id="select_map">wybierz mapę</option>';
 				for (var i = 0, i_max = response.data.length; i < i_max ;i++){
-					if(response.data[i]._id == crud.map_hash){
-						add_html += '<option selected id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+					if(response.data[i].map_hash == crud.map_hash){
+						add_html += '<option selected id="' + response.data[i].map_hash + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
 					}
 					else{
-						add_html += '<option id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
+						add_html += '<option id="' + response.data[i].map_hash + '">' + JSON.parse(response.data[i].map_json)[0][7] + '</option>';
 					}
 				}
 				$('#toolbar_top select.select_map').html( add_html );
@@ -88,13 +88,14 @@ menu_top = {
 			if(response.status == "ok"){
 
 				var add_html = '<option id="new_project">nowy projekt</option>';
+				
 				for (var i = 0, i_max = response.data.length; i < i_max ;i++){
-
-					if(response.data[i]._id == crud.project_hash){
-						add_html += '<option selected id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].project).name + '</option>';
+			
+					if(response.data[i].hash == crud.project_hash){
+						add_html += '<option selected id="' + response.data[i].hash + '">' + JSON.parse(response.data[i].project).name + '</option>';
 					}
 					else{
-						add_html += '<option id="' + response.data[i]._id + '">' + JSON.parse(response.data[i].project).name + '</option>';
+						add_html += '<option id="' + response.data[i].hash + '">' + JSON.parse(response.data[i].project).name + '</option>';
 					}
 				
 				}
@@ -103,7 +104,7 @@ menu_top = {
 			
 				//dodajemu zdarzenie change project 
 				$('.select_project').change(function(){
-					if (confirm('Czy chcesz wczytać nowy projekt ?')) {
+					if( confirm('Czy chcesz wczytać nowy projekt ?') ) {
 						if( $(this).find('option:selected').attr('id') == 'new_project' ){
 							location.reload();
 						}

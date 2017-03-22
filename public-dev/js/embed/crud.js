@@ -104,7 +104,7 @@ crud = {
 	},
 
 	set_project : function(data){
-
+console.log( data.layers );
 		//wczytujemy dane dotyczące mapy
 		this.set_map( JSON.parse(data.map_json) );
 		excel.data = JSON.parse(data.excel);
